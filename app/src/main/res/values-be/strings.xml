@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Мой список дел</string>
+
+    <string name="about_app">О приложении</string>
+    <string name="accept">Принять</string>
+    <string name="app_info">О приложении</string>
+    <string name="app_theme">Тема приложение</string>
+    <string name="apply">Применить</string>
+    <string name="background_start">Запуск в фоновом режиме</string>
+    <string name="do_you_really_want_to_logout">Вы действительно хотите выйти из аккаунта?</string>
+    <string name="input_your_message">Введите сообщение</string>
+    <string name="list">Список</string>
+    <string name="loading">Загрузка</string>
+    <string name="network_not_available">Ошибка интернет соединения</string>
+    <string name="new_version">Новая версия</string>
+    <string name="no">Нет</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="privacy_policy_in_sentence">Политикой конфиденциальности</string>
+    <string name="purchase_consumed">Покупка совершена, спасибо!</string>
+    <string name="rate">Оценить</string>
+    <string name="rate_app">Оценить приложение</string>
+    <string name="rate_app_question">Может быть хотите оценить приложение?</string>
+    <string name="send_feedback">Отправить отзыв</string>
+    <string name="settings">Настройки</string>
+    <string name="yes">Да</string>
+    <string name="you_like_app">Вам нравится приложение?</string>
+
+    <string name="error_purchase">Ошибка покупки, напишите на почту for.gamer.develop@gmail.com</string>
+
+    <!-- =========================================================================================================== -->
+    <string name="patch_notes">
+        - Новое приложение
+        \n- Новое приложение
+    </string>
+
+    <string name="privacy_policy_text">Авторизируясь, вы соглашаетесь с нашей Политикой конфиденциальности</string>
+
+    <string name="text_dialog_receive_help">Вы включили опцию запуска в фоновом режиме. Включение опции вероятно исправляет проблему получения уведомлений. Ее можно отключить в Android Настройки -> Приложения, либо путем переустановки приложения</string>
+
+    <string name="text_rate_app">В комментариях Вы можете написать, что можно улучшить в приложении</string>
+
+    <string name="text_app_about">
+        Описание приложения.
+        \n\nОписание приложения.
+        \n\nВерсия приложения: %s
+    </string>
+
+</resources>

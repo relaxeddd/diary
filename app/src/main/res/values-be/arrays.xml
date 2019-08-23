@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="array_themes">
+        <item>Стандартная</item>
+        <item>Темно-синяя</item>
+        <item>Темная</item>
+    </string-array>
+
+</resources>

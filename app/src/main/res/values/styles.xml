@@ -1,0 +1,33 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme2" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary2</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark2</item>
+        <item name="colorAccent">@color/colorAccent2</item>
+    </style>
+
+    <style name="AppTheme3" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary3</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark3</item>
+        <item name="colorAccent">@color/colorAccent3</item>
+    </style>
+
+    <style name="StyleCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="StyleCardViewSettings" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">8dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@id/fragmentTodoList"
+          android:title="@string/list"
+          app:showAsAction="ifRoom"
+          android:icon="@drawable/ic_list"/>
+
+    <item android:id="@id/fragmentSettings"
+          android:title="@string/settings"
+          app:showAsAction="ifRoom"
+          android:icon="@drawable/ic_settings"/>
+
+</menu>

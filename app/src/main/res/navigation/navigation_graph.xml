@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/fragmentTodoList"
+    android:id="@+id/navigation_graph">
+
+    <fragment
+        android:id="@+id/fragmentTodoList"
+        android:name="relaxeddd.simplediary.ui.todo_list.FragmentTodoList"
+        android:label="@string/label_fragment_todo_list"
+        tools:layout="@layout/fragment_todo_list"/>
+
+    <fragment
+        android:id="@+id/fragmentSettings"
+        android:name="relaxeddd.simplediary.ui.settings.FragmentSettings"
+        android:label="@string/label_fragment_settings"
+        tools:layout="@layout/fragment_settings"/>
+
+    <action
+        android:id="@+id/action_global_fragmentTodoList"
+        app:destination="@id/fragmentTodoList"
+        app:popUpTo="@+id/fragmentTodoList"
+        app:popUpToInclusive="true"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_enter_anim"
+        app:popExitAnim="@anim/nav_default_exit_anim"/>
+
+    <action
+        android:id="@+id/action_global_fragmentSettings"
+        app:destination="@id/fragmentSettings"
+        app:popUpTo="@+id/fragmentSettings"
+        app:popUpToInclusive="true"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_enter_anim"
+        app:popExitAnim="@anim/nav_default_exit_anim"/>
+
+</navigation>
