@@ -23,7 +23,6 @@ abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompat
     @LayoutRes
     abstract fun getLayoutResId() : Int
     protected open fun setupThemeColors() {}
-    protected open fun setLoadingVisible(isVisible: Boolean) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

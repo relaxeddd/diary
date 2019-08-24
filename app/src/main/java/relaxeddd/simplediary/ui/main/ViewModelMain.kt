@@ -2,7 +2,6 @@ package relaxeddd.simplediary.ui.main
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.BuildConfig
@@ -10,9 +9,9 @@ import relaxeddd.simplediary.common.EventType
 import relaxeddd.simplediary.common.NavigationEvent
 import relaxeddd.simplediary.common.SharedHelper
 import relaxeddd.simplediary.common.isNetworkAvailable
-import relaxeddd.simplediary.ui.ViewModelBase
+import relaxeddd.simplediary.ui.billing.ViewModelBilling
 
-class ViewModelMain(app: App) : ViewModelBase(app) {
+class ViewModelMain(app: App) : ViewModelBilling(app) {
 
     val isShowLoading = MutableLiveData(false)
     val isShowHorizontalProgress = MutableLiveData(false)
@@ -21,6 +20,14 @@ class ViewModelMain(app: App) : ViewModelBase(app) {
     val clickListenerGoogleAuth = View.OnClickListener {
         if (!isNetworkAvailable()) return@OnClickListener
         navigateEvent.value = NavigationEvent(EventType.GOOGLE_AUTH)
+    }
+
+    override fun onShowLoadingAction() {
+        isShowLoading.value = true
+    }
+
+    override fun onHideLoadingAction() {
+        isShowLoading.value = false
     }
 
     fun onViewCreate() {
