@@ -3,6 +3,8 @@ package relaxeddd.simplediary.common
 
 import android.os.Bundle
 import androidx.annotation.Keep
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Keep
 data class User(
@@ -13,10 +15,28 @@ data class User(
     constructor(user: User) : this(user.userId, user.email)
 }
 
+@Entity(tableName = TASKS)
+@Keep
+data class Task(
+
+    @PrimaryKey
+    val id: String = "",
+    val title: String = "",
+    val description: String = ""
+) {
+    constructor(task: Task) : this(task.id, task.title, task.description)
+}
+
+@Keep
+data class InitResult(val result: Result?, val user: User?, val tasks: List<Task>? = null, val isActualVersion: Boolean = true)
+
 @Keep
 data class Result(val code: Int = RESULT_UNDEFINED, val message: String = "") {
     fun isSuccess() = code == RESULT_OK
 }
+
+@Keep
+data class UpdateUserResult(val result: Result?, val user: User?)
 
 @Keep
 data class PurchaseResult(val result: Result?, val userId: String = "", val tokenId: String = "", val itemType: String = "",
@@ -34,6 +54,7 @@ enum class EventType {
     INIT_BILLING,
     GOOGLE_AUTH,
     GOOGLE_LOGOUT,
+    LAUNCH_BILLING_FLOW,
 
     NAVIGATION_FRAGMENT_TODO_LIST,
     NAVIGATION_FRAGMENT_SETTINGS,
@@ -42,6 +63,16 @@ enum class EventType {
     NAVIGATION_DIALOG_SEND_FEEDBACK,
     NAVIGATION_DIALOG_PATCH_NOTES,
     NAVIGATION_DIALOG_LIKE_APP
+}
+
+@Keep
+data class Resource<T>(
+
+    val status: Int = RESULT_UNDEFINED,
+    val errorStr: String = "",
+    val value: T? = null
+) {
+    fun isSuccess() = status == RESULT_OK
 }
 
 @Keep

@@ -122,8 +122,8 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
 
     override fun onNavigationEvent(type: EventType, args: Bundle?) {
         when (type) {
-            EventType.LOADING_SHOW -> setLoadingVisible(true)
-            EventType.LOADING_HIDE -> setLoadingVisible(false)
+            EventType.LOADING_SHOW -> viewModel.onShowLoadingAction()
+            EventType.LOADING_HIDE -> viewModel.onHideLoadingAction()
             EventType.NAVIGATION_FRAGMENT_TODO_LIST -> {
                 if (navController.currentDestination?.label != getString(R.string.label_fragment_todo_list)) {
                     navController.navigate(R.id.action_global_fragmentTodoList)
@@ -183,10 +183,6 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
         super.setupThemeColors()
         navigation_view_main.setBackgroundColor(getPrimaryColorResId())
         navigation_view_main.itemBackgroundResource = getPrimaryColorResId()
-    }
-
-    override fun setLoadingVisible(isVisible: Boolean) {
-        viewModel.isShowLoading.value = isVisible
     }
 
     private fun initGooglePlayServices() {

@@ -9,7 +9,13 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
+import relaxeddd.simplediary.common.DATABASE_NAME
 import relaxeddd.simplediary.common.SharedHelper
+import relaxeddd.simplediary.model.db.AppDatabase
+import relaxeddd.simplediary.model.http.ApiHelper
+import relaxeddd.simplediary.model.repository.RepositoryCommon
+import relaxeddd.simplediary.model.repository.RepositoryTasks
+import relaxeddd.simplediary.model.repository.RepositoryUsers
 import relaxeddd.simplediary.ui.main.ViewModelMain
 import relaxeddd.simplediary.ui.settings.ViewModelSettings
 import relaxeddd.simplediary.ui.todo_list.ViewModelTodoList
@@ -21,16 +27,17 @@ class App : MultiDexApplication() {
         lateinit var context: Context
     }
 
-    val appModule = module {
+    private val appModule = module {
 
-        /*single {
-            Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_SWTECNN)
+        single {
+            Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
         }
         single { ApiHelper() }
-        single { RepositoryUsers(get(), get()) }
-        single { RepositorySections(context, get()) }*/
+        single { RepositoryCommon(get()) }
+        single { RepositoryTasks(get(), SharedHelper) }
+        single { RepositoryUsers(get(), get(), get(), SharedHelper) }
 
         viewModel { ViewModelMain(this@App) }
         viewModel { ViewModelTodoList(this@App) }

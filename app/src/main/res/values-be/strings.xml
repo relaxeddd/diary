@@ -11,6 +11,10 @@
     <string name="background_start">Запуск в фоновом режиме</string>
     <string name="do_you_really_want_to_logout">Вы действительно хотите выйти из аккаунта?</string>
     <string name="input_your_message">Введите сообщение</string>
+    <string name="feedback_is_empty">Отзыв пуст</string>
+    <string name="feedback_send_error">Ошибка отправки отзыва</string>
+    <string name="feedback_too_short">Отзыв слишком короткий</string>
+    <string name="filter">Фильтр</string>
     <string name="list">Список</string>
     <string name="loading">Загрузка</string>
     <string name="network_not_available">Ошибка интернет соединения</string>
@@ -22,12 +26,23 @@
     <string name="rate">Оценить</string>
     <string name="rate_app">Оценить приложение</string>
     <string name="rate_app_question">Может быть хотите оценить приложение?</string>
+    <string name="thank_you">Спасибо!</string>
     <string name="send_feedback">Отправить отзыв</string>
     <string name="settings">Настройки</string>
+    <string name="undefined_error">Неизвестная ошибка</string>
+    <string name="unauthorized_error">Ошибка авторизации</string>
+    <string name="update">Обновление</string>
+    <string name="update_verb">Обновить</string>
+    <string name="update_text">Доступна новая версия приложения. Пожалуйста, обновите</string>
+    <string name="unknown_action">Неизвестное действие</string>
+    <string name="user_not_found">Пользователь не найден</string>
     <string name="yes">Да</string>
     <string name="you_like_app">Вам нравится приложение?</string>
 
+    <string name="error_initialization">Ошибка инициализации</string>
     <string name="error_purchase">Ошибка покупки, напишите на почту for.gamer.develop@gmail.com</string>
+    <string name="error_push_token">Ошибка получения уведомлений, пожалуйста, попробуйте перезайти в приложение</string>
+    <string name="error_update">Ошибка обновления</string>
 
     <!-- =========================================================================================================== -->
     <string name="patch_notes">
