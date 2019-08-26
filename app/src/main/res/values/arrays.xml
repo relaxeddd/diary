@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="array_renew_subscription">
+        <item>For 1 month</item>
+        <item>For 3 month (-30%)</item>
+        <item>For 6 month (-50%)</item>
+    </string-array>
+
     <string-array name="array_themes">
         <item>Standard</item>
         <item>Dark-blue</item>

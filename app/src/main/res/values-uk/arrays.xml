@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="array_renew_subscription">
+        <item>На 1 месяц</item>
+        <item>На 3 месяца (-30%)</item>
+        <item>На 6 месяцев (-50%)</item>
+    </string-array>
+
     <string-array name="array_themes">
         <item>Стандартная</item>
         <item>Темно-синяя</item>
