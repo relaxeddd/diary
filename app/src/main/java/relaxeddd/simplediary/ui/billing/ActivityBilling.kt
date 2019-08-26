@@ -10,6 +10,10 @@ abstract class ActivityBilling<VM : ViewModelBilling, B : ViewDataBinding> : Act
 
     override fun onNavigationEvent(type: EventType, args: Bundle?) {
         when (type) {
+            EventType.BUY_PRODUCT -> {
+                val productType = args?.getInt(PRODUCT_TYPE) ?: return
+                viewModel.onChooseProduct(productType)
+            }
             EventType.LAUNCH_BILLING_FLOW -> {
                 if (isActivityResumed) {
                     val productId = args?.getString(PRODUCT_ID, null) ?: return

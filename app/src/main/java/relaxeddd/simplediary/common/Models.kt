@@ -10,9 +10,10 @@ import androidx.room.PrimaryKey
 data class User(
 
     val userId: String = "",
-    val email: String = ""
+    val email: String = "",
+    var subscriptionTime: Long = 0
 ) {
-    constructor(user: User) : this(user.userId, user.email)
+    constructor(user: User) : this(user.userId, user.email, user.subscriptionTime)
 }
 
 @Entity(tableName = TASKS)
@@ -55,6 +56,7 @@ enum class EventType {
     GOOGLE_AUTH,
     GOOGLE_LOGOUT,
     LAUNCH_BILLING_FLOW,
+    BUY_PRODUCT,
 
     NAVIGATION_FRAGMENT_TODO_LIST,
     NAVIGATION_FRAGMENT_SETTINGS,
@@ -62,7 +64,15 @@ enum class EventType {
     NAVIGATION_DIALOG_RATE_APP,
     NAVIGATION_DIALOG_SEND_FEEDBACK,
     NAVIGATION_DIALOG_PATCH_NOTES,
-    NAVIGATION_DIALOG_LIKE_APP
+    NAVIGATION_DIALOG_LIKE_APP,
+    NAVIGATION_DIALOG_APP_ABOUT,
+    NAVIGATION_DIALOG_SUBSCRIPTION_INFO,
+    NAVIGATION_DIALOG_RECEIVE_HELP,
+    NAVIGATION_DIALOG_CONFIRM_LOGOUT,
+    NAVIGATION_GOOGLE_LOGOUT,
+    NAVIGATION_WEB_PLAY_MARKET,
+    NAVIGATION_DIALOG_THEME,
+    NAVIGATION_DIALOG_SUBSCRIPTION
 }
 
 @Keep

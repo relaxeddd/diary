@@ -15,13 +15,15 @@ abstract class ViewModelBilling(app: App) : ViewModelBase(app), PurchasesUpdated
         @BillingClient.SkuType private const val PRODUCT_3 = "product_3"
 
         var listSkuDetails: List<SkuDetails> = ArrayList()
+        var isBillingInit = false
+            private set
     }
 
     var billingClient: BillingClient? = null
         private set
     private var isBillingServiceConnected = false
     private var attemptConnect = 0
-    var isBillingInit = false
+    var isBillingInInitProcess = false
 
     abstract fun onShowLoadingAction()
     abstract fun onHideLoadingAction()
@@ -41,12 +43,15 @@ abstract class ViewModelBilling(app: App) : ViewModelBase(app), PurchasesUpdated
     }
 
     private fun initBilling(resultListener: ListenerResult<Boolean>? = null) {
-        if (isBillingInit) return
+        if (isBillingInit || isBillingInInitProcess) return
+
+        isBillingInInitProcess = true
         if (billingClient == null) {
             billingClient = BillingClient.newBuilder(getApplication()).enablePendingPurchases().setListener(this).build()
         }
         val innerResultListener = object: ListenerResult<Boolean> {
             override fun onResult(result: Boolean) {
+                isBillingInInitProcess = false
                 isBillingInit = result
                 resultListener?.onResult(result)
             }
@@ -112,12 +117,24 @@ abstract class ViewModelBilling(app: App) : ViewModelBase(app), PurchasesUpdated
         }
     }
 
-    fun onChooseSub(subType: Int) {
-        val productId = getProductId(subType) ?: return
+    fun onChooseProduct(productType: Int) {
+        val productId = getProductId(productType) ?: return
         val args = Bundle()
 
-        args.putString(PRODUCT_ID, productId)
-        navigateEvent.value = NavigationEvent(EventType.LAUNCH_BILLING_FLOW, args)
+        if (isBillingInit) {
+            args.putString(PRODUCT_ID, productId)
+            navigateEvent.value = NavigationEvent(EventType.LAUNCH_BILLING_FLOW, args)
+        } else if (!isBillingInInitProcess) {
+            val resultListener = object: ListenerResult<Boolean> {
+                override fun onResult(result: Boolean) {
+                    if (result) {
+                        args.putString(PRODUCT_ID, productId)
+                        navigateEvent.value = NavigationEvent(EventType.LAUNCH_BILLING_FLOW, args)
+                    }
+                }
+            }
+            initBilling(resultListener)
+        }
     }
 
     private fun requestVerify(purchase: Purchase?) {

@@ -41,7 +41,7 @@ class App : MultiDexApplication() {
 
         viewModel { ViewModelMain(this@App) }
         viewModel { ViewModelTodoList(this@App) }
-        viewModel { ViewModelSettings(this@App) }
+        viewModel { ViewModelSettings(this@App, get(), SharedHelper) }
     }
 
     override fun onCreate() {
