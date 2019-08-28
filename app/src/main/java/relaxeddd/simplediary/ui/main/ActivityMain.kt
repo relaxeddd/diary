@@ -38,7 +38,7 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
     private var selectedBottomMenuId: Int = R.id.fragmentTodoList
     private lateinit var navController: NavController
     override val viewModel: ViewModelMain by viewModel()
-    //private val providers: List<AuthUI.IdpConfig> = listOf(AuthUI.IdpConfig.GoogleBuilder().build())
+    private val providers: List<AuthUI.IdpConfig> = listOf(AuthUI.IdpConfig.GoogleBuilder().build())
 
     private val listenerFeedbackDialog: ListenerResult<String> = object: ListenerResult<String> {
         override fun onResult(result: String) {
@@ -145,13 +145,13 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
                 exitProcess(0)
             }
             EventType.GOOGLE_AUTH -> {
-                /*startActivityForResult(
+                startActivityForResult(
                     AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .build(),
                     REQUEST_SIGN_IN
-                )*/
+                )
             }
             EventType.NAVIGATION_DIALOG_PATCH_NOTES -> {
                 val dialog = DialogPatchNotes()
@@ -181,7 +181,7 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
 
     override fun setupThemeColors() {
         super.setupThemeColors()
-        navigation_view_main.setBackgroundColor(getPrimaryColorResId())
+        navigation_view_main.setBackgroundResource(getPrimaryColorResId())
         navigation_view_main.itemBackgroundResource = getPrimaryColorResId()
     }
 

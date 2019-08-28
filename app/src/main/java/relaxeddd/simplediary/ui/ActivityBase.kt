@@ -26,11 +26,14 @@ abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupTheme()
 
         binding = DataBindingUtil.setContentView(this, getLayoutResId())
         configureBinding()
         binding.lifecycleOwner = this
         binding.executePendingBindings()
+
+        setupThemeColors()
     }
 
     override fun onResume() {

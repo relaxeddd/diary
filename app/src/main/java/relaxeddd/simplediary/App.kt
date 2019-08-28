@@ -39,7 +39,7 @@ class App : MultiDexApplication() {
         single { RepositoryTasks(get(), SharedHelper) }
         single { RepositoryUsers(get(), get(), get(), SharedHelper) }
 
-        viewModel { ViewModelMain(this@App) }
+        viewModel { ViewModelMain(this@App, get(), get()) }
         viewModel { ViewModelTodoList(this@App) }
         viewModel { ViewModelSettings(this@App, get(), SharedHelper) }
     }

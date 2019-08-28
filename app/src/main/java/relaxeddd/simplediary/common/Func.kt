@@ -51,7 +51,7 @@ fun isNetworkAvailable(isShowToast: Boolean = true): Boolean {
     val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
     val isNetworkAvailable = activeNetworkInfo != null && activeNetworkInfo.isConnected
 
-    if (isShowToast) {
+    if (isShowToast && !isNetworkAvailable) {
         showToast(R.string.network_not_available)
     }
 

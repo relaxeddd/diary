@@ -15,6 +15,10 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLHandshakeException
+import com.google.gson.GsonBuilder
+import com.google.gson.Gson
+
+
 
 class ApiHelper {
 
@@ -31,9 +35,12 @@ class ApiHelper {
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .build()
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
         val retrofit = Retrofit.Builder()
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(URL_FIREBASE)
             .build()
         apiHelper = retrofit.create(IApi::class.java)
