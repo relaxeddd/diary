@@ -84,12 +84,9 @@
             app:itemIconTint="@drawable/selector_bottom_navigation"
             app:itemTextColor="@drawable/selector_bottom_navigation"
             app:menu="@menu/menu_main_navigation"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:backgroundTint="@color/colorPrimary"
-            android:backgroundTintMode="src_over"
-            android:background="@color/colorPrimary"
-            app:itemBackground="@color/colorPrimary"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <RelativeLayout
             android:id="@+id/container_main_progress_bar"

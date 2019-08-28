@@ -4,6 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'diaryKey'
+            keyPassword 'D5hzw3lo7'
+            storeFile file('D:/project/diaryKeystore.jks')
+            storePassword 'bd8Tkp01w'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
@@ -24,9 +32,11 @@ android {
             buildConfigField STRING, "DATABASE_NAME", '"relaxeddd_simplediary.db"'
         }
         release {
+            debuggable true
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
@@ -64,6 +74,12 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment:1.0.0"
     implementation "android.arch.navigation:navigation-ui:1.0.0"
 
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
+    implementation 'androidx.room:room-runtime:2.2.0-beta01'
+    implementation "androidx.room:room-coroutines:2.1.0-alpha04"
+    kapt 'androidx.room:room-compiler:2.2.0-beta01'
     //googleAuth
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.gms:google-services:4.2.0'
@@ -84,3 +100,5 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 }
+
+apply plugin: 'com.google.gms.google-services'

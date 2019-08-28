@@ -2,24 +2,53 @@ package relaxeddd.simplediary.ui.main
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.BuildConfig
-import relaxeddd.simplediary.common.EventType
-import relaxeddd.simplediary.common.NavigationEvent
-import relaxeddd.simplediary.common.SharedHelper
-import relaxeddd.simplediary.common.isNetworkAvailable
+import relaxeddd.simplediary.common.*
+import relaxeddd.simplediary.model.repository.RepositoryCommon
+import relaxeddd.simplediary.model.repository.RepositoryUsers
 import relaxeddd.simplediary.ui.billing.ViewModelBilling
 
-class ViewModelMain(app: App) : ViewModelBilling(app) {
+class ViewModelMain(app: App, private val repositoryUsers: RepositoryUsers,
+                    private val repositoryCommon: RepositoryCommon) : ViewModelBilling(app) {
 
     val isShowLoading = MutableLiveData(false)
     val isShowHorizontalProgress = MutableLiveData(false)
     val isShowGoogleAuth = MutableLiveData(false)
+    val isShowWarningSubscription = MutableLiveData(false)
+    private var isRateDialogShown = false
+
+    private val userObserver = Observer<User?> { user ->
+        isShowGoogleAuth.value = user == null || repositoryCommon.firebaseUser == null
+        isShowWarningSubscription.value = user != null && user.subscriptionTime <= System.currentTimeMillis()
+
+        val launchCount = SharedHelper.getLaunchCount()
+        if (user != null && !isRateDialogShown && !SharedHelper.isCancelledRateDialog() && launchCount % 2 == 0) {
+            isRateDialogShown = true
+            navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_LIKE_APP)
+        }
+        if (user != null) {
+            if (user.email.isNotEmpty()) {
+                SharedHelper.setPrivacyPolicyConfirmed(true)
+            }
+        }
+    }
 
     val clickListenerGoogleAuth = View.OnClickListener {
         if (!isNetworkAvailable()) return@OnClickListener
         navigateEvent.value = NavigationEvent(EventType.GOOGLE_AUTH)
+    }
+
+    init {
+        repositoryUsers.liveDataUser.observeForever(userObserver)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        repositoryUsers.liveDataUser.removeObserver(userObserver)
     }
 
     override fun onShowLoadingAction() {
@@ -42,13 +71,13 @@ class ViewModelMain(app: App) : ViewModelBilling(app) {
     fun onFeedbackDialogResult(feedback: String) {
         uiScope.launch {
             navigateEvent.value = NavigationEvent(EventType.LOADING_SHOW)
-            //RepositoryCommon.getInstance().sendFeedback(feedback)
+            repositoryCommon.sendFeedback(feedback)
             navigateEvent.value = NavigationEvent(EventType.LOADING_HIDE)
         }
     }
 
     fun requestInit() {
-        /*if (repositoryUser.isAuthorized()) {
+        if (repositoryUsers.isAuthorized()) {
             isShowGoogleAuth.value = false
             isShowHorizontalProgress.value = true
             ioScope.launch {
@@ -59,20 +88,15 @@ class ViewModelMain(app: App) : ViewModelBilling(app) {
                     //RepositoryWord.getInstance().clearDictionary()
                     SharedHelper.setUserEmail(loginEmail)
                 }
-                repositoryUser.init(object: ListenerResult<Boolean> {
+                repositoryUsers.init(object: ListenerResult<Boolean> {
                     override fun onResult(result: Boolean) {
                         if (!result) {
                             userObserver.onChanged(null)
-                        } else {
-                            val user = user.value
-                            if (user?.name?.isEmpty() == true) {
-                                navigateEvent.value = Event(NAVIGATION_DIALOG_ENTER_NAME)
-                            }
                         }
                         isShowHorizontalProgress.value = false
                     }
                 })
             }
-        }*/
+        }
     }
 }
