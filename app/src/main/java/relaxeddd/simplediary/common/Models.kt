@@ -23,9 +23,11 @@ data class Task(
     @PrimaryKey
     val id: String = "",
     val title: String = "",
-    val description: String = ""
+    val description: String = "",
+    val rrule: String = "",
+    val importance: Int
 ) {
-    constructor(task: Task) : this(task.id, task.title, task.description)
+    constructor(task: Task) : this(task.id, task.title, task.description, task.rrule, task.importance)
 }
 
 @Keep

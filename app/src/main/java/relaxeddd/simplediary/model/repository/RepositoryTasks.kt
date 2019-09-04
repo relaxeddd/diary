@@ -1,25 +1,28 @@
 package relaxeddd.simplediary.model.repository
 
-import relaxeddd.simplediary.common.SharedHelper
+import androidx.lifecycle.LiveData
 import relaxeddd.simplediary.common.Task
 import relaxeddd.simplediary.model.db.AppDatabase
 
-class RepositoryTasks(appDatabase: AppDatabase, private val sharedHelper: SharedHelper) {
+class RepositoryTasks(appDatabase: AppDatabase, repositoryInit: RepositoryInit) {
 
     private val dao = appDatabase.taskDao()
-    fun getTasks() = dao.getLiveDataAll()
+    val tasks: LiveData<List<Task>> get() = dao.getLiveDataAll()
 
-    fun updateTasks(words: List<Task>) {
-        val existWords = dao.getAll()
-        val idsSet = HashSet<String>()
-        var isAllExists = true
-
-        existWords.forEach { idsSet.add(it.id) }
-        words.forEach { if (!idsSet.contains(it.id)) isAllExists = false; }
-
-        if (!isAllExists || existWords.size != words.size) dao.deleteAll()
-        words.forEach {
-            dao.insert(it)
+    init {
+        repositoryInit.liveDataInitResult.observeForever {
+            if (it?.result != null && it.result.isSuccess() && it.tasks != null) {
+                updateTasks(it.tasks)
+            }
         }
+    }
+
+    private fun updateTasks(items: List<Task>) {
+        val existWords = dao.getAll()
+
+        if (!items.containsAll(existWords) || !existWords.containsAll(items)) {
+            dao.deleteAll()
+        }
+        dao.insertAll(items)
     }
 }
