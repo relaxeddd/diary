@@ -3,16 +3,17 @@ package relaxeddd.simplediary.ui.main
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
-import relaxeddd.simplediary.BuildConfig
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.model.repository.RepositoryCommon
+import relaxeddd.simplediary.model.repository.RepositoryInit
+import relaxeddd.simplediary.model.repository.RepositoryPreferences
 import relaxeddd.simplediary.model.repository.RepositoryUsers
 import relaxeddd.simplediary.ui.billing.ViewModelBilling
 
-class ViewModelMain(app: App, private val repositoryUsers: RepositoryUsers,
+class ViewModelMain(app: App, private val preferences: RepositoryPreferences,
+                    private val repositoryInit: RepositoryInit, private val repositoryUsers: RepositoryUsers,
                     private val repositoryCommon: RepositoryCommon) : ViewModelBilling(app) {
 
     val isShowLoading = MutableLiveData(false)
@@ -21,34 +22,37 @@ class ViewModelMain(app: App, private val repositoryUsers: RepositoryUsers,
     val isShowWarningSubscription = MutableLiveData(false)
     private var isRateDialogShown = false
 
-    private val userObserver = Observer<User?> { user ->
-        isShowGoogleAuth.value = user == null || repositoryCommon.firebaseUser == null
-        isShowWarningSubscription.value = user != null && user.subscriptionTime <= System.currentTimeMillis()
-
-        val launchCount = SharedHelper.getLaunchCount()
-        if (user != null && !isRateDialogShown && !SharedHelper.isCancelledRateDialog() && launchCount % 2 == 0) {
-            isRateDialogShown = true
-            navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_LIKE_APP)
-        }
-        if (user != null) {
-            if (user.email.isNotEmpty()) {
-                SharedHelper.setPrivacyPolicyConfirmed(true)
-            }
-        }
-    }
-
     val clickListenerGoogleAuth = View.OnClickListener {
         if (!isNetworkAvailable()) return@OnClickListener
         navigateEvent.value = NavigationEvent(EventType.GOOGLE_AUTH)
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+    private val userObserver = Observer<User?> { user ->
+        val isAuthorized = user != null
+
+        isShowGoogleAuth.value = !isAuthorized
+        isShowWarningSubscription.value = isAuthorized && user?.subscriptionTime ?: 0 <= System.currentTimeMillis()
+
+        if (isAuthorized) {
+            val launchCount = preferences.launchCount
+
+            if (!isRateDialogShown && !preferences.isCancelledRateDialog && launchCount % 3 == 0) {
+                navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_LIKE_APP)
+                isRateDialogShown = true
+            }
+            preferences.setPrivacyPolicyConfirmed()
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
     init {
-        repositoryUsers.liveDataUser.observeForever(userObserver)
+        repositoryUsers.user.observeForever(userObserver)
     }
 
     override fun onCleared() {
         super.onCleared()
-        repositoryUsers.liveDataUser.removeObserver(userObserver)
+        repositoryUsers.user.removeObserver(userObserver)
     }
 
     override fun onShowLoadingAction() {
@@ -62,9 +66,9 @@ class ViewModelMain(app: App, private val repositoryUsers: RepositoryUsers,
     fun onViewCreate() {
         requestInit()
 
-        if (!SharedHelper.isPatchNotesViewed(BuildConfig.VERSION_NAME)) {
+        if (!preferences.isPatchNotesViewed) {
             navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_PATCH_NOTES)
-            SharedHelper.setPatchNotesViewed(BuildConfig.VERSION_NAME)
+            preferences.setPatchNotesViewed()
         }
     }
 
@@ -77,25 +81,14 @@ class ViewModelMain(app: App, private val repositoryUsers: RepositoryUsers,
     }
 
     fun requestInit() {
-        if (repositoryUsers.isAuthorized()) {
-            isShowGoogleAuth.value = false
-            isShowHorizontalProgress.value = true
-            ioScope.launch {
-                val loginEmail = FirebaseAuth.getInstance().currentUser?.email ?: ""
-                val savedEmail = SharedHelper.getUserEmail()
+        isShowGoogleAuth.value = false
+        isShowHorizontalProgress.value = true
 
-                if (savedEmail.isNotEmpty() && savedEmail != loginEmail) {
-                    //RepositoryWord.getInstance().clearDictionary()
-                    SharedHelper.setUserEmail(loginEmail)
-                }
-                repositoryUsers.init(object: ListenerResult<Boolean> {
-                    override fun onResult(result: Boolean) {
-                        if (!result) {
-                            userObserver.onChanged(null)
-                        }
-                        isShowHorizontalProgress.value = false
-                    }
-                })
+        ioScope.launch {
+            repositoryInit.init()
+
+            uiScope.launch {
+                isShowHorizontalProgress.value = false
             }
         }
     }

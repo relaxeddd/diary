@@ -9,10 +9,11 @@ import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
+import relaxeddd.simplediary.model.repository.RepositoryPreferences
 import relaxeddd.simplediary.model.repository.RepositoryUsers
 import relaxeddd.simplediary.ui.ViewModelBase
 
-class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, sharedHelper: SharedHelper) : ViewModelBase(app) {
+class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, preferences: RepositoryPreferences) : ViewModelBase(app) {
 
     private val userObserver = Observer<User?> { user ->
         var subTime = user?.subscriptionTime ?: System.currentTimeMillis()
@@ -21,9 +22,9 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
         liveDataSubDays.value = (subTime / 1000 / 60 / 60 / 24).toString()
     }
 
-    val user: LiveData<User?> = repositoryUsers.liveDataUser
+    val user: LiveData<User?> = repositoryUsers.user
     val liveDataSubDays = MutableLiveData("")
-    val textTheme: String = App.context.resources.getStringArray(R.array.array_themes)[sharedHelper.getAppThemeType()]
+    val textTheme: String = App.context.resources.getStringArray(R.array.array_themes)[preferences.appThemeType]
     val isVisibleReceiveHelp = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
     val clickListenerAppInfo = View.OnClickListener {

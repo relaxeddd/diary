@@ -14,8 +14,23 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_todo_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:visibility="@{safeUnbox(viewModel.isVisibleList) ? View.VISIBLE : View.GONE}"/>
+
+        <TextView
+                android:id="@+id/text_todo_list_no_items"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/no_tasks_desc"
+                android:textSize="@dimen/font_16"
+                android:visibility="@{safeUnbox(viewModel.isVisibleTextNoItems) ? View.VISIBLE : View.GONE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

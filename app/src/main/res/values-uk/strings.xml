@@ -24,6 +24,7 @@
     <string name="network_not_available">Ошибка интернет соединения</string>
     <string name="new_version">Новая версия</string>
     <string name="no">Нет</string>
+    <string name="no_tasks_desc">У Вас нет дейсвующих задач. Для создания нажмите плюс</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
     <string name="privacy_policy_in_sentence">Политикой конфиденциальности</string>
     <string name="purchase_consumed">Покупка совершена, спасибо!</string>

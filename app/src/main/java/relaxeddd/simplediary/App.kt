@@ -13,9 +13,7 @@ import relaxeddd.simplediary.common.DATABASE_NAME
 import relaxeddd.simplediary.common.SharedHelper
 import relaxeddd.simplediary.model.db.AppDatabase
 import relaxeddd.simplediary.model.http.ApiHelper
-import relaxeddd.simplediary.model.repository.RepositoryCommon
-import relaxeddd.simplediary.model.repository.RepositoryTasks
-import relaxeddd.simplediary.model.repository.RepositoryUsers
+import relaxeddd.simplediary.model.repository.*
 import relaxeddd.simplediary.ui.main.ViewModelMain
 import relaxeddd.simplediary.ui.settings.ViewModelSettings
 import relaxeddd.simplediary.ui.todo_list.ViewModelTodoList
@@ -28,20 +26,21 @@ class App : MultiDexApplication() {
     }
 
     private val appModule = module {
-
         single {
             Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
         }
         single { ApiHelper() }
+        single { RepositoryPreferences(this@App, SharedHelper) }
+        single { RepositoryInit(get(), get()) }
         single { RepositoryCommon(get()) }
-        single { RepositoryTasks(get(), SharedHelper) }
-        single { RepositoryUsers(get(), get(), get(), SharedHelper) }
+        single { RepositoryTasks(get(), get()) }
+        single { RepositoryUsers(get(), get()) }
 
-        viewModel { ViewModelMain(this@App, get(), get()) }
-        viewModel { ViewModelTodoList(this@App) }
-        viewModel { ViewModelSettings(this@App, get(), SharedHelper) }
+        viewModel { ViewModelMain(this@App, get(), get(), get(), get()) }
+        viewModel { ViewModelTodoList(this@App, get()) }
+        viewModel { ViewModelSettings(this@App, get(), get()) }
     }
 
     override fun onCreate() {

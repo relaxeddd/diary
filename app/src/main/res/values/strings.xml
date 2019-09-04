@@ -24,6 +24,7 @@
     <string name="network_not_available">Network error</string>
     <string name="new_version">New version</string>
     <string name="no">No</string>
+    <string name="no_tasks_desc">You have not plans. Click plus to create</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_in_sentence">Privacy Policy</string>
     <string name="purchase_consumed">Success purchase, thank you!</string>

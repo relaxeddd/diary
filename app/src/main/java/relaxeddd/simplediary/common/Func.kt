@@ -11,6 +11,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.R
 
@@ -25,15 +28,21 @@ fun getStringByResName(resName: String): String {
 }
 
 fun showToast(string: String) {
-    Toast.makeText(App.context, string, Toast.LENGTH_SHORT).show()
+    CoroutineScope(Dispatchers.Main).launch {
+        Toast.makeText(App.context, string, Toast.LENGTH_SHORT).show()
+    }
 }
 
 fun showToast(@StringRes resId: Int) {
-    Toast.makeText(App.context, resId, Toast.LENGTH_SHORT).show()
+    CoroutineScope(Dispatchers.Main).launch {
+        Toast.makeText(App.context, resId, Toast.LENGTH_SHORT).show()
+    }
 }
 
 fun showToastLong(@StringRes resId: Int) {
-    Toast.makeText(App.context, resId, Toast.LENGTH_LONG).show()
+    CoroutineScope(Dispatchers.Main).launch {
+        Toast.makeText(App.context, resId, Toast.LENGTH_LONG).show()
+    }
 }
 
 fun hideKeyboard(view: View) {
