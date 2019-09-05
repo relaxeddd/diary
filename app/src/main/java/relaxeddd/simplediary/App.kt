@@ -1,7 +1,5 @@
 package relaxeddd.simplediary
 
-import android.annotation.SuppressLint
-import android.content.Context
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.FirebaseApp
 import org.koin.android.ext.koin.androidContext
@@ -11,6 +9,7 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import relaxeddd.simplediary.common.DATABASE_NAME
 import relaxeddd.simplediary.common.SharedHelper
+import relaxeddd.simplediary.model.NetworkHelper
 import relaxeddd.simplediary.model.db.AppDatabase
 import relaxeddd.simplediary.model.http.ApiHelper
 import relaxeddd.simplediary.model.repository.*
@@ -20,18 +19,14 @@ import relaxeddd.simplediary.ui.todo_list.ViewModelTodoList
 
 class App : MultiDexApplication() {
 
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        lateinit var context: Context
-    }
-
     private val appModule = module {
         single {
-            Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+            Room.databaseBuilder(this@App, AppDatabase::class.java, DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
         }
-        single { ApiHelper() }
+        factory { NetworkHelper(this@App) }
+        single { ApiHelper(get()) }
         single { RepositoryPreferences(this@App, SharedHelper) }
         single { RepositoryInit(get(), get()) }
         single { RepositoryCommon(get()) }
@@ -45,9 +40,9 @@ class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        context = this
+
         FirebaseApp.initializeApp(this)
-        SharedHelper.setLaunchCount(SharedHelper.getLaunchCount() + 1)
+        SharedHelper.setLaunchCount(SharedHelper.getLaunchCount(this) + 1, this)
         startKoin{
             androidLogger()
             androidContext(this@App)

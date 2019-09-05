@@ -22,11 +22,11 @@ class DialogLikeApp : DialogFragment() {
 
             builder.setTitle(R.string.you_like_app)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    SharedHelper.setCancelledRateDialog(true)
+                    context?.let { it1 -> SharedHelper.setCancelledRateDialog(true, it1) }
                     confirmListener?.onResult(true)
                 }
                 .setNegativeButton(R.string.no) { _, _ ->
-                    SharedHelper.setCancelledRateDialog(true)
+                    context?.let { it1 -> SharedHelper.setCancelledRateDialog(true, it1) }
                     confirmListener?.onResult(false)
                 }
             builder.create()

@@ -159,8 +159,8 @@ abstract class ViewModelBilling(app: App) : ViewModelBase(app), PurchasesUpdated
         }*/
     }
 
-    private fun consumePurchase(purchaseResult: PurchaseResult) {
-        val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(purchaseResult.tokenId).build()
+    private fun consumePurchase(purchaseContent: PurchaseContent) {
+        val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(purchaseContent.tokenId).build()
 
         billingClient?.consumeAsync(consumeParams) { billingResult, _ ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
@@ -169,8 +169,8 @@ abstract class ViewModelBilling(app: App) : ViewModelBase(app), PurchasesUpdated
         }
     }
 
-    private fun onPurchaseResultSuccess(purchaseResult: PurchaseResult) {
-        consumePurchase(purchaseResult)
+    private fun onPurchaseResultSuccess(purchaseContent: PurchaseContent) {
+        consumePurchase(purchaseContent)
         //TODO
     }
 

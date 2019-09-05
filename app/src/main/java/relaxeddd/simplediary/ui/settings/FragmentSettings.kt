@@ -15,7 +15,6 @@ import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.databinding.FragmentSettingsBinding
 import relaxeddd.simplediary.dialogs.*
 import relaxeddd.simplediary.ui.FragmentBase
-import relaxeddd.simplediary.ui.billing.ViewModelBilling
 import relaxeddd.simplediary.ui.main.ActivityMain
 import java.lang.Exception
 
@@ -92,7 +91,7 @@ class FragmentSettings : FragmentBase<ViewModelSettings, FragmentSettingsBinding
                 }
             }
             EventType.NAVIGATION_WEB_PLAY_MARKET -> {
-                openWebApplication(activity)
+                activity?.openWebApplication()
             }
             EventType.NAVIGATION_DIALOG_THEME -> {
                 if (isResumed) {
@@ -101,13 +100,9 @@ class FragmentSettings : FragmentBase<ViewModelSettings, FragmentSettingsBinding
                 }
             }
             EventType.NAVIGATION_DIALOG_SUBSCRIPTION -> {
-                if (ViewModelBilling.isBillingInit) {
-                    val dialog = DialogSubscription()
-                    dialog.listener = listenerSubscription
-                    dialog.show(this@FragmentSettings.childFragmentManager, "Subscription Dialog")
-                } else {
-                    showToast(R.string.loading)
-                }
+                val dialog = DialogSubscription()
+                dialog.listener = listenerSubscription
+                dialog.show(this@FragmentSettings.childFragmentManager, "Subscription Dialog")
             }
             else -> super.onNavigationEvent(type, args)
         }

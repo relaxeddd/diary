@@ -12,6 +12,7 @@ import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.model.repository.RepositoryPreferences
 import relaxeddd.simplediary.model.repository.RepositoryUsers
 import relaxeddd.simplediary.ui.ViewModelBase
+import relaxeddd.simplediary.ui.billing.ViewModelBilling
 
 class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, preferences: RepositoryPreferences) : ViewModelBase(app) {
 
@@ -24,14 +25,18 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
 
     val user: LiveData<User?> = repositoryUsers.user
     val liveDataSubDays = MutableLiveData("")
-    val textTheme: String = App.context.resources.getStringArray(R.array.array_themes)[preferences.appThemeType]
+    val textTheme: String = getApplication<App>().resources.getStringArray(R.array.array_themes)[preferences.appThemeType]
     val isVisibleReceiveHelp = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
     val clickListenerAppInfo = View.OnClickListener {
         navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_APP_ABOUT)
     }
     val clickListenerSubscription = View.OnClickListener {
-        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SUBSCRIPTION)
+        if (ViewModelBilling.isBillingInit) {
+            navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SUBSCRIPTION)
+        } else {
+            showToast(R.string.loading)
+        }
     }
     val clickListenerSubscriptionInfo = View.OnClickListener {
         navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SUBSCRIPTION_INFO)

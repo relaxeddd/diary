@@ -11,8 +11,8 @@ class RepositoryTasks(appDatabase: AppDatabase, repositoryInit: RepositoryInit) 
 
     init {
         repositoryInit.liveDataInitResult.observeForever {
-            if (it?.result != null && it.result.isSuccess() && it.tasks != null) {
-                updateTasks(it.tasks)
+            if (it.isSuccess && it.content != null && it.content.tasks != null) {
+                updateTasks(it.content.tasks)
             }
         }
     }
