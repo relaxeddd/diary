@@ -3,7 +3,6 @@ package relaxeddd.simplediary.model.repository
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.model.http.ApiHelper
 
@@ -14,8 +13,8 @@ class RepositoryUsers(private val apiHelper: ApiHelper, repositoryInit: Reposito
     //------------------------------------------------------------------------------------------------------------------
     init {
         repositoryInit.liveDataInitResult.observeForever {
-            if (it?.result != null && it.result.isSuccess() && it.user?.userId?.isNotEmpty() == true) {
-                user.value = it.user
+            if (it.isSuccess && it.content != null && it.content.user?.userId?.isNotEmpty() == true) {
+                user.value = it.content.user
             } else {
                 user.value = null
             }
@@ -29,20 +28,15 @@ class RepositoryUsers(private val apiHelper: ApiHelper, repositoryInit: Reposito
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    private suspend fun updateUser(user: User, oldUser: User?) : Boolean {
+    private suspend fun updateUser(user: User, oldUser: User?) : Result<UserContent> {
         this.user.postValue(user)
 
         val updateResult = apiHelper.requestUpdateUser()
 
-        return if (updateResult != null && updateResult.result !== null && !updateResult.result.isSuccess()) {
-            showToast(getErrorString(updateResult.result))
+        if (updateResult.isFailure) {
             this.user.postValue(oldUser)
-            false
-        } else if (updateResult != null && updateResult.result !== null) {
-            true
-        } else {
-            showToast(R.string.error_update)
-            false
         }
+
+        return updateResult
     }
 }

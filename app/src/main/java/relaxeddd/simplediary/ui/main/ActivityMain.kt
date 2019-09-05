@@ -9,6 +9,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.UnderlineSpan
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.firebase.ui.auth.AuthUI
@@ -108,7 +109,7 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
                     viewModel.requestInit()
                 } else if (isActivityResumed && response != null) {
                     AuthUI.getInstance().signOut(this).addOnCompleteListener {}
-                    showToast(response.error.toString())
+                    Toast.makeText(this, response.error.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
             REQUEST_PLAY_SERVICES_RESULT -> {
@@ -137,6 +138,11 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
             EventType.NAVIGATION_DIALOG_RATE_APP -> {
                 if (isActivityResumed) {
                     val dialog = DialogRateApp()
+                    dialog.confirmListener = object: ListenerResult<Boolean> {
+                        override fun onResult(result: Boolean) {
+                            openWebApplication()
+                        }
+                    }
                     dialog.show(this@ActivityMain.supportFragmentManager, "Rate app Dialog")
                 }
             }
@@ -210,7 +216,7 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
         val spannablePrivacyPolicy = SpannableString(privacyPolicy)
         val clickablePrivacyPolicy = object : ClickableSpan() {
             override fun onClick(textView: View) {
-                openWebPrivacyPolicy(this@ActivityMain)
+                openWebPrivacyPolicy()
             }
         }
 

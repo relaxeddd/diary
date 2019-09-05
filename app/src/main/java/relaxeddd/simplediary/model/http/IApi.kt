@@ -12,7 +12,7 @@ interface IApi {
                             @Query("userId") userId: String,
                             @Query("appVersion") appVersion: Int,
                             @Query("pushToken") pushToken: String,
-                            @Query("email") email: String) : InitResult?
+                            @Query("email") email: String) : Result<InitContent>?
 
     @GET(FUNC_VERIFY_PURCHASE)
     suspend fun requestVerifyPurchase(@Header("Authorization") idToken: String,
@@ -20,14 +20,14 @@ interface IApi {
                                       @Query("purchaseTokenId") purchaseTokenId: String,
                                       @Query("signature") signature: String,
                                       @Query("originalJson") originalJson: String,
-                                      @Query("itemType") itemType: String) : PurchaseResult?
+                                      @Query("itemType") itemType: String) : Result<PurchaseContent>?
 
     @GET(FUNC_SEND_FEEDBACK)
     suspend fun requestSendFeedback(@Header("Authorization") idToken: String,
                                     @Query("userId") userId: String,
-                                    @Query("message") message: String) : Result?
+                                    @Query("message") message: String) : Result<Void>?
 
     @GET(FUNC_UPDATE_USER)
     suspend fun requestUpdateUser(@Header("Authorization") idToken: String,
-                                  @Query("userId") userId: String) : UpdateUserResult?
+                                  @Query("userId") userId: String) : Result<UserContent>?
 }

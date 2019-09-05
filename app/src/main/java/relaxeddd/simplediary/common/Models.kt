@@ -3,8 +3,10 @@ package relaxeddd.simplediary.common
 
 import android.os.Bundle
 import androidx.annotation.Keep
+import androidx.annotation.StringRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import relaxeddd.simplediary.R
 
 @Keep
 data class User(
@@ -31,22 +33,24 @@ data class Task(
 }
 
 @Keep
-data class InitResult(val result: Result?, val user: User?, val tasks: List<Task>? = null, val isActualVersion: Boolean = true)
-
-@Keep
-data class Result(val code: Int = RESULT_UNDEFINED, val message: String = "") {
-    fun isSuccess() = code == RESULT_OK
+data class Result<T>(val code: Int = RESULT_UNDEFINED, val message: String = "", val content: T? = null) {
+    val isSuccess: Boolean get() = code == RESULT_OK
+    val isFailure: Boolean get() = code != RESULT_OK
 }
 
 @Keep
-data class UpdateUserResult(val result: Result?, val user: User?)
+data class InitContent(val user: User?, val tasks: List<Task>? = null, val isActualVersion: Boolean = true)
 
 @Keep
-data class PurchaseResult(val result: Result?, val userId: String = "", val tokenId: String = "", val itemType: String = "",
-                          val refillInfo: RefillInfo = RefillInfo(), val isObtained: Boolean = false, val text: String = "")
+data class UserContent(val user: User?)
 
 @Keep
-data class RefillInfo(val subscriptionTime: Long = 0)
+data class PurchaseContent(val userId: String = "", val tokenId: String = "", val itemType: String = "",
+                           val refillContent: RefillContent = RefillContent(), val isObtained: Boolean = false,
+                           val text: String = "")
+
+@Keep
+data class RefillContent(val subscriptionTime: Long = 0)
 
 enum class EventType {
 
@@ -80,9 +84,10 @@ enum class EventType {
 @Keep
 data class Resource<T>(
 
+    val value: T? = null,
     val status: Int = RESULT_UNDEFINED,
     val errorStr: String = "",
-    val value: T? = null
+    @StringRes val errorResIdStr: Int = R.string.undefined_error
 ) {
     fun isSuccess() = status == RESULT_OK
 }

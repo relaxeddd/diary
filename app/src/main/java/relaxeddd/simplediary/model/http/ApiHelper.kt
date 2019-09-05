@@ -16,9 +16,10 @@ import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLHandshakeException
 import com.google.gson.GsonBuilder
+import relaxeddd.simplediary.model.NetworkHelper
 import java.util.concurrent.CountDownLatch
 
-class ApiHelper {
+class ApiHelper(private val networkHelper: NetworkHelper) {
 
     companion object {
 
@@ -51,46 +52,30 @@ class ApiHelper {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    suspend fun requestInit(pushToken: String) : InitResult? {
-        if (!isNetworkAvailable() || userTokenId?.isNotEmpty() != true || firebaseUserId.isEmpty() || firebaseUserEmail.isEmpty()) {
-            return InitResult(Result(RESULT_ERROR_INTERNET), User())
-        }
-
+    suspend fun requestInit(pushToken: String) : Result<InitContent> {
         return executeRequest( suspend {
             api.requestInit(TOKEN_PREFIX + userTokenId, firebaseUserId, BuildConfig.VERSION_CODE, pushToken, firebaseUserEmail)
-        }, InitResult(Result(RESULT_ERROR_INTERNET), User()))
+        })
     }
 
-    suspend fun requestUpdateUser() : UpdateUserResult? {
-        if (!isNetworkAvailable() || userTokenId?.isNotEmpty() != true || firebaseUserId.isEmpty()) {
-            return UpdateUserResult(Result(RESULT_ERROR_INTERNET), User())
-        }
-
+    suspend fun requestUpdateUser() : Result<UserContent> {
         return executeRequest( suspend {
             api.requestUpdateUser(TOKEN_PREFIX + userTokenId, firebaseUserId)
-        }, UpdateUserResult(Result(RESULT_ERROR_INTERNET), User()))
+        })
     }
 
-    suspend fun requestSendFeedback(feedback: String) : Result? {
-        if (!isNetworkAvailable() || userTokenId?.isNotEmpty() != true || firebaseUserId.isEmpty()) {
-            return Result(RESULT_ERROR_INTERNET)
-        }
-
+    suspend fun requestSendFeedback(feedback: String) : Result<Void> {
         return executeRequest( suspend {
             api.requestSendFeedback(TOKEN_PREFIX + userTokenId, firebaseUserId, feedback)
-        }, Result(RESULT_ERROR_INTERNET))
+        })
     }
 
     suspend fun requestVerifyPurchase(purchaseTokenId: String, signature: String, originalJson: String,
-                                      itemType: String) : PurchaseResult? {
-        if (!isNetworkAvailable() || userTokenId?.isNotEmpty() != true || firebaseUserId.isEmpty()) {
-            return PurchaseResult(Result(RESULT_ERROR_INTERNET))
-        }
-
+                                      itemType: String) : Result<PurchaseContent> {
         return executeRequest( suspend {
             api.requestVerifyPurchase(TOKEN_PREFIX + userTokenId, firebaseUserId, purchaseTokenId, signature,
                 originalJson, itemType)
-        }, PurchaseResult(Result(RESULT_ERROR_INTERNET)))
+        })
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -135,21 +120,28 @@ class ApiHelper {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    private suspend fun <T> executeRequest(request: suspend () -> T, defaultAnswer: T) = try {
-        request()
-    } catch (e: UnknownHostException) {
-        defaultAnswer
-    } catch (e: SocketTimeoutException) {
-        defaultAnswer
-    } catch (e: StreamResetException) {
-        defaultAnswer
-    } catch (e: HttpException) {
-        defaultAnswer
-    } catch (e: ConnectException) {
-        defaultAnswer
-    } catch (e: SSLHandshakeException) {
-        defaultAnswer
-    } catch (e: ErrnoException) {
-        defaultAnswer
+    private suspend fun <T> executeRequest(request: suspend () -> Result<T>?,
+                                           defaultAnswer: Result<T> = Result(RESULT_ERROR_INTERNET)) : Result<T> {
+        if (!networkHelper.isNetworkAvailable() || userTokenId?.isNotEmpty() != true || firebaseUserId.isEmpty()) {
+            return Result(RESULT_ERROR_INTERNET)
+        }
+
+        return try {
+            request() ?: Result(RESULT_UNDEFINED)
+        } catch (e: UnknownHostException) {
+            defaultAnswer
+        } catch (e: SocketTimeoutException) {
+            defaultAnswer
+        } catch (e: StreamResetException) {
+            defaultAnswer
+        } catch (e: HttpException) {
+            defaultAnswer
+        } catch (e: ConnectException) {
+            defaultAnswer
+        } catch (e: SSLHandshakeException) {
+            defaultAnswer
+        } catch (e: ErrnoException) {
+            defaultAnswer
+        }
     }
 }

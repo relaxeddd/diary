@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
+import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.model.repository.RepositoryCommon
 import relaxeddd.simplediary.model.repository.RepositoryInit
@@ -23,8 +24,9 @@ class ViewModelMain(app: App, private val preferences: RepositoryPreferences,
     private var isRateDialogShown = false
 
     val clickListenerGoogleAuth = View.OnClickListener {
-        if (!isNetworkAvailable()) return@OnClickListener
-        navigateEvent.value = NavigationEvent(EventType.GOOGLE_AUTH)
+        if (isNetworkAvailable()) {
+            navigateEvent.value = NavigationEvent(EventType.GOOGLE_AUTH)
+        }
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -75,7 +77,14 @@ class ViewModelMain(app: App, private val preferences: RepositoryPreferences,
     fun onFeedbackDialogResult(feedback: String) {
         uiScope.launch {
             navigateEvent.value = NavigationEvent(EventType.LOADING_SHOW)
-            repositoryCommon.sendFeedback(feedback)
+
+            val result = repositoryCommon.sendFeedback(feedback)
+            if (result.isSuccess) {
+                showToast(R.string.thank_you)
+            } else {
+                showErrorIfIncorrect(result)
+            }
+
             navigateEvent.value = NavigationEvent(EventType.LOADING_HIDE)
         }
     }
@@ -85,9 +94,10 @@ class ViewModelMain(app: App, private val preferences: RepositoryPreferences,
         isShowHorizontalProgress.value = true
 
         ioScope.launch {
-            repositoryInit.init()
+            val initResult = repositoryInit.init()
 
             uiScope.launch {
+                showErrorIfIncorrect(initResult) //TODO handle when push token is empty
                 isShowHorizontalProgress.value = false
             }
         }

@@ -1,23 +1,19 @@
 package relaxeddd.simplediary.model.repository
 
-import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.model.http.ApiHelper
 
 class RepositoryCommon(private val apiHelper: ApiHelper) {
 
-    suspend fun sendFeedback(feedback: String) {
-        if (feedback.isEmpty() || feedback.length < 6) {
-            showToast(getErrorString(RESULT_ERROR_FEEDBACK_TOO_SHORT))
-            return
+    companion object {
+        private const val MIN_FEEDBACK_LENGTH = 5
+    }
+
+    suspend fun sendFeedback(feedback: String) : Result<Void> {
+        if (feedback.isEmpty() || feedback.length <= MIN_FEEDBACK_LENGTH) {
+            return Result(RESULT_ERROR_FEEDBACK_TOO_SHORT)
         }
 
-        val answer = apiHelper.requestSendFeedback(feedback)
-
-        if (answer?.isSuccess() == true) {
-            showToast(R.string.thank_you)
-        } else {
-            showToast(getErrorString(answer))
-        }
+        return apiHelper.requestSendFeedback(feedback)
     }
 }

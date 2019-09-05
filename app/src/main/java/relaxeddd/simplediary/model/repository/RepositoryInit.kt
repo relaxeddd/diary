@@ -2,29 +2,23 @@ package relaxeddd.simplediary.model.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.iid.FirebaseInstanceId
-import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.model.http.ApiHelper
 import relaxeddd.simplediary.push.MyFirebaseMessagingService
 
 class RepositoryInit(private val apiHelper: ApiHelper, private val preferences: RepositoryPreferences) {
 
-    val liveDataInitResult = MutableLiveData<InitResult>(null)
+    val liveDataInitResult = MutableLiveData<Result<InitContent>>(Result(RESULT_UNDEFINED))
 
-    suspend fun init() {
-        var initResult: InitResult? = null
+    suspend fun init() : Result<InitContent> {
         val isSuccessFirebaseInit = initFirebase()
-
-        if (isSuccessFirebaseInit) {
-            initResult = initRequest()
-        }
+        val initResult = if (isSuccessFirebaseInit) initRequest() else Result(RESULT_ERROR_UNAUTHORIZED)
 
         liveDataInitResult.postValue(initResult)
+        return initResult
     }
 
     private fun initFirebase() : Boolean {
-        var isSuccess = false
-
         val answerInitUserTokenId = apiHelper.initUserTokenId()
 
         if (answerInitUserTokenId.isSuccess()) {
@@ -33,15 +27,12 @@ class RepositoryInit(private val apiHelper: ApiHelper, private val preferences: 
             if (answerInitPushTokenId.isSuccess() && answerInitPushTokenId.value != null) {
                 MyFirebaseMessagingService.pushToken = answerInitPushTokenId.value
             }
-            isSuccess = answerInitPushTokenId.isSuccess()
-        } else {
-            showToast(getErrorString(RESULT_ERROR_UNAUTHORIZED))
         }
 
-        return isSuccess
+        return answerInitUserTokenId.isSuccess()
     }
 
-    private suspend fun initRequest() : InitResult? {
+    private suspend fun initRequest() : Result<InitContent> {
         var pushToken = MyFirebaseMessagingService.pushToken
 
         if (pushToken.isEmpty()) {
@@ -50,9 +41,6 @@ class RepositoryInit(private val apiHelper: ApiHelper, private val preferences: 
         if (pushToken.isEmpty()) {
             @Suppress("DEPRECATION")
             pushToken = FirebaseInstanceId.getInstance().token ?: ""
-        }
-        if (pushToken.isEmpty()) {
-            showToast(R.string.error_push_token)
         }
 
         return apiHelper.requestInit(pushToken)
