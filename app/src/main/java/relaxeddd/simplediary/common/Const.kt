@@ -14,6 +14,7 @@ const val THEME_BLACK = 2
 
 const val APP_THEME = "appTheme"
 const val CANCELLED_RATE_DIALOG = "cancelledRateDialog15"
+const val ITEM_IX = "itemIx"
 const val LAUNCH_COUNT = "launchCount"
 const val LOGIN_DATA = "loginData"
 const val NOTIFICATIONS_CHANNEL_REMIND = "notificationsChannelRemind"

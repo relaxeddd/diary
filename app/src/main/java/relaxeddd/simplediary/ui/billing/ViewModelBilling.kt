@@ -5,9 +5,11 @@ import com.android.billingclient.api.*
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
+import relaxeddd.simplediary.model.repository.RepositoryPreferences
 import relaxeddd.simplediary.ui.ViewModelBase
 
-abstract class ViewModelBilling(app: App) : ViewModelBase(app), PurchasesUpdatedListener {
+abstract class ViewModelBilling(app: App, preferences: RepositoryPreferences)
+    : ViewModelBase(app, preferences), PurchasesUpdatedListener {
 
     companion object {
         @BillingClient.SkuType private const val PRODUCT_1 = "product_1"

@@ -13,14 +13,15 @@ import relaxeddd.simplediary.model.repository.RepositoryPreferences
 import relaxeddd.simplediary.model.repository.RepositoryUsers
 import relaxeddd.simplediary.ui.billing.ViewModelBilling
 
-class ViewModelMain(app: App, private val preferences: RepositoryPreferences,
+class ViewModelMain(app: App, preferences: RepositoryPreferences,
                     private val repositoryInit: RepositoryInit, private val repositoryUsers: RepositoryUsers,
-                    private val repositoryCommon: RepositoryCommon) : ViewModelBilling(app) {
+                    private val repositoryCommon: RepositoryCommon) : ViewModelBilling(app, preferences) {
 
     val isShowLoading = MutableLiveData(false)
     val isShowHorizontalProgress = MutableLiveData(false)
     val isShowGoogleAuth = MutableLiveData(false)
     val isShowWarningSubscription = MutableLiveData(false)
+    val isPrivacyPolicyTextVisible = preferences.isPrivacyPolicyConfirmed
     private var isRateDialogShown = false
 
     val clickListenerGoogleAuth = View.OnClickListener {
@@ -86,6 +87,15 @@ class ViewModelMain(app: App, private val preferences: RepositoryPreferences,
             }
 
             navigateEvent.value = NavigationEvent(EventType.LOADING_HIDE)
+        }
+    }
+
+    fun onLikeAppDialogResult(isLikeApp: Boolean) {
+        preferences.setCancelledRateDialog()
+        if (isLikeApp) {
+            navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_RATE_APP)
+        } else {
+            navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SEND_FEEDBACK)
         }
     }
 

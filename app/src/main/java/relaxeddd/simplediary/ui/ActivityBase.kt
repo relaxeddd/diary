@@ -12,10 +12,9 @@ import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 
 abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompatActivity(), LifecycleOwner {
@@ -74,13 +73,13 @@ abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompat
         listenerHomeMenuButton = clickListener
     }
 
-    fun FragmentActivity.openWebPrivacyPolicy() {
+    fun openWebPrivacyPolicy() {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://sites.google.com/view/pushenglish"))
         browserIntent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         this.startActivity(browserIntent)
     }
 
-    fun FragmentActivity.openWebApplication() {
+    fun openWebApplication() {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=relaxeddd.englishnotify"))
         browserIntent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         this.startActivity(browserIntent)
@@ -95,34 +94,18 @@ abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompat
         })
     }
 
+    protected fun showDialog(dialog: DialogFragment) {
+        if (isActivityResumed) {
+            dialog.show(supportFragmentManager, dialog.javaClass.simpleName)
+        }
+    }
+
     protected fun hideKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    protected fun getPrimaryColorResId() = when (SharedHelper.getAppThemeType(this)) {
-        THEME_BLUE -> R.color.colorPrimary2
-        THEME_BLACK -> R.color.colorPrimary3
-        else -> R.color.colorPrimary
-    }
-
-    protected fun getPrimaryDarkColorResId() = when (SharedHelper.getAppThemeType(this)) {
-        THEME_BLUE -> R.color.colorPrimaryDark2
-        THEME_BLACK -> R.color.colorPrimary3
-        else -> R.color.colorPrimaryDark
-    }
-
-    protected fun getAccentColorResId() = when (SharedHelper.getAppThemeType(this)) {
-        THEME_BLUE -> R.color.colorAccent2
-        THEME_BLACK -> R.color.colorPrimary3
-        else -> R.color.colorPrimary
-    }
-
     private fun setupTheme() {
-        when (SharedHelper.getAppThemeType(this)) {
-            THEME_STANDARD -> setTheme(R.style.AppTheme)
-            THEME_BLUE -> setTheme(R.style.AppTheme2)
-            THEME_BLACK -> setTheme(R.style.AppTheme3)
-        }
+        setTheme(viewModel.appTheme)
     }
 }

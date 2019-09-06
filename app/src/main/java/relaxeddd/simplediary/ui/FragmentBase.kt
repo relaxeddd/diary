@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.CallSuper
-import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import relaxeddd.simplediary.common.EventType
@@ -44,6 +44,12 @@ abstract class FragmentBase<VM : ViewModelBase, B : ViewDataBinding> : Fragment(
     protected open fun onNavigationEvent(type: EventType, args: Bundle? = null) {
         if (activity is ActivityMain) {
             (activity as ActivityMain).onNavigationEvent(type, args)
+        }
+    }
+
+    protected fun showDialog(dialog: DialogFragment) {
+        if (isResumed) {
+            dialog.show(this.childFragmentManager, dialog.javaClass.simpleName)
         }
     }
 

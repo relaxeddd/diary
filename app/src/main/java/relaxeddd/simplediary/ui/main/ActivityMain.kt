@@ -41,22 +41,6 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
     override val viewModel: ViewModelMain by viewModel()
     private val providers: List<AuthUI.IdpConfig> = listOf(AuthUI.IdpConfig.GoogleBuilder().build())
 
-    private val listenerFeedbackDialog: ListenerResult<String> = object: ListenerResult<String> {
-        override fun onResult(result: String) {
-            viewModel.onFeedbackDialogResult(result)
-        }
-    }
-
-    private val listenerLikeApp: ListenerResult<Boolean> = object: ListenerResult<Boolean> {
-        override fun onResult(result: Boolean) {
-            if (result) {
-                onNavigationEvent(EventType.NAVIGATION_DIALOG_RATE_APP)
-            } else {
-                onNavigationEvent(EventType.NAVIGATION_DIALOG_SEND_FEEDBACK)
-            }
-        }
-    }
-
     override fun getLayoutResId() = R.layout.activity_main
 
     override fun configureBinding() {
@@ -105,7 +89,6 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
                 val response: IdpResponse? = IdpResponse.fromResultIntent(data)
 
                 if (resultCode == Activity.RESULT_OK) {
-                    text_main_privacy_policy.visibility = View.GONE
                     viewModel.requestInit()
                 } else if (isActivityResumed && response != null) {
                     AuthUI.getInstance().signOut(this).addOnCompleteListener {}
@@ -136,15 +119,13 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
                 }
             }
             EventType.NAVIGATION_DIALOG_RATE_APP -> {
-                if (isActivityResumed) {
-                    val dialog = DialogRateApp()
-                    dialog.confirmListener = object: ListenerResult<Boolean> {
-                        override fun onResult(result: Boolean) {
+                showDialog(DialogRateApp(object: ListenerResult<Boolean> {
+                    override fun onResult(result: Boolean) {
+                        if (result) {
                             openWebApplication()
                         }
                     }
-                    dialog.show(this@ActivityMain.supportFragmentManager, "Rate app Dialog")
-                }
+                }))
             }
             EventType.EXIT -> {
                 finishAffinity()
@@ -160,8 +141,7 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
                 )
             }
             EventType.NAVIGATION_DIALOG_PATCH_NOTES -> {
-                val dialog = DialogPatchNotes()
-                dialog.show(this@ActivityMain.supportFragmentManager, "Patch Notes Dialog")
+                showDialog(DialogPatchNotes())
             }
             EventType.GOOGLE_LOGOUT -> {
                 if (isActivityResumed) {
@@ -172,14 +152,18 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
                 }
             }
             EventType.NAVIGATION_DIALOG_LIKE_APP -> {
-                val dialog = DialogLikeApp()
-                dialog.confirmListener = listenerLikeApp
-                dialog.show(this@ActivityMain.supportFragmentManager, "Like app Dialog")
+                showDialog(DialogLikeApp(object: ListenerResult<Boolean> {
+                    override fun onResult(result: Boolean) {
+                        viewModel.onLikeAppDialogResult(result)
+                    }
+                }))
             }
             EventType.NAVIGATION_DIALOG_SEND_FEEDBACK -> {
-                val dialog = DialogSendFeedback()
-                dialog.setConfirmListener(listenerFeedbackDialog)
-                dialog.show(this.supportFragmentManager, "Send feedback Dialog")
+                showDialog(DialogSendFeedback(object: ListenerResult<String> {
+                    override fun onResult(result: String) {
+                        viewModel.onFeedbackDialogResult(result)
+                    }
+                }))
             }
             else -> super.onNavigationEvent(type, args)
         }
@@ -187,8 +171,8 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
 
     override fun setupThemeColors() {
         super.setupThemeColors()
-        navigation_view_main.setBackgroundResource(getPrimaryColorResId())
-        navigation_view_main.itemBackgroundResource = getPrimaryColorResId()
+        navigation_view_main.setBackgroundResource(viewModel.primaryColorResId)
+        navigation_view_main.itemBackgroundResource = viewModel.primaryColorResId
     }
 
     private fun initGooglePlayServices() {
@@ -207,11 +191,6 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
     }
 
     private fun initPrivacyPolicyText() {
-        if (SharedHelper.isPrivacyPolicyConfirmed(this)) {
-            text_main_privacy_policy.visibility = View.GONE
-            return
-        }
-
         val privacyPolicy = text_main_privacy_policy.text.toString()
         val spannablePrivacyPolicy = SpannableString(privacyPolicy)
         val clickablePrivacyPolicy = object : ClickableSpan() {
