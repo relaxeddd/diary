@@ -19,34 +19,35 @@ import relaxeddd.simplediary.ui.todo_list.ViewModelTodoList
 
 class App : MultiDexApplication() {
 
-    private val appModule = module {
-        single {
-            Room.databaseBuilder(this@App, AppDatabase::class.java, DATABASE_NAME)
-                .fallbackToDestructiveMigration()
-                .build()
-        }
-        factory { NetworkHelper(this@App) }
-        single { ApiHelper(get()) }
-        single { RepositoryPreferences(this@App, SharedHelper) }
-        single { RepositoryInit(get(), get()) }
-        single { RepositoryCommon(get()) }
-        single { RepositoryTasks(get(), get()) }
-        single { RepositoryUsers(get(), get()) }
-
-        viewModel { ViewModelMain(this@App, get(), get(), get(), get()) }
-        viewModel { ViewModelTodoList(this@App, get()) }
-        viewModel { ViewModelSettings(this@App, get(), get()) }
-    }
-
     override fun onCreate() {
         super.onCreate()
 
         FirebaseApp.initializeApp(this)
-        SharedHelper.setLaunchCount(SharedHelper.getLaunchCount(this) + 1, this)
-        startKoin{
+
+        val sharedHelper = SharedHelper(this)
+        sharedHelper.setLaunchCount(sharedHelper.getLaunchCount() + 1)
+
+        startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(appModule)
+            modules(module {
+                single {
+                    Room.databaseBuilder(this@App, AppDatabase::class.java, DATABASE_NAME)
+                        .fallbackToDestructiveMigration()
+                        .build()
+                }
+                factory { NetworkHelper(this@App) }
+                single { ApiHelper(get()) }
+                single { RepositoryPreferences(sharedHelper) }
+                single { RepositoryInit(get(), get()) }
+                single { RepositoryCommon(get()) }
+                single { RepositoryTasks(get(), get()) }
+                single { RepositoryUsers(get(), get()) }
+
+                viewModel { ViewModelMain(this@App, get(), get(), get(), get()) }
+                viewModel { ViewModelTodoList(this@App, get(), get()) }
+                viewModel { ViewModelSettings(this@App, get(), get()) }
+            })
         }
     }
 }

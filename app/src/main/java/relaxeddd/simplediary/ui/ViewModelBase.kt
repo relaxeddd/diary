@@ -13,12 +13,34 @@ import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
+import relaxeddd.simplediary.model.repository.RepositoryPreferences
 
-open class ViewModelBase(app: App) : AndroidViewModel(app) {
+open class ViewModelBase(app: App, protected val preferences: RepositoryPreferences) : AndroidViewModel(app) {
 
     protected val uiScope = CoroutineScope(Dispatchers.Main)
     protected val ioScope = CoroutineScope(Dispatchers.IO)
     val navigateEvent = MutableLiveData<NavigationEvent>()
+
+    val appTheme: Int get() = when (preferences.appThemeType) {
+        THEME_BLUE -> R.style.AppTheme2
+        THEME_BLACK -> R.style.AppTheme3
+        else -> R.style.AppTheme
+    }
+    val primaryColorResId: Int get() = when (preferences.appThemeType) {
+        THEME_BLUE -> R.color.colorPrimary2
+        THEME_BLACK -> R.color.colorPrimary3
+        else -> R.color.colorPrimary
+    }
+    val primaryDarkColorResId: Int get() = when (preferences.appThemeType) {
+        THEME_BLUE -> R.color.colorPrimaryDark2
+        THEME_BLACK -> R.color.colorPrimary3
+        else -> R.color.colorPrimaryDark
+    }
+    val primaryAccentColorResId: Int get() = when (preferences.appThemeType) {
+        THEME_BLUE -> R.color.colorAccent2
+        THEME_BLACK -> R.color.colorPrimary3
+        else -> R.color.colorPrimary
+    }
 
     open fun onViewResume() {}
 

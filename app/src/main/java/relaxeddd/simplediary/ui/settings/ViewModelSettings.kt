@@ -1,6 +1,7 @@
 package relaxeddd.simplediary.ui.settings
 
 import android.os.Build
+import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +15,8 @@ import relaxeddd.simplediary.model.repository.RepositoryUsers
 import relaxeddd.simplediary.ui.ViewModelBase
 import relaxeddd.simplediary.ui.billing.ViewModelBilling
 
-class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, preferences: RepositoryPreferences) : ViewModelBase(app) {
+class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, preferences: RepositoryPreferences)
+    : ViewModelBase(app, preferences) {
 
     private val userObserver = Observer<User?> { user ->
         var subTime = user?.subscriptionTime ?: System.currentTimeMillis()
@@ -54,7 +56,9 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
         navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_RECEIVE_HELP)
     }
     val clickListenerTheme = View.OnClickListener {
-        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_THEME)
+        val args = Bundle()
+        args.putInt(ITEM_IX, preferences.appThemeType)
+        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_THEME, args)
     }
 
     init {
@@ -69,6 +73,13 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
     fun onLogoutDialogResult(isConfirmed: Boolean) {
         if (isConfirmed) {
             navigateEvent.value = NavigationEvent(EventType.NAVIGATION_GOOGLE_LOGOUT)
+        }
+    }
+
+    fun onAppThemeDialogResult(themeIx: Int) {
+        if (themeIx != preferences.appThemeType) {
+            preferences.setAppThemeType(themeIx)
+            navigateEvent.value = NavigationEvent(EventType.NAVIGATION_RECREATE_ACTIVITY)
         }
     }
 

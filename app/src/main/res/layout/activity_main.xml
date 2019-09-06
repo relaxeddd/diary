@@ -59,6 +59,7 @@
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:background="@color/white"
+                android:visibility="@{safeUnbox(viewModel.isPrivacyPolicyTextVisible) ? View.VISIBLE : View.GONE}"
                 android:text="@string/privacy_policy_text"
                 android:textSize="@dimen/font_12"/>
 

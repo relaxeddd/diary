@@ -14,28 +14,12 @@ import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.databinding.FragmentSettingsBinding
 import relaxeddd.simplediary.dialogs.*
+import relaxeddd.simplediary.ui.ActivityBase
 import relaxeddd.simplediary.ui.FragmentBase
 import relaxeddd.simplediary.ui.main.ActivityMain
 import java.lang.Exception
 
 class FragmentSettings : FragmentBase<ViewModelSettings, FragmentSettingsBinding>() {
-
-    private val listenerConfirmLogout: ListenerResult<Boolean> = object: ListenerResult<Boolean> {
-        override fun onResult(result: Boolean) {
-            viewModel.onLogoutDialogResult(result)
-        }
-    }
-    private val listenerSubscription: ListenerResult<Int> = object: ListenerResult<Int> {
-        override fun onResult(result: Int) {
-            val activity = activity
-
-            if (activity != null && activity is ActivityMain) {
-                val args = Bundle()
-                args.putInt(PRODUCT_TYPE, result)
-                activity.onNavigationEvent(EventType.BUY_PRODUCT, args)
-            }
-        }
-    }
 
     override fun getLayoutResId() = R.layout.fragment_settings
     override val viewModel: ViewModelSettings by viewModel()
@@ -49,14 +33,10 @@ class FragmentSettings : FragmentBase<ViewModelSettings, FragmentSettingsBinding
     override fun onNavigationEvent(type: EventType, args: Bundle?) {
         when (type) {
             EventType.NAVIGATION_DIALOG_APP_ABOUT -> {
-                if (isResumed) {
-                    DialogAppAbout().show(this@FragmentSettings.childFragmentManager, "App Info Dialog")
-                }
+                showDialog(DialogAppAbout())
             }
             EventType.NAVIGATION_DIALOG_SUBSCRIPTION_INFO -> {
-                if (isResumed) {
-                    DialogSubscriptionInfo().show(this@FragmentSettings.childFragmentManager, "Sub Info Dialog")
-                }
+                showDialog(DialogSubscriptionInfo())
             }
             EventType.NAVIGATION_DIALOG_RECEIVE_HELP -> {
                 val ctx = context ?: return
@@ -70,39 +50,51 @@ class FragmentSettings : FragmentBase<ViewModelSettings, FragmentSettingsBinding
                             startActivity(Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).setData(Uri.parse("package:$pkg")))
                         } catch (e: Exception) {}
                     } else {
-                        DialogInfoReceiveHelp().show(this@FragmentSettings.childFragmentManager, "Receive help Dialog")
+                        showDialog(DialogInfoReceiveHelp())
                     }
                 }
             }
             EventType.NAVIGATION_DIALOG_CONFIRM_LOGOUT -> {
-                if (isResumed) {
-                    val dialog = DialogConfirmLogout()
-                    dialog.confirmListener = listenerConfirmLogout
-                    dialog.show(this@FragmentSettings.childFragmentManager, "Confirm Logout Dialog")
-                }
+                showDialog(DialogConfirmLogout(object: ListenerResult<Boolean> {
+                    override fun onResult(result: Boolean) {
+                        viewModel.onLogoutDialogResult(result)
+                    }
+                }))
             }
             EventType.NAVIGATION_GOOGLE_LOGOUT -> {
                 if (isResumed) {
-                    activity?.let {
-                        AuthUI.getInstance().signOut(it).addOnCompleteListener { resultTask ->
-                            viewModel.onLogoutResult(resultTask.isSuccessful)
-                        }
+                    AuthUI.getInstance().signOut(activity ?: return).addOnCompleteListener { resultTask ->
+                        viewModel.onLogoutResult(resultTask.isSuccessful)
                     }
                 }
             }
             EventType.NAVIGATION_WEB_PLAY_MARKET -> {
-                activity?.openWebApplication()
+                activity?.let { (activity as ActivityBase<*, *>).openWebApplication() }
             }
             EventType.NAVIGATION_DIALOG_THEME -> {
-                if (isResumed) {
-                    val dialog = DialogAppTheme()
-                    dialog.show(this@FragmentSettings.childFragmentManager, "Theme Dialog")
-                }
+                val dialog = DialogAppTheme(object: ListenerResult<Int> {
+                    override fun onResult(result: Int) {
+                        viewModel.onAppThemeDialogResult(result)
+                    }
+                })
+                dialog.arguments = args
+                showDialog(dialog)
+            }
+            EventType.NAVIGATION_RECREATE_ACTIVITY -> {
+                activity?.recreate()
             }
             EventType.NAVIGATION_DIALOG_SUBSCRIPTION -> {
-                val dialog = DialogSubscription()
-                dialog.listener = listenerSubscription
-                dialog.show(this@FragmentSettings.childFragmentManager, "Subscription Dialog")
+                showDialog(DialogSubscription(object: ListenerResult<Int> {
+                    override fun onResult(result: Int) {
+                        val activity = activity
+
+                        if (activity != null && activity is ActivityMain) {
+                            val arguments = Bundle()
+                            arguments.putInt(PRODUCT_TYPE, result)
+                            activity.onNavigationEvent(EventType.BUY_PRODUCT, arguments)
+                        }
+                    }
+                }))
             }
             else -> super.onNavigationEvent(type, args)
         }

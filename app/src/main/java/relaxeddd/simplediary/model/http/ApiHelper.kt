@@ -5,7 +5,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
 import okhttp3.OkHttpClient
 import okhttp3.internal.http2.StreamResetException
-import relaxeddd.simplediary.BuildConfig
 import relaxeddd.simplediary.common.*
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -53,9 +52,11 @@ class ApiHelper(private val networkHelper: NetworkHelper) {
 
     //------------------------------------------------------------------------------------------------------------------
     suspend fun requestInit(pushToken: String) : Result<InitContent> {
-        return executeRequest( suspend {
+        return Result(RESULT_OK, content = InitContent(User("1231231", "abc@yandex.ru")))
+
+        /*return executeRequest( suspend {
             api.requestInit(TOKEN_PREFIX + userTokenId, firebaseUserId, BuildConfig.VERSION_CODE, pushToken, firebaseUserEmail)
-        })
+        })*/
     }
 
     suspend fun requestUpdateUser() : Result<UserContent> {
