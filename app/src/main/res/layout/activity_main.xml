@@ -1,5 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="relaxeddd.simplediary.ui.main.ViewModelMain"/>
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/container_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.ActivityMain">
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer_layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:openDrawer="start">
+
+            <FrameLayout
+                android:id="@+id/container_main_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
+
+                <fragment
+                    android:id="@+id/fragment_navigation_host"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:defaultNavHost="true"
+                    app:navGraph="@navigation/navigation_graph" />
+
+                <!--<View
+                    android:id="@+id/status_bar_scrim"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/status_bar_scrim" />-->
+
+                <!--<com.google.samples.apps.iosched.widget.FadingSnackbar
+                    android:id="@+id/snackbar"
+                    android:layout_width="@dimen/snackbar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/snackbar_margin_end_fab"
+                    android:visibility="gone" />-->
+
+            </FrameLayout>
+
+            <!-- Note: navigation header is added at runtime because it uses DataBinding. -->
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/navigation_view_main"
+                android:layout_width="@dimen/width_navigation_view_main"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                app:insetForeground="@color/transparent"
+                app:menu="@menu/menu_main_navigation" />
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+    </FrameLayout>
+
+</layout>
+
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
@@ -118,4 +187,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</layout>
+</layout>-->

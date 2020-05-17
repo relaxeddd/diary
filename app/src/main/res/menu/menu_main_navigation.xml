@@ -2,14 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@id/fragmentTodoList"
-          android:title="@string/list"
-          app:showAsAction="ifRoom"
-          android:icon="@drawable/ic_list"/>
+    <group
+        android:id="@+id/group_menu_main"
+        android:checkableBehavior="single">
 
-    <item android:id="@id/fragmentSettings"
-          android:title="@string/settings"
-          app:showAsAction="ifRoom"
-          android:icon="@drawable/ic_settings"/>
+        <item android:id="@id/navigation_todo_list"
+              android:title="@string/list"
+              app:showAsAction="ifRoom"
+              android:icon="@drawable/ic_list"/>
+
+        <item android:id="@id/navigation_settings"
+              android:title="@string/settings"
+              app:showAsAction="ifRoom"
+              android:icon="@drawable/ic_settings"/>
+
+    </group>
 
 </menu>

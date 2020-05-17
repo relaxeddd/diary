@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
+import relaxeddd.simplediary.common.theme.ThemedActivityDelegate
 import relaxeddd.simplediary.model.repository.RepositoryPreferences
 
 open class ViewModelBase(app: App, protected val preferences: RepositoryPreferences) : AndroidViewModel(app) {
@@ -21,7 +22,7 @@ open class ViewModelBase(app: App, protected val preferences: RepositoryPreferen
     protected val ioScope = CoroutineScope(Dispatchers.IO)
     val navigateEvent = MutableLiveData<NavigationEvent>()
 
-    val appTheme: Int get() = when (preferences.appThemeType) {
+    /*val appTheme: Int get() = when (preferences.appThemeType) {
         THEME_BLUE -> R.style.AppTheme2
         THEME_BLACK -> R.style.AppTheme3
         else -> R.style.AppTheme
@@ -40,13 +41,13 @@ open class ViewModelBase(app: App, protected val preferences: RepositoryPreferen
         THEME_BLUE -> R.color.colorAccent2
         THEME_BLACK -> R.color.colorPrimary3
         else -> R.color.colorPrimary
-    }
+    }*/
 
     open fun onViewResume() {}
 
-    protected fun showErrorIfIncorrect(result: Result<*>) {
-        if (result.isFailure) {
-            val errorStr = if (result.message.isEmpty()) getErrorStringByCode(result.code) else result.message
+    protected fun showErrorIfIncorrect(serverAnswer: ServerAnswer<*>) {
+        if (serverAnswer.isFailure) {
+            val errorStr = if (serverAnswer.message.isEmpty()) getErrorStringByCode(serverAnswer.code) else serverAnswer.message
             showToast(errorStr)
         }
     }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
+        <!--<item name="colorControlLight">@color/color_control_light</item>-->
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">@bool/use_light_status</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">@bool/use_light_navigation</item>
+        <item name="android:navigationBarColor">@color/nav_bar_scrim</item>
+
+        <item name="toolbarStyle">@style/StyleToolbar</item>
+        <item name="tabStyle">@style/Widget.MyTodoList.Tabs</item>
+        <item name="navigationViewStyle">@style/Widget.MyTodoList.NavigationView</item>
+        <!--<item name="eventFilterViewStyle">@style/Widget.IOSched.EventFilters</item>-->
+
+        <item name="textAppearanceBody2">@style/TextAppearance.MyTodoList.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MyTodoList.Button</item>
+        <item name="textAppearanceListItem">@style/TextAppearance.MyTodoList.ListPrimary</item>
+
+        <item name="materialAlertDialogTheme">@style/AlertDialog.Theme</item>
+
+        <!-- Custom theme attrs -->
+        <!--<item name="ioschedNavigationBarDividerColor">?attr/colorControlLight</item>
+        <item name="sessionListKeyline">@dimen/session_keyline</item>
+        <item name="eventCardHeaderBackground">@color/event_card_header_background</item>-->
+    </style>
+
+    <style name="ThemeOverlay.MyTodoList.Light" parent="ThemeOverlay.MaterialComponents.Light">
+        <item name="colorPrimary">@color/deep_sky_blue</item>
+        <item name="colorPrimaryDark">@color/warm_blue</item>
+    </style>
+
+    <style name="AppTheme" parent="Base.AppTheme"/>
+
+    <style name="AppTheme.PopupTheme" parent="ThemeOverlay.MyTodoList.Light" />
+
+</resources>

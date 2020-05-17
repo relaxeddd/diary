@@ -8,7 +8,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.NOTIFICATIONS_CHANNEL_REMIND
-import relaxeddd.simplediary.common.SharedHelper
+import relaxeddd.simplediary.common.SharedPreferenceStorage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -32,7 +32,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(p0)
         pushToken = p0
         if (p0.isNotEmpty()) {
-            SharedHelper(applicationContext).setPushToken(p0)
+            SharedPreferenceStorage(applicationContext).setPushToken(p0)
         }
     }
 

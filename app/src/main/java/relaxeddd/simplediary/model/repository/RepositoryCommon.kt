@@ -9,9 +9,9 @@ class RepositoryCommon(private val apiHelper: ApiHelper) {
         private const val MIN_FEEDBACK_LENGTH = 5
     }
 
-    suspend fun sendFeedback(feedback: String) : Result<Void> {
+    suspend fun sendFeedback(feedback: String) : ServerAnswer<Void> {
         if (feedback.isEmpty() || feedback.length <= MIN_FEEDBACK_LENGTH) {
-            return Result(RESULT_ERROR_FEEDBACK_TOO_SHORT)
+            return ServerAnswer(RESULT_ERROR_FEEDBACK_TOO_SHORT)
         }
 
         return apiHelper.requestSendFeedback(feedback)

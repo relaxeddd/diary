@@ -3,25 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/fragmentTodoList"
+    app:startDestination="@id/navigation_todo_list"
     android:id="@+id/navigation_graph">
 
     <fragment
-        android:id="@+id/fragmentTodoList"
+        android:id="@id/navigation_todo_list"
         android:name="relaxeddd.simplediary.ui.todo_list.FragmentTodoList"
         android:label="@string/label_fragment_todo_list"
         tools:layout="@layout/fragment_todo_list"/>
 
     <fragment
-        android:id="@+id/fragmentSettings"
+        android:id="@+id/navigation_settings"
         android:name="relaxeddd.simplediary.ui.settings.FragmentSettings"
         android:label="@string/label_fragment_settings"
         tools:layout="@layout/fragment_settings"/>
 
-    <action
+    <!--<action
         android:id="@+id/action_global_fragmentTodoList"
-        app:destination="@id/fragmentTodoList"
-        app:popUpTo="@+id/fragmentTodoList"
+        app:destination="@id/navigation_todo_list"
+        app:popUpTo="@+id/navigation_todo_list"
         app:popUpToInclusive="true"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
@@ -30,12 +30,12 @@
 
     <action
         android:id="@+id/action_global_fragmentSettings"
-        app:destination="@id/fragmentSettings"
-        app:popUpTo="@+id/fragmentSettings"
+        app:destination="@id/navigation_settings"
+        app:popUpTo="@+id/navigation_settings"
         app:popUpToInclusive="true"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_enter_anim"
-        app:popExitAnim="@anim/nav_default_exit_anim"/>
+        app:popExitAnim="@anim/nav_default_exit_anim"/>-->
 
 </navigation>

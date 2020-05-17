@@ -33,7 +33,7 @@ data class Task(
 }
 
 @Keep
-data class Result<T>(val code: Int = RESULT_UNDEFINED, val message: String = "", val content: T? = null) {
+data class ServerAnswer<T>(val code: Int = RESULT_UNDEFINED, val message: String = "", val content: T? = null) {
     val isSuccess: Boolean get() = code == RESULT_OK
     val isFailure: Boolean get() = code != RESULT_OK
 }

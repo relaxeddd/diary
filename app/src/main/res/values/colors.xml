@@ -23,4 +23,20 @@
     <color name="red_wrong">#BD0000</color>
     <color name="green_success">#00CA05</color>
 
+    <color name="transparent">#0fff</color>
+
+    <color name="deep_sky_blue">#1a73e8</color>
+    <color name="warm_blue">#574ddd</color>
+    <color name="carolina_blue">#8ab4f8</color>
+    <color name="cornflower_blue">#669DF6</color>
+
+    <color name="system_ui_scrim_light">#B3FFFFFF</color>
+    <color name="system_ui_scrim_black">#40000000</color>
+
+    <color name="color_primary">@color/deep_sky_blue</color>
+    <color name="color_primary_dark">@color/warm_blue</color>
+    <color name="color_on_secondary">@color/white</color>
+
+    <color name="nav_bar_scrim">@color/system_ui_scrim_black</color>
+
 </resources>

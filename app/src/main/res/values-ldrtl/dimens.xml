@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="nav_item_background_corner_radius_left">100dp</dimen>
+    <dimen name="nav_item_background_corner_radius_right">0dp</dimen>
+    <dimen name="nav_item_background_inset_left">8dp</dimen>
+    <dimen name="nav_item_background_inset_right">0dp</dimen>
+
+</resources>
