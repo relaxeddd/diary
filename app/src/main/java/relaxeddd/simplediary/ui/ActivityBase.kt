@@ -31,7 +31,8 @@ abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupTheme()
+
+        //setupTheme()
 
         binding = DataBindingUtil.setContentView(this, getLayoutResId())
         configureBinding()
@@ -106,6 +107,6 @@ abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompat
     }
 
     private fun setupTheme() {
-        setTheme(viewModel.appTheme)
+        //setTheme(viewModel.appTheme)
     }
 }

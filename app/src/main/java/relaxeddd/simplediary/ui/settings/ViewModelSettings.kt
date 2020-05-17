@@ -27,7 +27,7 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
 
     val user: LiveData<User?> = repositoryUsers.user
     val liveDataSubDays = MutableLiveData("")
-    val textTheme: String = getApplication<App>().resources.getStringArray(R.array.array_themes)[preferences.appThemeType]
+    val textTheme: String = "" /*getApplication<App>().resources.getStringArray(R.array.array_themes)[preferences.appThemeType]*/
     val isVisibleReceiveHelp = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
     val clickListenerAppInfo = View.OnClickListener {
@@ -56,9 +56,9 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
         navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_RECEIVE_HELP)
     }
     val clickListenerTheme = View.OnClickListener {
-        val args = Bundle()
+        /*val args = Bundle()
         args.putInt(ITEM_IX, preferences.appThemeType)
-        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_THEME, args)
+        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_THEME, args)*/
     }
 
     init {
@@ -77,10 +77,10 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
     }
 
     fun onAppThemeDialogResult(themeIx: Int) {
-        if (themeIx != preferences.appThemeType) {
+        /*if (themeIx != preferences.appThemeType) {
             preferences.setAppThemeType(themeIx)
             navigateEvent.value = NavigationEvent(EventType.NAVIGATION_RECREATE_ACTIVITY)
-        }
+        }*/
     }
 
     fun onLogoutResult(isSuccess: Boolean) {

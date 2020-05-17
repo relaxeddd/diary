@@ -7,6 +7,8 @@ import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
+import relaxeddd.simplediary.common.theme.ThemedActivityDelegate
+import relaxeddd.simplediary.common.theme.ThemedActivityDelegateImpl
 import relaxeddd.simplediary.model.repository.RepositoryCommon
 import relaxeddd.simplediary.model.repository.RepositoryInit
 import relaxeddd.simplediary.model.repository.RepositoryPreferences
@@ -15,7 +17,9 @@ import relaxeddd.simplediary.ui.billing.ViewModelBilling
 
 class ViewModelMain(app: App, preferences: RepositoryPreferences,
                     private val repositoryInit: RepositoryInit, private val repositoryUsers: RepositoryUsers,
-                    private val repositoryCommon: RepositoryCommon) : ViewModelBilling(app, preferences) {
+                    private val repositoryCommon: RepositoryCommon,
+                    themedActivityDelegate: ThemedActivityDelegateImpl)
+        : ViewModelBilling(app, preferences), ThemedActivityDelegate by themedActivityDelegate {
 
     val isShowLoading = MutableLiveData(false)
     val isShowHorizontalProgress = MutableLiveData(false)

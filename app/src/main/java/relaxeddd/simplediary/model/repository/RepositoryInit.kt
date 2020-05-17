@@ -8,11 +8,11 @@ import relaxeddd.simplediary.push.MyFirebaseMessagingService
 
 class RepositoryInit(private val apiHelper: ApiHelper, private val preferences: RepositoryPreferences) {
 
-    val liveDataInitResult = MutableLiveData<Result<InitContent>>(Result(RESULT_UNDEFINED))
+    val liveDataInitResult = MutableLiveData<ServerAnswer<InitContent>>(ServerAnswer(RESULT_UNDEFINED))
 
-    suspend fun init() : Result<InitContent> {
+    suspend fun init() : ServerAnswer<InitContent> {
         val isSuccessFirebaseInit = initFirebase()
-        val initResult = if (isSuccessFirebaseInit) initRequest() else Result(RESULT_ERROR_UNAUTHORIZED)
+        val initResult = if (isSuccessFirebaseInit) initRequest() else ServerAnswer(RESULT_ERROR_UNAUTHORIZED)
 
         liveDataInitResult.postValue(initResult)
         return initResult
@@ -32,7 +32,7 @@ class RepositoryInit(private val apiHelper: ApiHelper, private val preferences: 
         return answerInitUserTokenId.isSuccess()
     }
 
-    private suspend fun initRequest() : Result<InitContent> {
+    private suspend fun initRequest() : ServerAnswer<InitContent> {
         var pushToken = MyFirebaseMessagingService.pushToken
 
         if (pushToken.isEmpty()) {

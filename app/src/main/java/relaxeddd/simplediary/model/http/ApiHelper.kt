@@ -51,28 +51,28 @@ class ApiHelper(private val networkHelper: NetworkHelper) {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    suspend fun requestInit(pushToken: String) : Result<InitContent> {
-        return Result(RESULT_OK, content = InitContent(User("1231231", "abc@yandex.ru")))
+    suspend fun requestInit(pushToken: String) : ServerAnswer<InitContent> {
+        return ServerAnswer(RESULT_OK, content = InitContent(User("1231231", "abc@yandex.ru")))
 
         /*return executeRequest( suspend {
             api.requestInit(TOKEN_PREFIX + userTokenId, firebaseUserId, BuildConfig.VERSION_CODE, pushToken, firebaseUserEmail)
         })*/
     }
 
-    suspend fun requestUpdateUser() : Result<UserContent> {
+    suspend fun requestUpdateUser() : ServerAnswer<UserContent> {
         return executeRequest( suspend {
             api.requestUpdateUser(TOKEN_PREFIX + userTokenId, firebaseUserId)
         })
     }
 
-    suspend fun requestSendFeedback(feedback: String) : Result<Void> {
+    suspend fun requestSendFeedback(feedback: String) : ServerAnswer<Void> {
         return executeRequest( suspend {
             api.requestSendFeedback(TOKEN_PREFIX + userTokenId, firebaseUserId, feedback)
         })
     }
 
     suspend fun requestVerifyPurchase(purchaseTokenId: String, signature: String, originalJson: String,
-                                      itemType: String) : Result<PurchaseContent> {
+                                      itemType: String) : ServerAnswer<PurchaseContent> {
         return executeRequest( suspend {
             api.requestVerifyPurchase(TOKEN_PREFIX + userTokenId, firebaseUserId, purchaseTokenId, signature,
                 originalJson, itemType)
@@ -121,14 +121,14 @@ class ApiHelper(private val networkHelper: NetworkHelper) {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    private suspend fun <T> executeRequest(request: suspend () -> Result<T>?,
-                                           defaultAnswer: Result<T> = Result(RESULT_ERROR_INTERNET)) : Result<T> {
+    private suspend fun <T> executeRequest(request: suspend () -> ServerAnswer<T>?,
+                                           defaultAnswer: ServerAnswer<T> = ServerAnswer(RESULT_ERROR_INTERNET)) : ServerAnswer<T> {
         if (!networkHelper.isNetworkAvailable() || userTokenId?.isNotEmpty() != true || firebaseUserId.isEmpty()) {
-            return Result(RESULT_ERROR_INTERNET)
+            return ServerAnswer(RESULT_ERROR_INTERNET)
         }
 
         return try {
-            request() ?: Result(RESULT_UNDEFINED)
+            request() ?: ServerAnswer(RESULT_UNDEFINED)
         } catch (e: UnknownHostException) {
             defaultAnswer
         } catch (e: SocketTimeoutException) {

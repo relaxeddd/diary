@@ -43,6 +43,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    lintOptions {
+        disable 'InvalidPackage', "MissingTranslation"
+        disable 'GradleDependency'
+        disable 'ObsoleteLintCustomCheck'
+    }
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
     }
@@ -75,18 +87,18 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui:1.0.0"
 
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
-    implementation 'androidx.room:room-runtime:2.2.0-rc01'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
+    implementation 'androidx.room:room-runtime:2.2.1'
     implementation "androidx.room:room-coroutines:2.1.0-alpha04"
-    kapt 'androidx.room:room-compiler:2.2.0-rc01'
+    kapt 'androidx.room:room-compiler:2.2.1'
     //googleAuth
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.gms:google-services:4.2.0'
+    implementation 'com.google.gms:google-services:4.3.2'
     //firebase
     implementation 'com.firebaseui:firebase-ui-auth:4.3.2'
-    implementation 'com.google.firebase:firebase-auth:19.0.0'
-    implementation 'com.google.firebase:firebase-firestore:21.0.0'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.google.firebase:firebase-firestore:21.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     //Retrofit
     /*implementation 'com.squareup.retrofit2:retrofit:2.6.1'
@@ -99,6 +111,8 @@ dependencies {
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
+    api "com.jakewharton.timber:timber:4.7.1"
 }
 
 apply plugin: 'com.google.gms.google-services'

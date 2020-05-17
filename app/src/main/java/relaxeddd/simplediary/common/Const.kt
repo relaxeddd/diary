@@ -23,8 +23,13 @@ const val PRODUCT_ID = "productId"
 const val PRODUCT_TYPE = "productType"
 const val PUSH_TOKEN = "pushToken"
 const val SELECTED_ITEM = "selectedItem"
+const val SELECTED_THEME = "selectedTheme"
 const val TASKS = "tasks"
 const val USER_EMAIL = "userEmail"
+
+const val PREFS_NAME = "prefsRelaxedddMyTodoList"
+
+const val PREF_DARK_MODE_ENABLED = "pref_dark_mode"
 
 const val ERROR_TOKEN_NOT_INIT = "User token not init"
 const val ERROR_NOT_AUTHORIZED = "User not authorized"

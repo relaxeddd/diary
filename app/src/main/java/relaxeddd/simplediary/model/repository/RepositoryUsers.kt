@@ -28,7 +28,7 @@ class RepositoryUsers(private val apiHelper: ApiHelper, repositoryInit: Reposito
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    private suspend fun updateUser(user: User, oldUser: User?) : Result<UserContent> {
+    private suspend fun updateUser(user: User, oldUser: User?) : ServerAnswer<UserContent> {
         this.user.postValue(user)
 
         val updateResult = apiHelper.requestUpdateUser()

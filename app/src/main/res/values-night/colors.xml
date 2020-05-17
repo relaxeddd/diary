@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_primary">@color/carolina_blue</color>
+    <color name="color_primary_dark">@color/cornflower_blue</color>
+    <color name="color_on_secondary">@color/black</color>
+
+    <color name="system_ui_scrim_light">#2EFFFFFF</color>
+    <color name="system_ui_scrim_black">#B3000000</color>
+
+</resources>

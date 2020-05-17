@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="size_40_">-40dp</dimen>
+    <dimen name="size_0">0dp</dimen>
     <dimen name="size_1">1dp</dimen>
     <dimen name="size_2">2dp</dimen>
     <dimen name="size_3">3dp</dimen>
@@ -65,5 +66,15 @@
     <dimen name="dimen_3">3</dimen>
     <dimen name="dimen_8">8</dimen>
     <dimen name="dimen_20">20</dimen>
+
+    <dimen name="width_navigation_view_main">@dimen/match_parent</dimen>
+
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
+
+    <dimen name="nav_item_background_corner_radius_left">0dp</dimen>
+    <dimen name="nav_item_background_corner_radius_right">100dp</dimen>
+    <dimen name="nav_item_background_inset_left">0dp</dimen>
+    <dimen name="nav_item_background_inset_right">8dp</dimen>>
 
 </resources>
