@@ -18,7 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -37,7 +37,6 @@ import relaxeddd.simplediary.dialogs.DialogRateApp
 import relaxeddd.simplediary.dialogs.DialogSendFeedback
 import relaxeddd.simplediary.push.MyFirebaseMessagingService
 import relaxeddd.simplediary.ui.NavigationHost
-import relaxeddd.simplediary.ui.billing.ActivityBilling
 import relaxeddd.simplediary.ui.ActivityBase
 import kotlin.system.exitProcess
 
@@ -62,7 +61,7 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>(), Navigat
     private lateinit var navigationController: NavController
     private lateinit var navigationHeaderBinding: NavigationHeaderBinding
     private var currentNavId = NAV_ID_NONE
-    private val providers: List<AuthUI.IdpConfig> = listOf(AuthUI.IdpConfig.GoogleBuilder().build())
+    //private val providers: List<AuthUI.IdpConfig> = listOf(AuthUI.IdpConfig.GoogleBuilder().build())
 
     override fun getLayoutResId() = R.layout.activity_main
 
@@ -108,7 +107,7 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>(), Navigat
 
             itemBackground = navigationItemBackground(context)
 
-            setupWithNavController(navigationController)
+            setupWithNavController(this, navigationController)
         }
 
         if (savedInstanceState == null) {
@@ -175,8 +174,8 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>(), Navigat
     }
 
     override fun registerToolbarWithNavigation(toolbar: Toolbar) {
-        val appBarConfiguration = AppBarConfiguration(TOP_LEVEL_DESTINATIONS, drawer_layout_main)
-        toolbar.setupWithNavController(navigationController, appBarConfiguration)
+        val appBarConfiguration = AppBarConfiguration.Builder(TOP_LEVEL_DESTINATIONS).setDrawerLayout(drawer_layout_main).build()
+        setupWithNavController(toolbar, navigationController, appBarConfiguration)
     }
 
     override fun onNavigationEvent(type: EventType, args: Bundle?) {
@@ -206,7 +205,7 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>(), Navigat
                 finishAffinity()
                 exitProcess(0)
             }
-            EventType.GOOGLE_AUTH -> {
+            /*EventType.GOOGLE_AUTH -> {
                 startActivityForResult(
                     AuthUI.getInstance()
                         .createSignInIntentBuilder()
@@ -214,7 +213,7 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>(), Navigat
                         .build(),
                     REQUEST_SIGN_IN
                 )
-            }
+            }*/
             EventType.NAVIGATION_DIALOG_PATCH_NOTES -> {
                 showDialog(DialogPatchNotes())
             }

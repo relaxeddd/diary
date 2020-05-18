@@ -4,14 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    signingConfigs {
+    /*signingConfigs {
         config {
             keyAlias 'diaryKey'
             keyPassword 'D5hzw3lo7'
-            storeFile file('D:/project/diaryKeystore.jks')
+            storeFile file('E:/project/diaryKeystore.jks')
             storePassword 'bd8Tkp01w'
         }
-    }
+    }*/
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
@@ -36,7 +36,7 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            //signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
@@ -101,9 +101,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     //Retrofit
-    /*implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'*/
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     //billing
     //implementation 'com.android.billingclient:billing:2.0.1'
 

@@ -16,13 +16,14 @@ class DialogSubscription(private val listener: ListenerResult<Int>?) : DialogFra
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         selectedItemIx = arguments?.getInt(SELECTED_ITEM, 0) ?: 0
         val subsNames = resources.getStringArray(R.array.array_renew_subscription)
-        val subsNamesWithPrice = if (ViewModelBilling.listSkuDetails.size == subsNames.size) {
+        val subsNamesWithPrice = subsNames
+        /*val subsNamesWithPrice = if (ViewModelBilling.listSkuDetails.size == subsNames.size) {
             Array(subsNames.size) { ix -> subsNames[ix] + " - " + ViewModelBilling.listSkuDetails[ix].price }
         } else {
             subsNames
-        }
+        }*/
 
-        return MaterialAlertDialogBuilder(context)
+        return MaterialAlertDialogBuilder(context!!)
             .setTitle(R.string.renew_subscription)
             .setSingleChoiceItems(subsNamesWithPrice, selectedItemIx) { _, which ->
                 selectedItemIx = which

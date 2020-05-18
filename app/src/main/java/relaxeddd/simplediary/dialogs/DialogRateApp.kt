@@ -8,7 +8,7 @@ import relaxeddd.simplediary.common.ListenerResult
 
 class DialogRateApp(private val confirmListener: ListenerResult<Boolean>?) : DialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context)
+    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context!!)
         .setTitle(R.string.rate_app_question)
         .setPositiveButton(R.string.yes) { _, _ -> confirmListener?.onResult(true) }
         .setNegativeButton(R.string.no) { _, _ -> confirmListener?.onResult(false) }

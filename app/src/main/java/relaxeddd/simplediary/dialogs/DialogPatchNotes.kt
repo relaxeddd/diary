@@ -7,7 +7,7 @@ import relaxeddd.simplediary.R
 
 class DialogPatchNotes : DialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context)
+    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context!!)
         .setTitle(getString(R.string.new_version))
         .setMessage(getString(R.string.patch_notes))
         .setPositiveButton(android.R.string.ok) { _, _ -> }

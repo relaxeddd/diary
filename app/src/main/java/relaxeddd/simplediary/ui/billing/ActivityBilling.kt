@@ -2,14 +2,13 @@ package relaxeddd.simplediary.ui.billing
 
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
-import com.android.billingclient.api.*
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.ui.ActivityBase
 
 abstract class ActivityBilling<VM : ViewModelBilling, B : ViewDataBinding> : ActivityBase<VM, B>() {
 
     override fun onNavigationEvent(type: EventType, args: Bundle?) {
-        when (type) {
+        /*when (type) {
             EventType.BUY_PRODUCT -> {
                 val productType = args?.getInt(PRODUCT_TYPE) ?: return
                 viewModel.onChooseProduct(productType)
@@ -34,7 +33,7 @@ abstract class ActivityBilling<VM : ViewModelBilling, B : ViewDataBinding> : Act
                 }
             }
             else -> super.onNavigationEvent(type, args)
-        }
+        }*/
     }
 
 

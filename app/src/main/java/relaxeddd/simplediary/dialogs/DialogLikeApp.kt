@@ -12,7 +12,7 @@ class DialogLikeApp(private val confirmListener: ListenerResult<Boolean>?) : Dia
         isCancelable = false
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context)
+    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context!!)
         .setTitle(R.string.you_like_app)
         .setPositiveButton(R.string.yes) { _, _ -> confirmListener?.onResult(true) }
         .setNegativeButton(R.string.no) { _, _ -> confirmListener?.onResult(false) }

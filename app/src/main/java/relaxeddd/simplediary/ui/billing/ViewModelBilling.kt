@@ -1,7 +1,6 @@
 package relaxeddd.simplediary.ui.billing
 
 import android.os.Bundle
-import com.android.billingclient.api.*
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
@@ -10,9 +9,9 @@ import relaxeddd.simplediary.model.repository.RepositoryPreferences
 import relaxeddd.simplediary.ui.ViewModelBase
 
 abstract class ViewModelBilling(app: App, preferences: RepositoryPreferences)
-        : ViewModelBase(app, preferences), PurchasesUpdatedListener {
+        : ViewModelBase(app, preferences) {//, PurchasesUpdatedListener {
 
-    companion object {
+    /*companion object {
         @BillingClient.SkuType private const val PRODUCT_1 = "product_1"
         @BillingClient.SkuType private const val PRODUCT_2 = "product_2"
         @BillingClient.SkuType private const val PRODUCT_3 = "product_3"
@@ -23,7 +22,7 @@ abstract class ViewModelBilling(app: App, preferences: RepositoryPreferences)
     }
 
     var billingClient: BillingClient? = null
-        private set
+        private set*/
     private var isBillingServiceConnected = false
     private var attemptConnect = 0
     var isBillingInInitProcess = false
@@ -31,7 +30,7 @@ abstract class ViewModelBilling(app: App, preferences: RepositoryPreferences)
     abstract fun onShowLoadingAction()
     abstract fun onHideLoadingAction()
 
-    override fun onPurchasesUpdated(billingResult: BillingResult, purchases: MutableList<Purchase>?) {
+    /*override fun onPurchasesUpdated(billingResult: BillingResult, purchases: MutableList<Purchase>?) {
         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
             for (purchase in purchases) {
                 if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
@@ -138,13 +137,13 @@ abstract class ViewModelBilling(app: App, preferences: RepositoryPreferences)
             }
             initBilling(resultListener)
         }
-    }
+    }*/
 
-    private fun requestVerify(purchase: Purchase?) {
+    /*private fun requestVerify(purchase: Purchase?) {
         if (purchase == null || !isNetworkAvailable()) return
 
         //TODO
-        /*CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val firebaseUser = RepositoryCommon.getInstance().firebaseUser
             val tokenId = RepositoryCommon.getInstance().tokenId
 
@@ -159,10 +158,10 @@ abstract class ViewModelBilling(app: App, preferences: RepositoryPreferences)
             } else if (purchaseResult?.result?.code == RESULT_PURCHASE_ALREADY_RECEIVED) {
                 consumePurchase(purchaseResult)
             }
-        }*/
-    }
+        }
+    }*/
 
-    private fun consumePurchase(purchaseContent: PurchaseContent) {
+    /*private fun consumePurchase(purchaseContent: PurchaseContent) {
         val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(purchaseContent.tokenId).build()
 
         billingClient?.consumeAsync(consumeParams) { billingResult, _ ->
@@ -183,5 +182,5 @@ abstract class ViewModelBilling(app: App, preferences: RepositoryPreferences)
         1 -> PRODUCT_2
         2 -> PRODUCT_3
         else -> null
-    }
+    }*/
 }
