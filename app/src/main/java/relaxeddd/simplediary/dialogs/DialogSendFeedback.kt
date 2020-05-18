@@ -11,7 +11,7 @@ class DialogSendFeedback(private val confirmListener: ListenerResult<String>?) :
 
     private var editTextFeedback: TextInputEditText? = null
 
-    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context)
+    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context!!)
         .setTitle(R.string.send_feedback)
         .setView(R.layout.dialog_send_feedback)
         .setPositiveButton(R.string.send_feedback) { _, _ ->

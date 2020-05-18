@@ -15,7 +15,7 @@ class DialogAppTheme(private val listener: ListenerResult<Int>?) : DialogFragmen
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         selectedItemIx = arguments?.getInt(ITEM_IX) ?: 0
 
-        return MaterialAlertDialogBuilder(context)
+        return MaterialAlertDialogBuilder(context!!)
             .setTitle(R.string.app_theme)
             .setSingleChoiceItems(R.array.array_themes, selectedItemIx) { _, which ->
                 selectedItemIx = which

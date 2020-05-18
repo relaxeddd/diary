@@ -34,11 +34,11 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
         navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_APP_ABOUT)
     }
     val clickListenerSubscription = View.OnClickListener {
-        if (ViewModelBilling.isBillingInit) {
-            navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SUBSCRIPTION)
-        } else {
+        //if (ViewModelBilling.isBillingInit) {
+            //navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SUBSCRIPTION)
+        //} else {
             showToast(R.string.loading)
-        }
+        //}
     }
     val clickListenerSubscriptionInfo = View.OnClickListener {
         navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SUBSCRIPTION_INFO)

@@ -7,7 +7,7 @@ import relaxeddd.simplediary.R
 
 class DialogSubscriptionInfo : DialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context)
+    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context!!)
         .setTitle(R.string.sub_advantages)
         .setMessage(getString(R.string.sub_advantages_info))
         .setPositiveButton(android.R.string.ok) { _, _ -> }

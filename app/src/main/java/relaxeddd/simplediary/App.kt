@@ -2,6 +2,7 @@ package relaxeddd.simplediary
 
 import android.app.Application
 import androidx.multidex.MultiDexApplication
+import androidx.room.Room
 import com.google.firebase.FirebaseApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -20,14 +21,12 @@ import relaxeddd.simplediary.model.repository.*
 import relaxeddd.simplediary.ui.main.ViewModelMain
 import relaxeddd.simplediary.ui.settings.ViewModelSettings
 import relaxeddd.simplediary.ui.todo_list.ViewModelTodoList
-import timber.log.Timber
 
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        Timber.d("not inited!!!!!!!!!!!!!!")
         /*if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }*/
