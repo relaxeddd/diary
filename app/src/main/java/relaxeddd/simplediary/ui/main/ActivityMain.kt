@@ -25,10 +25,10 @@ import relaxeddd.simplediary.dialogs.DialogPatchNotes
 import relaxeddd.simplediary.dialogs.DialogRateApp
 import relaxeddd.simplediary.dialogs.DialogSendFeedback
 import relaxeddd.simplediary.push.MyFirebaseMessagingService
-import relaxeddd.simplediary.ui.billing.ActivityBilling
+import relaxeddd.simplediary.ui.ActivityBase
 import kotlin.system.exitProcess
 
-class ActivityMain : ActivityBilling<ViewModelMain, ActivityMainBinding>() {
+class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>() {
 
     companion object {
         const val REQUEST_SIGN_IN = 1312

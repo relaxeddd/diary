@@ -3,7 +3,6 @@ package relaxeddd.simplediary
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.multidex.MultiDexApplication
-import androidx.room.Room
 import com.google.firebase.FirebaseApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

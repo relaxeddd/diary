@@ -1,0 +1,17 @@
+
+CREATE TABLE taskModel (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT
+);
+
+
+insertItem:
+INSERT OR FAIL INTO taskModel(title, description) VALUES (?, ?);
+
+
+selectAll:
+SELECT * FROM taskModel;
+
+deleteItem:
+DELETE FROM taskModel WHERE id = ?;

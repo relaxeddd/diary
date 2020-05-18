@@ -5,10 +5,10 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.0"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "relaxeddd.simplediary"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "0.1"
@@ -19,9 +19,13 @@ android {
         enabled = true
     }
     buildTypes {
+        def STRING = "String"
+        all {
+            buildConfigField STRING, "DATABASE_NAME", '"relaxeddd_simplediary.db"'
+        }
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -29,27 +33,37 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50"
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
-    implementation 'com.google.android.material:material:1.1.0-alpha09'
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta5'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha03"
-    kapt "androidx.lifecycle:lifecycle-compiler:2.2.0-alpha03"
+    implementation project(':SharedCode')
+
+    // SQL DELIGHT
+    implementation "com.squareup.sqldelight:android-driver:$sqldelight_version"
+
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+
+    implementation("dev.icerock.moko:mvvm:0.3.1")
+
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.3.0-alpha02"
     implementation "android.arch.navigation:navigation-fragment:1.0.0"
     implementation "android.arch.navigation:navigation-ui:1.0.0"
 
-    implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
-    implementation 'androidx.room:room-runtime:2.2.0-alpha02'
-    implementation "androidx.room:room-coroutines:2.1.0-alpha04"
-    kapt 'androidx.room:room-compiler:2.2.0-alpha02'
     //googleAuth
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.gms:google-services:4.2.0'
@@ -59,11 +73,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    /*implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'*/
     //billing
-    implementation 'com.android.billingclient:billing:2.0.1'
+    //implementation 'com.android.billingclient:billing:2.0.1'
 
     ext.koin_version = '2.0.1'
     implementation "org.koin:koin-android:$koin_version"
