@@ -2,29 +2,24 @@ package relaxeddd.simplediary.ui.main
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.UnderlineSpan
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import relaxeddd.simplediary.R
@@ -38,6 +33,7 @@ import relaxeddd.simplediary.dialogs.DialogSendFeedback
 import relaxeddd.simplediary.push.MyFirebaseMessagingService
 import relaxeddd.simplediary.ui.NavigationHost
 import relaxeddd.simplediary.ui.ActivityBase
+import relaxeddd.simplediary.viewmodel.ViewModelTaskList
 import kotlin.system.exitProcess
 
 class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>(), NavigationHost {
@@ -135,6 +131,10 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>(), Navigat
         initPrivacyPolicyText()
 
         viewModel.onViewCreate()
+
+        val tasksViewModel = ViewModelProviders.of(this).get(ViewModelTaskList::class.java)
+        tasksViewModel.tasksLiveData.addObserver { Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show() }
+        tasksViewModel.loadTasks()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
