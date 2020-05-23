@@ -14,6 +14,7 @@ import relaxeddd.simplediary.common.SharedPreferenceStorage
 import relaxeddd.simplediary.common.theme.GetThemeUseCase
 import relaxeddd.simplediary.common.theme.ObserveThemeModeUseCase
 import relaxeddd.simplediary.common.theme.ThemedActivityDelegateImpl
+import relaxeddd.simplediary.di.InjectorCommon
 import relaxeddd.simplediary.model.NetworkHelper
 import relaxeddd.simplediary.model.db.AppDatabase
 import relaxeddd.simplediary.model.http.ApiHelper
@@ -30,6 +31,7 @@ class App : Application() {
         /*if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }*/
+        InjectorCommon.provideContextArgs(ContextArgs(this))
         FirebaseApp.initializeApp(this)
 
         val sharedHelper = SharedPreferenceStorage(this)
