@@ -6,17 +6,17 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import kotlinx.coroutines.launch
 import relaxeddd.simplediary.App
 import relaxeddd.simplediary.R
-import relaxeddd.simplediary.common.*
+import relaxeddd.simplediary.common.User
+import relaxeddd.simplediary.domain.model.EventType
+import relaxeddd.simplediary.domain.model.NavigationEvent
 import relaxeddd.simplediary.model.repository.RepositoryPreferences
 import relaxeddd.simplediary.model.repository.RepositoryUsers
-import relaxeddd.simplediary.ui.ViewModelBase
-import relaxeddd.simplediary.ui.billing.ViewModelBilling
+import relaxeddd.simplediary.viewmodel.ViewModelBase
 
 class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, preferences: RepositoryPreferences)
-    : ViewModelBase(app, preferences) {
+    : ViewModelBase() {
 
     private val userObserver = Observer<User?> { user ->
         var subTime = user?.subscriptionTime ?: System.currentTimeMillis()
@@ -37,7 +37,7 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
         //if (ViewModelBilling.isBillingInit) {
             //navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SUBSCRIPTION)
         //} else {
-            showToast(R.string.loading)
+            //showToast(R.string.loading)
         //}
     }
     val clickListenerSubscriptionInfo = View.OnClickListener {
@@ -84,12 +84,12 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
     }
 
     fun onLogoutResult(isSuccess: Boolean) {
-        if (isSuccess) {
+        /*if (isSuccess) {
             ioScope.launch {
                 repositoryUsers.deleteUserInfo()
             }
         } else {
             showToast(R.string.logout_error)
-        }
+        }*/
     }
 }

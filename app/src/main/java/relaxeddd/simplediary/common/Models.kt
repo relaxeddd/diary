@@ -4,9 +4,8 @@ package relaxeddd.simplediary.common
 import android.os.Bundle
 import androidx.annotation.Keep
 import androidx.annotation.StringRes
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import relaxeddd.simplediary.R
+import relaxeddd.simplediary.domain.model.Task
 
 @Keep
 data class User(
@@ -18,11 +17,9 @@ data class User(
     constructor(user: User) : this(user.userId, user.email, user.subscriptionTime)
 }
 
-@Entity(tableName = TASKS)
-@Keep
+/*@Keep
 data class Task(
 
-    @PrimaryKey
     val id: String = "",
     val title: String = "",
     val description: String = "",
@@ -30,7 +27,7 @@ data class Task(
     val importance: Int
 ) {
     constructor(task: Task) : this(task.id, task.title, task.description, task.rrule, task.importance)
-}
+}*/
 
 @Keep
 data class ServerAnswer<T>(val code: Int = RESULT_UNDEFINED, val message: String = "", val content: T? = null) {
@@ -94,7 +91,7 @@ data class Resource<T>(
 }
 
 @Keep
-open class NavigationEvent(private val type: EventType, var args: Bundle? = null) {
+class NavigationEvent(private val type: EventType, var args: Bundle? = null) {
 
     private var isHandled = false
 

@@ -1,7 +1,6 @@
 package relaxeddd.simplediary.domain
 
-sealed class Response<out T> {
-    class Success<out T>(val data: T) : Response<T>()
+class Response<out T>(val data: T? = null, val exception: Throwable? = null) {
 
-    class Error(val exception: Throwable) : Response<Nothing>()
+    val isValid: Boolean = exception == null
 }
