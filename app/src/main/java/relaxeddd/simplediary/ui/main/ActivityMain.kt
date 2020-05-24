@@ -131,10 +131,6 @@ class ActivityMain : ActivityBase<ViewModelMain, ActivityMainBinding>(), Navigat
         initPrivacyPolicyText()
 
         viewModel.onViewCreate()
-
-        val tasksViewModel = ViewModelProviders.of(this).get(ViewModelTaskList::class.java)
-        tasksViewModel.tasksLiveData.addObserver { Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show() }
-        tasksViewModel.loadTasks()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {

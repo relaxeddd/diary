@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="relaxeddd.simplediary.ui.todo_list.ViewModelTodoList"/>
+            type="relaxeddd.simplediary.viewmodel.ViewModelTaskList"/>
 
     </data>
 
@@ -51,7 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:visibility="@{safeUnbox(viewModel.isVisibleList) ? View.VISIBLE : View.GONE}"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:visibility="@{safeUnbox(viewModel.isVisibleTaskList.value) ? View.VISIBLE : View.GONE}"/>
 
             <TextView
                 android:id="@+id/text_todo_list_no_items"
@@ -60,7 +61,7 @@
                 android:gravity="center"
                 android:text="@string/no_tasks_desc"
                 android:textSize="@dimen/font_16"
-                android:visibility="@{safeUnbox(viewModel.isVisibleTextNoItems) ? View.VISIBLE : View.GONE}"/>
+                android:visibility="@{safeUnbox(viewModel.isVisibleTextNoItems.value) ? View.VISIBLE : View.GONE}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

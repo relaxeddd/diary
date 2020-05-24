@@ -19,5 +19,5 @@ class DaoTask(database: Database) {
         db.deleteItem(id)
     }
 
-    internal fun select():List<TaskModel> = db.selectAll().executeAsList()
+    internal fun select() : List<TaskModel> = db.selectAll().executeAsList()
 }

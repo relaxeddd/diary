@@ -15,7 +15,7 @@ class PresenterTaskList(private var useCaseTaskGetList: UseCaseTaskGetList,
 
     }
 
-    fun getTasksList() {
+    /*fun getTasksList() {
         view?.showHideLoading(true)
         scope.launch {
             val response = useCaseTaskGetList.execute()
@@ -26,7 +26,7 @@ class PresenterTaskList(private var useCaseTaskGetList: UseCaseTaskGetList,
             }
             view?.showHideLoading(false)
         }
-    }
+    }*/
 }
 
 interface ViewTaskList {

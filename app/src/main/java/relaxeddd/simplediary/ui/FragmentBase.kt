@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.EventType
 import relaxeddd.simplediary.ui.main.ActivityMain
+import relaxeddd.simplediary.viewmodel.ViewModelBase
 
 abstract class FragmentBase<VM : ViewModelBase, B : ViewDataBinding> : Fragment() {
 
@@ -56,11 +57,6 @@ abstract class FragmentBase<VM : ViewModelBase, B : ViewDataBinding> : Fragment(
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.onViewResume()
-    }
-
     override fun onDetach() {
         super.onDetach()
         navigationHost = null
@@ -85,11 +81,11 @@ abstract class FragmentBase<VM : ViewModelBase, B : ViewDataBinding> : Fragment(
 
     @CallSuper
     protected open fun configureBinding() {
-        viewModel.navigateEvent.observe(this, Observer {
-            it.getTypeIfNotHandled()?.let {type ->
-                onNavigationEvent(type, it?.args)
+        viewModel.navigateEvent.addObserver {
+            it?.getTypeIfNotHandled()?.let { type ->
+                //onNavigationEvent(type, it?.args)
             }
-        })
+        }
     }
 }
 
