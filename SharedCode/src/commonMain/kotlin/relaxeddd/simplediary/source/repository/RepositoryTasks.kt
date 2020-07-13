@@ -7,13 +7,13 @@ import relaxeddd.simplediary.Database
 import relaxeddd.simplediary.data.TaskModel
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Task
-import relaxeddd.simplediary.source.db.DatabaseCreator
+import relaxeddd.simplediary.getDataBase
 import relaxeddd.simplediary.source.db.dao.DaoTask
 import relaxeddd.simplediary.source.network.ApiTask
 
 class RepositoryTasks(private val apiTask: ApiTask) {
 
-    private var database: Database? = DatabaseCreator.getDataBase()
+    private var database: Database? = getDataBase()
 
     /*suspend fun insertTask(item: Task): Response<List<Task>> {
         val cachedTasks = database?.let {
@@ -72,5 +72,5 @@ class RepositoryTasks(private val apiTask: ApiTask) {
 
     private suspend fun insertTaskToCache(item: Task) = database?.let { DaoTask(it).insert(item) }
 
-    private suspend fun fetchTasksFromDb() = database?.let { DaoTask(it).select().map { cachedTask -> Task(cachedTask) }} ?: emptyList()
+    private suspend fun fetchTasksFromDb() = database?.let { DaoTask(it).select().map { cachedTask -> Task(cachedTask) }} ?: emptyList<Task>()
 }

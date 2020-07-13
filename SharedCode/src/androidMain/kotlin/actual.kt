@@ -4,7 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
+import kotlinx.coroutines.Dispatchers
 import relaxeddd.simplediary.di.InjectorCommon
+import kotlin.coroutines.CoroutineContext
 
 actual class ContextArgs(var context: Context)
 
@@ -22,3 +24,5 @@ actual fun getSqlDriver(): SqlDriver? {
     val driver: SqlDriver = AndroidSqliteDriver(Database.Schema,  InjectorCommon.contextArgs.context, "relaxeddd.diary.db")
     return driver
 }
+
+internal actual val ApplicationDispatcher: CoroutineContext = Dispatchers.Default

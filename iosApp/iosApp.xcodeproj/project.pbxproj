@@ -12,18 +12,29 @@
 		83635D6124715A84008222C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83635D6024715A84008222C3 /* ContentView.swift */; };
 		83635D6324715A85008222C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83635D6224715A85008222C3 /* Assets.xcassets */; };
 		83635D6624715A85008222C3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83635D6524715A85008222C3 /* Preview Assets.xcassets */; };
-		83635D6924715A85008222C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83635D6724715A85008222C3 /* LaunchScreen.storyboard */; };
+		836B0C5824B9DFC4009A39F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C5724B9DFC4009A39F2 /* ViewController.swift */; };
+		836B0C5F24BB2089009A39F2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 836B0C6124BB2089009A39F2 /* Localizable.strings */; };
+		836B0C6324BB22EA009A39F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 836B0C6524BB22EA009A39F2 /* Main.storyboard */; };
+		836B0C6B24BB2796009A39F2 /* Func.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C6A24BB2796009A39F2 /* Func.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		83635D5924715A84008222C3 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		83635D5924715A84008222C3 /* My ToDo List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My ToDo List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		83635D5C24715A84008222C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83635D5E24715A84008222C3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		83635D6024715A84008222C3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		83635D6224715A85008222C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83635D6524715A85008222C3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		83635D6824715A85008222C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83635D6A24715A85008222C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		836B0C5724B9DFC4009A39F2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		836B0C5A24BAEBFD009A39F2 /* SharedCode */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SharedCode; path = ../SharedCode; sourceTree = "<group>"; };
+		836B0C5B24BAEC6A009A39F2 /* SharedCode.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SharedCode.framework.dSYM; path = ../SharedCode/build/bin/ios/debugFramework/SharedCode.framework.dSYM; sourceTree = "<group>"; };
+		836B0C6024BB2089009A39F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		836B0C6224BB20BE009A39F2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		836B0C6424BB22EA009A39F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		836B0C6724BB22F1009A39F2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		836B0C6924BB2313009A39F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		836B0C6A24BB2796009A39F2 /* Func.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Func.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,13 +53,14 @@
 			children = (
 				83635D5B24715A84008222C3 /* iosApp */,
 				83635D5A24715A84008222C3 /* Products */,
+				836B0C5924BAEBFD009A39F2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		83635D5A24715A84008222C3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				83635D5924715A84008222C3 /* iosApp.app */,
+				83635D5924715A84008222C3 /* My ToDo List.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,9 +72,12 @@
 				83635D5E24715A84008222C3 /* SceneDelegate.swift */,
 				83635D6024715A84008222C3 /* ContentView.swift */,
 				83635D6224715A85008222C3 /* Assets.xcassets */,
-				83635D6724715A85008222C3 /* LaunchScreen.storyboard */,
 				83635D6A24715A85008222C3 /* Info.plist */,
 				83635D6424715A85008222C3 /* Preview Content */,
+				836B0C6524BB22EA009A39F2 /* Main.storyboard */,
+				836B0C5724B9DFC4009A39F2 /* ViewController.swift */,
+				836B0C6124BB2089009A39F2 /* Localizable.strings */,
+				836B0C6A24BB2796009A39F2 /* Func.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -73,6 +88,15 @@
 				83635D6524715A85008222C3 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		836B0C5924BAEBFD009A39F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				836B0C5B24BAEC6A009A39F2 /* SharedCode.framework.dSYM */,
+				836B0C5A24BAEBFD009A39F2 /* SharedCode */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -93,7 +117,7 @@
 			);
 			name = iosApp;
 			productName = iosApp;
-			productReference = 83635D5924715A84008222C3 /* iosApp.app */;
+			productReference = 83635D5924715A84008222C3 /* My ToDo List.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -118,6 +142,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 83635D5024715A84008222C3;
 			productRefGroup = 83635D5A24715A84008222C3 /* Products */;
@@ -134,9 +159,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83635D6924715A85008222C3 /* LaunchScreen.storyboard in Resources */,
+				836B0C5F24BB2089009A39F2 /* Localizable.strings in Resources */,
 				83635D6624715A85008222C3 /* Preview Assets.xcassets in Resources */,
 				83635D6324715A85008222C3 /* Assets.xcassets in Resources */,
+				836B0C6324BB22EA009A39F2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,19 +195,32 @@
 			files = (
 				83635D5D24715A84008222C3 /* AppDelegate.swift in Sources */,
 				83635D5F24715A84008222C3 /* SceneDelegate.swift in Sources */,
+				836B0C5824B9DFC4009A39F2 /* ViewController.swift in Sources */,
 				83635D6124715A84008222C3 /* ContentView.swift in Sources */,
+				836B0C6B24BB2796009A39F2 /* Func.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		83635D6724715A85008222C3 /* LaunchScreen.storyboard */ = {
+		836B0C6124BB2089009A39F2 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				83635D6824715A85008222C3 /* Base */,
+				836B0C6024BB2089009A39F2 /* en */,
+				836B0C6224BB20BE009A39F2 /* ru */,
 			);
-			name = LaunchScreen.storyboard;
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		836B0C6524BB22EA009A39F2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				836B0C6424BB22EA009A39F2 /* Base */,
+				836B0C6724BB22F1009A39F2 /* ru */,
+				836B0C6924BB2313009A39F2 /* en */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -191,6 +230,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -251,6 +291,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -304,20 +345,25 @@
 		83635D6E24715A85008222C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = P2Z4PLS2UV;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
+					"@loader_path/Frameworks",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = relaxeddd.simplediary.iosApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "My ToDo List";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -325,19 +371,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = P2Z4PLS2UV;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
+					"@loader_path/Frameworks",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = relaxeddd.simplediary.iosApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "My ToDo List";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
