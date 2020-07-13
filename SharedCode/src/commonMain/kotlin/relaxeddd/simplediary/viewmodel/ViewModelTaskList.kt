@@ -24,8 +24,6 @@ class ViewModelTaskList : ViewModelBase() {
     }
 
     fun loadTasks() = launchSilent(coroutineContext, exceptionHandler, job) {
-        listTasks.postValue(LoadingTaskListState())
-
         val response = useCaseTaskGetList.run()
 
         if (response.isValid) {

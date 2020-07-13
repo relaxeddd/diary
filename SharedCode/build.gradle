@@ -76,7 +76,9 @@ kotlin {
                 }
             }
             //compilations.main.outputKinds('FRAMEWORK')
+            //compilations.main.linkerOpts '-rpath @loader_path/Frameworks'
             compilations.each {
+                //it.extraOpts("-output-kinds", "FRAMEWORK")
                 it.extraOpts("-linker-options", "-lsqlite3")
             }
         }
@@ -120,21 +122,44 @@ kotlin {
 }
 
 task packForXCode {
-    def buildType = project.findProperty("kotlin.build.type") ?: "DEBUG"
-    dependsOn "link${buildType.toLowerCase().capitalize()}FrameworkIos"
-    //dependsOn "linkMainDebugFrameworkIOS"
+//    def buildType = project.findProperty("kotlin.build.type") ?: "DEBUG"
+//    dependsOn "link${buildType.toLowerCase().capitalize()}FrameworkIos"
+//    //dependsOn "linkMainDebugFrameworkIOS"
+//
+//    doLast {
+//        def srcFile = kotlin.targets.ios.binaries.getFramework(buildType).outputFile
+//        def targetDir = getProperty("configuration.build.dir")
+//        copy {
+//            from srcFile.parent
+//            into targetDir
+//            include 'SharedCode.framework/**'
+//            include 'SharedCode .framework.dSYM'
+//        }
+//    }
+
+    def buildType = project.findProperty('kotlin.build.type') ?: 'DEBUG'
+    dependsOn("link${buildType.toLowerCase().capitalize()}FrameworkIos")
+    //dependsOn kotlin.targets.ios.binaries.getFramework(buildType).linkTask
 
     doLast {
         def srcFile = kotlin.targets.ios.binaries.getFramework(buildType).outputFile
-        def targetDir = getProperty("configuration.build.dir")
+        def targetDir = project.property('configuration.build.dir')
         copy {
             from srcFile.parent
             into targetDir
+//            into("/"){
+//                from { srcFile.parent }
+//            }
+//            into("/${project.name}.framework/Frameworks/SharedCode.framework") {
+//                from srcFile.parent
+//            }
             include 'SharedCode.framework/**'
-            include 'SharedCode .framework.dSYM'
+            include 'SharedCode.framework.dSYM'
         }
     }
 }
+
+tasks.build.dependsOn packForXCode
 
 sqldelight {
     Database {
@@ -146,6 +171,26 @@ sqldelight {
 configurations {
     compileClasspath
 }
+
+//task packForXCode(type: Sync) {
+//    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+//    final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+//    final def framework = kotlin.targets.iOS.binaries.getFramework("SharedCode", mode)
+//
+//    inputs.property "mode", mode
+//    dependsOn framework.linkTask
+//
+//    from { framework.outputFile.parentFile }
+//    into frameworkDir
+//
+//    doLast {
+//        new File(frameworkDir, 'gradlew').with {
+//            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
+//            setExecutable(true)
+//        }
+//    }
+//}
+//tasks.build.dependsOn packForXCode
 
 /*val packForXcode by tasks.creating(Sync::class) {
     val targetDir = File(buildDir, "xcode-frameworks")

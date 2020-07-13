@@ -11,7 +11,7 @@ import SharedCode
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, World! " + CommonKt.createApplicationScreenMessage())
+        Text("Hello, World! ")
     }
 }
 
