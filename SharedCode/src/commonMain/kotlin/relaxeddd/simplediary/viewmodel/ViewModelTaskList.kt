@@ -11,7 +11,7 @@ import kotlin.coroutines.CoroutineContext
 
 class ViewModelTaskList : ViewModelBase() {
 
-    val listTasks = MutableLiveData<TaskListState>(LoadingTaskListState())
+    val listTasks = MutableLiveData<TaskListState>(NotLoadedTaskListState())
     val isVisibleTextNoItems = MutableLiveData(true)
     val isVisibleTaskList = MutableLiveData(true)
 
@@ -24,6 +24,8 @@ class ViewModelTaskList : ViewModelBase() {
     }
 
     fun loadTasks() = launchSilent(coroutineContext, exceptionHandler, job) {
+        listTasks.postValue(LoadingTaskListState())
+
         val response = useCaseTaskGetList.run()
 
         if (response.isValid) {

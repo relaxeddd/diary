@@ -8,9 +8,9 @@ import relaxeddd.simplediary.data.TaskModel
 data class Task(
     val id: Long,
     val title: String = "",
-    val description: String = ""
+    val desc: String = ""
 ) {
-    constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.description ?: "")
+    constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc ?: "")
 }
 
 class NavigationEvent(private val type: EventType, var args: Map<String, Any>? = null) {

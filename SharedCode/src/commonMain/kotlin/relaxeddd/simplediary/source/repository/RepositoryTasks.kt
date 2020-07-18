@@ -72,5 +72,5 @@ class RepositoryTasks(private val apiTask: ApiTask) {
 
     private suspend fun insertTaskToCache(item: Task) = database?.let { DaoTask(it).insert(item) }
 
-    private suspend fun fetchTasksFromDb() = database?.let { DaoTask(it).select().map { cachedTask -> Task(cachedTask) }} ?: emptyList<Task>()
+    private suspend fun fetchTasksFromDb() = /*database?.let { DaoTask(it).select().map { cachedTask -> Task(cachedTask) }} ?:*/ emptyList<Task>()
 }

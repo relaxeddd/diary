@@ -9,81 +9,68 @@
 import UIKit
 import SharedCode
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    //private var viewModel: ViewModelTaskList?
-    
-    @IBOutlet weak var progressBar: UIActivityIndicatorView!
     @IBOutlet weak var tasksList: UITableView!
-    @IBOutlet weak var textNoTasks: UIActivityIndicatorView!
+    @IBOutlet weak var textNoItems: UILabel!
+    @IBOutlet weak var progressBar: UIActivityIndicatorView!
     
-    @IBAction func click(_ sender: Any) {
-        let viewModel = ViewModelTaskList()
-//        viewModel.listTasks.addObserver { (state) in
-//            if state is LoadingTaskListState {
-//                self.tasksList.isHidden = true
-//                self.textNoTasks.isHidden = true
-//                self.progressBar.startAnimating()
-//            } else if state is SuccessTaskListState {
-//                self.tasksList.isHidden = false
-//                self.textNoTasks.isHidden = true
-//                self.progressBar.stopAnimating()
-//
-//                if let tasks = (state as? SuccessTaskListState)?.response.data {
-//                    print(tasks)
-//                } else {
-//
-//                }
-//            } else if state is ErrorTaskListState {
-//                self.tasksList.isHidden = true
-//                self.textNoTasks.isHidden = false
-//                self.progressBar.stopAnimating()
-//
-//                if let error = (state as? ErrorTaskListState)?.response.exception?.message {
-//                    showToast(controller: self, message: error)
-//                    print(error)
-//                }
-//            }
-//        }
-//
-//        viewModel.loadTasks()
-    }
+    private var viewModel: ViewModelTaskList!
+    
+    internal var tasks: [Task] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tasksList.isHidden = true
-        self.textNoTasks.isHidden = false
+        self.textNoItems.isHidden = false
+        self.progressBar.isHidden = true
 
-//        viewModel = ViewModelTaskList()
-//        viewModel.listTasks.addObserver { (state) in
-//            if state is LoadingTaskListState {
-//                self.tasksList.isHidden = true
-//                self.textNoTasks.isHidden = true
-//                self.progressBar.startAnimating()
-//            } else if state is SuccessTaskListState {
-//                self.tasksList.isHidden = false
-//                self.textNoTasks.isHidden = true
-//                self.progressBar.stopAnimating()
-//
-//                if let tasks = (state as? SuccessTaskListState)?.response.data {
-//                    print(tasks)
-//                } else {
-//
-//                }
-//            } else if state is ErrorTaskListState {
-//                self.tasksList.isHidden = true
-//                self.textNoTasks.isHidden = false
-//                self.progressBar.stopAnimating()
-//
-//                if let error = (state as? ErrorTaskListState)?.response.exception?.message {
-//                    showToast(controller: self, message: error)
-//                    print(error)
-//                }
-//            }
-//        }
-        
-        //viewModel.loadTasks()
+        viewModel = ViewModelTaskList()
+        viewModel.listTasks.addObserver { (state) in
+            if state is NotLoadedTaskListState {
+                self.tasksList.isHidden = true
+                self.textNoItems.isHidden = false
+                self.progressBar.stopAnimating()
+            } else if state is LoadingTaskListState {
+                self.tasksList.isHidden = true
+                self.textNoItems.isHidden = true
+                self.progressBar.startAnimating()
+            } else if state is SuccessTaskListState {
+                self.tasksList.isHidden = false
+                self.textNoItems.isHidden = true
+                self.progressBar.stopAnimating()
+
+                if let tasksAnswer = (state as? SuccessTaskListState)?.response.data {
+                    self.tasks = tasksAnswer as! [Task]
+                    print(self.tasks)
+                } else {
+
+                }
+                self.tasksList.reloadData()
+            } else if state is ErrorTaskListState {
+                self.tasksList.isHidden = true
+                self.textNoItems.isHidden = false
+                self.progressBar.stopAnimating()
+
+                if let error = (state as? ErrorTaskListState)?.response.exception?.message {
+                    showToast(controller: self, message: error)
+                    print(error)
+                }
+            }
+        }
+        viewModel.loadTasks()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tasks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell")
+        cell?.textLabel?.text = tasks[indexPath.row].title
+        cell?.detailTextLabel?.text = tasks[indexPath.row].desc
+        return cell!
     }
 
     /*

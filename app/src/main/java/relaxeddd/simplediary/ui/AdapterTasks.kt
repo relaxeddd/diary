@@ -26,7 +26,7 @@ class AdapterTasks(private val clickListener: OnItemClickListener<Task>): ListAd
 
         fun bind(task: Task) {
             view.text_task_title.text = task.title
-            view.text_task_description.text = task.description
+            view.text_task_description.text = task.desc
         }
     }
 
@@ -34,6 +34,6 @@ class AdapterTasks(private val clickListener: OnItemClickListener<Task>): ListAd
 
         override fun areItemsTheSame(oldItem: Task, newItem: Task) = oldItem.id == newItem.id
         override fun areContentsTheSame(oldItem: Task, newItem: Task) = oldItem.title == newItem.title
-                && oldItem.description == newItem.description
+                && oldItem.desc == newItem.desc
     }
 }
