@@ -9,3 +9,4 @@ sealed class TaskListState {
 data class SuccessTaskListState(override val response: Response<List<Task>>) : TaskListState()
 data class LoadingTaskListState(override val response: Response<List<Task>>? = null) : TaskListState()
 data class ErrorTaskListState(override val response: Response<List<Task>>) : TaskListState()
+data class NotLoadedTaskListState(override val response: Response<List<Task>>? = null) : TaskListState()
