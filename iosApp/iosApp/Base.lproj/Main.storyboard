@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sLx-P2-fNx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jnu-yY-gPh">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Tasks list-->
         <scene sceneID="DIv-Wp-352">
             <objects>
                 <viewController id="sLx-P2-fNx" customClass="ViewController" customModule="My_ToDo_List" customModuleProvider="target" sceneMemberID="viewController">
@@ -15,57 +15,72 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="flm-Wb-GXZ">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bwj-rY-Qzw">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskCell" id="Tes-s2-O5b">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tes-s2-O5b" id="pUy-n6-IIP">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="sLx-P2-fNx" id="oNE-RX-mVf"/>
+                                    <outlet property="delegate" destination="sLx-P2-fNx" id="J7k-0b-wCD"/>
+                                </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No tasks" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WlO-gX-2vE">
-                                <rect key="frame" x="0.0" y="404" width="414" height="90"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No tasks" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SZM-pS-YXS">
+                                <rect key="frame" x="0.0" y="426" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" id="AGK-7w-gPZ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="e24-Ef-DmP">
+                                <rect key="frame" x="187" y="428" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="color" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="color" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcz-qL-dgg">
-                                <rect key="frame" x="91" y="735" width="239" height="55"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                                <state key="normal" title="Load">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="click:" destination="sLx-P2-fNx" eventType="touchUpInside" id="YcB-s8-s15"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="yfW-PR-exx" firstAttribute="trailing" secondItem="flm-Wb-GXZ" secondAttribute="trailing" id="JwS-gN-mQD"/>
-                            <constraint firstItem="yfW-PR-exx" firstAttribute="trailing" secondItem="WlO-gX-2vE" secondAttribute="trailing" id="Tzw-VM-3E3"/>
-                            <constraint firstItem="flm-Wb-GXZ" firstAttribute="leading" secondItem="yfW-PR-exx" secondAttribute="leading" id="a6S-bl-Ov1"/>
-                            <constraint firstItem="WlO-gX-2vE" firstAttribute="leading" secondItem="yfW-PR-exx" secondAttribute="leading" id="hIp-DO-pTK"/>
-                            <constraint firstItem="flm-Wb-GXZ" firstAttribute="top" secondItem="yfW-PR-exx" secondAttribute="top" id="ldh-Hc-Krt"/>
-                            <constraint firstItem="WlO-gX-2vE" firstAttribute="top" secondItem="yfW-PR-exx" secondAttribute="top" id="mD5-tq-GOk"/>
-                            <constraint firstItem="yfW-PR-exx" firstAttribute="bottom" secondItem="flm-Wb-GXZ" secondAttribute="bottom" id="uDF-sC-R5j"/>
-                            <constraint firstItem="yfW-PR-exx" firstAttribute="bottom" secondItem="WlO-gX-2vE" secondAttribute="bottom" id="w3g-DQ-dsI"/>
+                            <constraint firstItem="bwj-rY-Qzw" firstAttribute="top" secondItem="yfW-PR-exx" secondAttribute="top" id="LFs-fc-jwN"/>
+                            <constraint firstItem="yfW-PR-exx" firstAttribute="bottom" secondItem="bwj-rY-Qzw" secondAttribute="bottom" id="PF6-2Z-XKM"/>
+                            <constraint firstItem="yfW-PR-exx" firstAttribute="trailing" secondItem="bwj-rY-Qzw" secondAttribute="trailing" id="aRw-N7-8bT"/>
+                            <constraint firstItem="bwj-rY-Qzw" firstAttribute="leading" secondItem="yfW-PR-exx" secondAttribute="leading" id="ol6-9P-xgz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yfW-PR-exx"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Tasks list" id="bIg-Ot-lWh"/>
                     <connections>
-                        <outlet property="progressBar" destination="AGK-7w-gPZ" id="wfe-fh-j7X"/>
-                        <outlet property="tasksList" destination="flm-Wb-GXZ" id="gnu-ah-iIf"/>
-                        <outlet property="textNoTasks" destination="AGK-7w-gPZ" id="hXh-4W-pce"/>
+                        <outlet property="progressBar" destination="e24-Ef-DmP" id="e6y-3G-5ik"/>
+                        <outlet property="tasksList" destination="bwj-rY-Qzw" id="Nee-rh-WWj"/>
+                        <outlet property="textNoItems" destination="SZM-pS-YXS" id="gcy-ob-JIg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lYn-Ec-Zcb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="957.97101449275374" y="20.758928571428569"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="3RC-b8-izm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jnu-yY-gPh" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sxl-Ij-AwR">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="sLx-P2-fNx" kind="relationship" relationship="rootViewController" id="JMx-cL-RXN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eVk-RT-t5Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="47.826086956521742" y="20.758928571428569"/>
         </scene>

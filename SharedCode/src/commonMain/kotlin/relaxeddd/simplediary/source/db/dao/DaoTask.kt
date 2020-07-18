@@ -11,7 +11,7 @@ class DaoTask(database: Database) {
     internal fun insert(item: Task) {
         db.insertItem(
             item.title,
-            item.description
+            item.desc
         )
     }
 
