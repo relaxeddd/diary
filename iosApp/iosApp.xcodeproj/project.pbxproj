@@ -11,7 +11,7 @@
 		83635D5F24715A84008222C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83635D5E24715A84008222C3 /* SceneDelegate.swift */; };
 		83635D6324715A85008222C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83635D6224715A85008222C3 /* Assets.xcassets */; };
 		83635D6624715A85008222C3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83635D6524715A85008222C3 /* Preview Assets.xcassets */; };
-		836B0C5824B9DFC4009A39F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C5724B9DFC4009A39F2 /* ViewController.swift */; };
+		836B0C5824B9DFC4009A39F2 /* ViewControllerTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C5724B9DFC4009A39F2 /* ViewControllerTaskList.swift */; };
 		836B0C5F24BB2089009A39F2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 836B0C6124BB2089009A39F2 /* Localizable.strings */; };
 		836B0C6324BB22EA009A39F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 836B0C6524BB22EA009A39F2 /* Main.storyboard */; };
 		836B0C6B24BB2796009A39F2 /* Func.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C6A24BB2796009A39F2 /* Func.swift */; };
@@ -42,7 +42,7 @@
 		83635D6224715A85008222C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83635D6524715A85008222C3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		83635D6A24715A85008222C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		836B0C5724B9DFC4009A39F2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		836B0C5724B9DFC4009A39F2 /* ViewControllerTaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskList.swift; sourceTree = "<group>"; };
 		836B0C5A24BAEBFD009A39F2 /* SharedCode */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SharedCode; path = ../SharedCode; sourceTree = "<group>"; };
 		836B0C5B24BAEC6A009A39F2 /* SharedCode.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SharedCode.framework.dSYM; path = ../SharedCode/build/bin/ios/debugFramework/SharedCode.framework.dSYM; sourceTree = "<group>"; };
 		836B0C6024BB2089009A39F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -89,15 +89,15 @@
 		83635D5B24715A84008222C3 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				83F1A0A324C3255D00EB1F6B /* util */,
+				83F1A0A224C3251900EB1F6B /* view */,
 				83635D5C24715A84008222C3 /* AppDelegate.swift */,
 				83635D5E24715A84008222C3 /* SceneDelegate.swift */,
 				83635D6224715A85008222C3 /* Assets.xcassets */,
 				83635D6A24715A85008222C3 /* Info.plist */,
 				83635D6424715A85008222C3 /* Preview Content */,
 				836B0C6524BB22EA009A39F2 /* Main.storyboard */,
-				836B0C5724B9DFC4009A39F2 /* ViewController.swift */,
 				836B0C6124BB2089009A39F2 /* Localizable.strings */,
-				836B0C6A24BB2796009A39F2 /* Func.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -119,6 +119,22 @@
 				836B0C5A24BAEBFD009A39F2 /* SharedCode */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		83F1A0A224C3251900EB1F6B /* view */ = {
+			isa = PBXGroup;
+			children = (
+				836B0C5724B9DFC4009A39F2 /* ViewControllerTaskList.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		83F1A0A324C3255D00EB1F6B /* util */ = {
+			isa = PBXGroup;
+			children = (
+				836B0C6A24BB2796009A39F2 /* Func.swift */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,7 +234,7 @@
 			files = (
 				83635D5D24715A84008222C3 /* AppDelegate.swift in Sources */,
 				83635D5F24715A84008222C3 /* SceneDelegate.swift in Sources */,
-				836B0C5824B9DFC4009A39F2 /* ViewController.swift in Sources */,
+				836B0C5824B9DFC4009A39F2 /* ViewControllerTaskList.swift in Sources */,
 				836B0C6B24BB2796009A39F2 /* Func.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
