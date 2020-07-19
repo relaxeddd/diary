@@ -1,4 +1,10 @@
 
 /* Class = "UILabel"; text = "No tasks"; ObjectID = "SZM-pS-YXS"; */
 "SZM-pS-YXS.text" = "No tasks";
-"bIg-Ot-lWh.text" = "Список задач";
+"bIg-Ot-lWh.title" = "Список задач";
+"Lvx-rI-y3Q.title" = "Новая задача";
+
+"bff-qe-39P.placeholder" = "Введите заголовок";
+"iOS-IN-mE1.placeholder" = "Введите описание";
+"Zs4-Rf-QyQ.placeholder" = "Заголовок";
+"OMr-gH-STq.placeholder" = "Описание";

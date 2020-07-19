@@ -1,4 +1,10 @@
 
 /* Class = "UILabel"; text = "No tasks"; ObjectID = "SZM-pS-YXS"; */
 "SZM-pS-YXS.text" = "No tasks";
-"bIg-Ot-lWh.text" = "Task list";
+"bIg-Ot-lWh.title" = "Task list";
+"Lvx-rI-y3Q.title" = "New task";
+
+"bff-qe-39P.placeholder" = "Enter title";
+"iOS-IN-mE1.placeholder" = "Enter description";
+"Zs4-Rf-QyQ.placeholder" = "Title";
+"OMr-gH-STq.placeholder" = "Description";

@@ -35,6 +35,15 @@ class ViewControllerTaskList: UIViewController, UITableViewDataSource, UITableVi
         viewModel.loadTasks()
     }
     
+    @IBAction func onSaveTaskCard(_ segue: UIStoryboardSegue) {
+        guard let viewControllerTaskCard = segue.source as? ViewControllerTaskCard else { return }
+        let (title, desc) = viewControllerTaskCard.getTaskData()
+        let task = Task(id: 412, title: title, desc: desc)
+        
+        tasks.append(task)
+        tasksList.reloadData()
+    }
+    
     /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -49,10 +58,10 @@ class ViewControllerTaskList: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell")
-        cell?.textLabel?.text = tasks[indexPath.row].title
-        cell?.detailTextLabel?.text = tasks[indexPath.row].desc
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell") as! ViewCellTaskTableViewCell
+        cell.textTitle?.text = tasks[indexPath.row].title
+        cell.textDesc?.text = tasks[indexPath.row].desc
+        return cell
     }
     
     // MARK: - Common
