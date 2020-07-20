@@ -1,39 +1,35 @@
 package relaxeddd.simplediary.viewmodel
 
 import dev.icerock.moko.mvvm.livedata.MutableLiveData
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Job
 import org.kodein.di.erased.instance
 import relaxeddd.simplediary.di.KodeinInjector
-import relaxeddd.simplediary.domain.usecase.task.UseCaseTaskGetList
+import relaxeddd.simplediary.domain.Response
+import relaxeddd.simplediary.source.repository.RepositoryTasks
 import relaxeddd.simplediary.utils.launchSilent
-import kotlin.coroutines.CoroutineContext
 
 class ViewModelTaskList : ViewModelBase() {
 
-    val listTasks = MutableLiveData<TaskListState>(NotLoadedTaskListState())
+    private val repositoryTasks by KodeinInjector.instance<RepositoryTasks>()
+
+    val state = MutableLiveData<TaskListState>(NotLoadedTaskListState())
     val isVisibleTextNoItems = MutableLiveData(true)
     val isVisibleTaskList = MutableLiveData(true)
 
-    private val useCaseTaskGetList by KodeinInjector.instance<UseCaseTaskGetList>()
-
-    private val coroutineContext by KodeinInjector.instance<CoroutineContext>()
-    private var job: Job = Job()
-    private val exceptionHandler = CoroutineExceptionHandler { _, e ->
-        print(e)
+    init {
+        repositoryTasks.tasks.addObserver {
+            isVisibleTaskList.postValue(it.isNotEmpty())
+            isVisibleTextNoItems.postValue(it.isEmpty())
+            state.postValue(SuccessTaskListState(Response(it)))
+        }
+        repositoryTasks.exception.addObserver {
+            isVisibleTaskList.postValue(false)
+            isVisibleTextNoItems.postValue(true)
+            state.postValue(ErrorTaskListState(Response(null, it)))
+        }
     }
 
-    fun loadTasks() = launchSilent(coroutineContext, exceptionHandler, job) {
-        listTasks.postValue(LoadingTaskListState())
-
-        val response = useCaseTaskGetList.run()
-
-        if (response.isValid) {
-            listTasks.postValue(SuccessTaskListState(response))
-            isVisibleTextNoItems.postValue(response.data?.isNotEmpty() == true)
-        } else {
-            listTasks.postValue(ErrorTaskListState(response))
-            isVisibleTextNoItems.postValue(response.data?.isNotEmpty() == true)
-        }
+    fun load() = launchSilent(coroutineContext, exceptionHandler, job) {
+        state.postValue(LoadingTaskListState())
+        repositoryTasks.init()
     }
 }
