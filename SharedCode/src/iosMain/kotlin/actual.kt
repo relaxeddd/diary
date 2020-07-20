@@ -19,7 +19,7 @@ actual fun platformName() : String {
     return UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
 }
 
-actual fun getSqlDriver(): SqlDriver? {
+actual fun getSqlDriver(): SqlDriver {
     val driver: SqlDriver = NativeSqliteDriver(Database.Schema, "relaxeddd.diary.db")
     return driver
 }

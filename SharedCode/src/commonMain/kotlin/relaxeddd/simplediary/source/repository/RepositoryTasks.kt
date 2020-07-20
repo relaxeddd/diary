@@ -1,10 +1,7 @@
 package relaxeddd.simplediary.source.repository
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import relaxeddd.simplediary.ApplicationDispatcher
-import relaxeddd.simplediary.Database
-import relaxeddd.simplediary.data.TaskModel
+import dev.icerock.moko.mvvm.livedata.LiveData
+import dev.icerock.moko.mvvm.livedata.MutableLiveData
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.getDataBase
@@ -13,27 +10,43 @@ import relaxeddd.simplediary.source.network.ApiTask
 
 class RepositoryTasks(private val apiTask: ApiTask) {
 
-    private var database: Database? = getDataBase()
+    private val daoTask = DaoTask(getDataBase())
+    private var isInitialized = false
 
-    /*suspend fun insertTask(item: Task): Response<List<Task>> {
-        val cachedTasks = database?.let {
-            val dao = DaoTask(it)
-            dao.insert(item)
-            Response.Success(dao.select().map { cachedTask -> Task(cachedTask) })
+    private val tasks_ = MutableLiveData<List<Task>>(ArrayList())
+    val tasks: LiveData<List<Task>> = tasks_
+
+    private val exception_ = MutableLiveData<Throwable?>(null)
+    val exception: LiveData<Throwable?> = exception_
+
+    suspend fun createTask(title: String, desc: String): Response<Unit> {
+        createTaskInDb(title, desc)
+        tasks_.postValue(fetchTasksFromDb())
+        return Response()
+    }
+
+    suspend fun init() {
+        if (isInitialized) {
+            tasks_.postValue(tasks_.value)
+            return
         }
 
-        return cachedTasks
-    }*/
-
-    suspend fun getTasks() = fetchTasksFromDb().let { tasks ->
-        if (tasks.isEmpty()) { //TODO check
-            apiTask.requestTasks().also { tasksResponse ->
-                if (tasksResponse.isValid) {
-                    tasksResponse.data?.forEach { insertTaskToCache(it) }
+        fetchTasksFromDb().let { tasks ->
+            if (tasks.isEmpty()) {
+                apiTask.requestTasks().also { tasksResponse ->
+                    if (tasksResponse.isValid) {
+                        isInitialized = true
+                        tasksResponse.data?.forEach { createTaskInDb(it.title, it.desc) }
+                        tasks_.postValue(tasksResponse.data ?: ArrayList())
+                    } else {
+                        exception_.postValue(tasksResponse.exception)
+                    }
                 }
+            } else {
+                isInitialized = true
+                tasks_.postValue(tasks)
+                Response(tasks)
             }
-        } else {
-            Response(tasks)
         }
     }
 
@@ -70,7 +83,7 @@ class RepositoryTasks(private val apiTask: ApiTask) {
         }
     }*/
 
-    private suspend fun insertTaskToCache(item: Task) = database?.let { DaoTask(it).insert(item) }
+    private suspend fun createTaskInDb(title: String, desc: String) = daoTask.create(title, desc)
 
-    private suspend fun fetchTasksFromDb() = /*database?.let { DaoTask(it).select().map { cachedTask -> Task(cachedTask) }} ?:*/ emptyList<Task>()
+    private suspend fun fetchTasksFromDb() = daoTask.select().map { cachedTask -> Task(cachedTask) } ?: emptyList<Task>()
 }

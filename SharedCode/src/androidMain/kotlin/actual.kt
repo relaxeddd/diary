@@ -20,7 +20,7 @@ actual fun platformName(): String {
     return "Android"
 }
 
-actual fun getSqlDriver(): SqlDriver? {
+actual fun getSqlDriver(): SqlDriver {
     val driver: SqlDriver = AndroidSqliteDriver(Database.Schema,  InjectorCommon.contextArgs.context, "relaxeddd.diary.db")
     return driver
 }

@@ -6,7 +6,6 @@ import org.kodein.di.erased.instance
 import org.kodein.di.erased.provider
 import org.kodein.di.erased.singleton
 import relaxeddd.simplediary.ApplicationDispatcher
-import relaxeddd.simplediary.domain.usecase.task.UseCaseTaskGetList
 import relaxeddd.simplediary.source.network.ApiTask
 import relaxeddd.simplediary.source.repository.RepositoryTasks
 import kotlin.coroutines.CoroutineContext
@@ -16,11 +15,6 @@ import kotlin.native.concurrent.ThreadLocal
 val KodeinInjector = Kodein {
 
     bind<CoroutineContext>() with provider { ApplicationDispatcher }
-    bind<ApiTask>() with provider { ApiTask() }
-
-    bind<UseCaseTaskGetList>() with singleton {
-        UseCaseTaskGetList(instance())
-    }
-
-    bind<RepositoryTasks>() with provider { RepositoryTasks(instance()) }
+    bind<ApiTask>() with singleton { ApiTask() }
+    bind<RepositoryTasks>() with singleton { RepositoryTasks(instance()) }
 }

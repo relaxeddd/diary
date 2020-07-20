@@ -7,18 +7,17 @@
 //
 
 import UIKit
+import SharedCode
 
-class ViewControllerTaskCard: UIViewController {
+class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
 
     @IBOutlet weak var editTextTitle: UITextField!
     @IBOutlet weak var editTextDesc: UITextField!
     @IBOutlet weak var buttonSave: UIBarButtonItem!
     @IBOutlet weak var buttonCancel: UIBarButtonItem!
     
-    // MARK: - View
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    // MARK: - Init
+    override func initView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
         
@@ -27,12 +26,24 @@ class ViewControllerTaskCard: UIViewController {
         editTextTitle.addTarget(self, action: #selector(onTextTitleChanged), for: .editingChanged)
     }
     
+    override func initViewModel() {
+        viewModel = ViewModelTaskCard()
+        viewModel.state.addObserver { (state) in
+            self.onStateChanged(state: (state as? TaskCreateState))
+        }
+    }
+    
+    // MARK: - View
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
     @objc private func onTextTitleChanged() {
         buttonSave.isEnabled = !(editTextTitle.text?.isEmpty ?? false)
+    }
+    
+    @IBAction func onSaveClicked(_ sender: Any) {
+        viewModel.createTask(title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "")
     }
     
     @IBAction func onCancelClicked(_ sender: Any) {
@@ -52,7 +63,22 @@ class ViewControllerTaskCard: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    // MARK: - Common
+    private func onStateChanged(state: TaskCreateState?) {
+        if state is SuccessTaskCreateState {
+            dismiss(animated: true, completion: nil)
+        } else if state is LoadingTaskCreateState {
+            
+        } else if state is NothingTaskCreateState {
+            
+        } else if state is ErrorTaskCreateState {
+            if let error = (state as? ErrorTaskCreateState)?.response.exception?.message {
+                showToast(controller: self, message: error)
+                print(error)
+            }
+        }
+    }
 }
 
 extension ViewControllerTaskCard: UITextFieldDelegate {
