@@ -9,30 +9,28 @@
 import UIKit
 import SharedCode
 
-class ViewControllerTaskList: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Fields
     @IBOutlet weak var tasksList: UITableView!
     @IBOutlet weak var textNoItems: UILabel!
     @IBOutlet weak var progressBar: UIActivityIndicatorView!
     
-    private var viewModel: ViewModelTaskList!
-    
     internal var tasks: [Task] = []
     
     // MARK: - View
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func initView() {
         self.tasksList.isHidden = true
         self.textNoItems.isHidden = false
         self.progressBar.isHidden = true
-
+    }
+    
+    override func initViewModel() {
         viewModel = ViewModelTaskList()
-        viewModel.listTasks.addObserver { (state) in
+        viewModel.state.addObserver { (state) in
             self.onStateChanged(state: (state as? TaskListState))
         }
-        viewModel.loadTasks()
+        viewModel.load()
     }
     
     @IBAction func onSaveTaskCard(_ segue: UIStoryboardSegue) {

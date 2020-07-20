@@ -34,7 +34,7 @@ class FragmentTodoList : FragmentBase<ViewModelTaskList, FragmentTodoListBinding
         binding.recyclerViewTodoList.adapter = adapterTasks
         binding.viewModel = viewModel
 
-        viewModel.listTasks.addObserver { state ->
+        viewModel.state.addObserver { state ->
             when(state) {
                 is LoadingTaskListState -> {
 
@@ -44,10 +44,6 @@ class FragmentTodoList : FragmentBase<ViewModelTaskList, FragmentTodoListBinding
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadTasks()
+        viewModel.load()
     }
 }

@@ -166,7 +166,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="M5b-lh-q5s">
                             <connections>
-                                <segue destination="bxd-xp-9V6" kind="unwind" unwindAction="onSaveTaskCard:" id="AMj-TV-GO7"/>
+                                <action selector="onSaveClicked:" destination="0sp-M7-YtA" id="m5a-hb-zXh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -178,7 +178,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhU-Ob-tGA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="bxd-xp-9V6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1527.536231884058" y="20.758928571428569"/>
         </scene>

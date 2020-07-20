@@ -8,11 +8,8 @@ class DaoTask(database: Database) {
 
     private val db = database.taskModelQueries
 
-    internal fun insert(item: Task) {
-        db.insertItem(
-            item.title,
-            item.desc
-        )
+    internal fun create(title: String, desc: String) {
+        db.insertItem(title, desc)
     }
 
     internal fun delete(id: Long) {
