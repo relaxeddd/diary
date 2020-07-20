@@ -5,10 +5,11 @@ CREATE TABLE taskModel (
     desc TEXT
 );
 
+lastInsertRowId:
+SELECT last_insert_rowid();
 
 insertItem:
 INSERT OR FAIL INTO taskModel(title, desc) VALUES (?, ?);
-
 
 selectAll:
 SELECT * FROM taskModel;
