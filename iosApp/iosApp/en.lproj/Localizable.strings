@@ -6,3 +6,5 @@
   Copyright © 2020 Chechin Vadim. All rights reserved.
 */
 "no_tasks" = "No Tasks";
+"error" = "Error";
+"dismiss" = "Dismiss";
