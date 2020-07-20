@@ -14,7 +14,7 @@ class ApiTask {
 
     private val httpClient = HttpClient()
 
-    @UseExperimental(ImplicitReflectionSerializer::class)
+    @OptIn(ImplicitReflectionSerializer::class, UnstableDefault::class)
     suspend fun requestTasks() = try {
         //val url = ""
         //val json = httpClient.get<String>(url)
