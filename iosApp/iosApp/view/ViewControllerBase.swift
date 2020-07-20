@@ -8,6 +8,7 @@
 
 import UIKit
 import SharedCode
+import MaterialComponents
 
 class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     
@@ -26,6 +27,18 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     
     internal func initViewModel() {
         fatalError("This method must be overridden")
+    }
+    
+    internal func showError(text: String) {
+        let action = MDCSnackbarMessageAction()
+        action.title = NSLocalizedString("dismiss", comment: "")
+        
+        let message = MDCSnackbarMessage()
+        message.automaticallyDismisses = false
+        message.shouldDismissOnOverlayTap = false
+        message.text = NSLocalizedString("error", comment: "") + ": " + text
+        message.action = action
+        MDCSnackbarManager.show(message)
     }
 
     /*

@@ -6,4 +6,5 @@
   Copyright © 2020 Chechin Vadim. All rights reserved.
 */
 "no_tasks" = "Нет задач";
-
+"error" = "Ошибка";
+"dismiss" = "Закрыть";

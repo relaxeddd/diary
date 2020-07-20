@@ -2,14 +2,14 @@ package relaxeddd.simplediary.source.db.dao
 
 import relaxeddd.simplediary.Database
 import relaxeddd.simplediary.data.TaskModel
-import relaxeddd.simplediary.domain.model.Task
 
 class DaoTask(database: Database) {
 
     private val db = database.taskModelQueries
 
-    internal fun create(title: String, desc: String) {
+    internal fun create(title: String, desc: String) : Long {
         db.insertItem(title, desc)
+        return db.lastInsertRowId().executeAsOne()
     }
 
     internal fun delete(id: Long) {

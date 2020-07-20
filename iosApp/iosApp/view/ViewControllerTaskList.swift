@@ -8,6 +8,7 @@
 
 import UIKit
 import SharedCode
+import MaterialComponents
 
 class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableViewDataSource, UITableViewDelegate {
     
@@ -90,7 +91,7 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
             self.progressBar.stopAnimating()
 
             if let error = (state as? ErrorTaskListState)?.response.exception?.message {
-                showToast(controller: self, message: error)
+                showError(text: error)
                 print(error)
             }
         }
