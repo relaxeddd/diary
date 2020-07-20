@@ -60,12 +60,15 @@ kotlin {
                 }
             }
             compilations.each {
-                it.extraOpts("-linker-options", "-lsqlite3")
+                //it.extraOpts("-linker-options", "-lsqlite3")
             }
         }
     }
 
     sourceSets {
+        all {
+            languageSettings.useExperimentalAnnotation("org.mylibrary.OptInAnnotation")
+        }
         commonMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib-common'
 
@@ -97,7 +100,7 @@ kotlin {
             implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutine_version"
             implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serializer_version"
             implementation "io.ktor:ktor-client-ios:$ktor_version"
-            implementation "com.squareup.sqldelight:ios-driver:$sqldelight_version"
+            implementation "com.squareup.sqldelight:native-driver:$sqldelight_version"
         }
     }
 }
