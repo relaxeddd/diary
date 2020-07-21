@@ -15,14 +15,23 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBOutlet weak var editTextDesc: UITextField!
     @IBOutlet weak var buttonSave: UIBarButtonItem!
     @IBOutlet weak var buttonCancel: UIBarButtonItem!
+    @IBOutlet weak var progressBar: UIActivityIndicatorView!
+    
+    private var editTaskId: Int64?
+    private var editTaskTitle: String?
+    private var editTaskDesc: String?
     
     // MARK: - Init
     override func initView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
         
-        buttonSave.isEnabled = false
+        if (editTaskId != nil) {
+            editTextTitle.text = editTaskTitle ?? ""
+            editTextDesc.text = editTaskDesc ?? ""
+        }
         
+        buttonSave.isEnabled = editTaskId != nil
         editTextTitle.addTarget(self, action: #selector(onTextTitleChanged), for: .editingChanged)
     }
     
@@ -34,7 +43,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     }
     
     // MARK: - View
-    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+    @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
@@ -43,15 +52,23 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     }
     
     @IBAction func onSaveClicked(_ sender: Any) {
-        viewModel.createTask(title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "")
+        view.endEditing(true)
+        if (editTaskId != nil) {
+            viewModel.updateTask(id: editTaskId!, title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "")
+        } else {
+            viewModel.createTask(title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "")
+        }
     }
     
     @IBAction func onCancelClicked(_ sender: Any) {
+        view.endEditing(true)
         dismiss(animated: true, completion: nil)
     }
     
-    func getTaskData() -> (String, String) {
-        return (editTextTitle.text ?? "", editTextDesc.text ?? "")
+    func setEditTaskData(id: Int64, title: String, desc: String) {
+        editTaskId = id
+        editTaskTitle = title
+        editTaskDesc = desc
     }
     
     /*
@@ -66,15 +83,17 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     
     // MARK: - Common
     private func onStateChanged(state: TaskCreateState?) {
-        if state is SuccessTaskCreateState {
+        if state is SuccessTaskCardState {
+            progressBar.stopAnimating()
             dismiss(animated: true, completion: nil)
         } else if state is LoadingTaskCreateState {
-            
-        } else if state is NothingTaskCreateState {
-            
-        } else if state is ErrorTaskCreateState {
-            if let error = (state as? ErrorTaskCreateState)?.response.exception?.message {
-                showToast(controller: self, message: error)
+            progressBar.startAnimating()
+        } else if state is EmptyTaskCreateState {
+            progressBar.stopAnimating()
+        } else if state is ErrorTaskCardState {
+            progressBar.stopAnimating()
+            if let error = (state as? ErrorTaskCardState)?.response.exception?.message {
+                showError(text: error)
                 print(error)
             }
         }

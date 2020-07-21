@@ -34,22 +34,26 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
         viewModel.load()
     }
     
-    @IBAction func onSaveTaskCard(_ segue: UIStoryboardSegue) {
-        guard let viewControllerTaskCard = segue.source as? ViewControllerTaskCard else { return }
-        let (title, desc) = viewControllerTaskCard.getTaskData()
-        let task = Task(id: 412, title: title, desc: desc)
-        
-        tasks.append(task)
-        tasksList.reloadData()
-    }
+//    @IBAction func onSaveTaskCard(_ segue: UIStoryboardSegue) {
+//        guard let viewControllerTaskCard = segue.source as? ViewControllerTaskCard else { return }
+//        let (title, desc) = viewControllerTaskCard.getTaskData()
+//        let task = Task(id: 412, title: title, desc: desc)
+//
+//        tasks.append(task)
+//        tasksList.reloadData()
+//    }
     
-    /*
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if (segue.identifier == "taskEdit") {
+            if let taskIx = tasksList?.indexPathForSelectedRow?.row {
+                let task = tasks[taskIx]
+                let navigationController = segue.destination as? UINavigationController
+                let viewControllerTaskCard = navigationController?.topViewController as? ViewControllerTaskCard
+                
+                viewControllerTaskCard?.setEditTaskData(id: task.id, title: task.title, desc: task.desc)
+            }
+        }
     }
-    */
     
     // MARK: - Table view tasks list
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -63,6 +67,19 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
         return cell
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteItem = UIContextualAction(style: .destructive, title: NSLocalizedString("delete", comment: "")) { (contextualAction, view, boolValue) in
+            self.viewModel.deleteTask(id: self.tasks[indexPath.row].id)
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteItem])
+
+        return swipeActions
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     // MARK: - Common
     private func onStateChanged(state: TaskListState?) {
         if state is NotLoadedTaskListState {
@@ -70,21 +87,18 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
             self.textNoItems.isHidden = false
             self.progressBar.stopAnimating()
         } else if state is LoadingTaskListState {
-            self.tasksList.isHidden = true
+            let tasks = (state as? LoadingTaskListState)?.response?.data as? [Task] ?? []
+            
+            self.tasksList.isHidden = tasks.isEmpty
             self.textNoItems.isHidden = true
             self.progressBar.startAnimating()
+            updateList(tasks: tasks)
         } else if state is SuccessTaskListState {
-            self.tasksList.isHidden = false
-            self.textNoItems.isHidden = true
+            let tasks = (state as? SuccessTaskListState)?.response.data as? [Task] ?? []
+            
             self.progressBar.stopAnimating()
-
-            if let tasksAnswer = (state as? SuccessTaskListState)?.response.data {
-                self.tasks = tasksAnswer as! [Task]
-                print(self.tasks)
-            } else {
-
-            }
-            self.tasksList.reloadData()
+            self.tasksList.isHidden = false
+            updateList(tasks: tasks)
         } else if state is ErrorTaskListState {
             self.tasksList.isHidden = true
             self.textNoItems.isHidden = false
@@ -94,6 +108,27 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
                 showError(text: error)
                 print(error)
             }
+        }
+    }
+    
+    private func updateList(tasks: [Task]) {
+        var isNeedUpdate = false
+        
+        if (tasks.count == self.tasks.count) {
+            for task in tasks {
+                if (!self.tasks.contains(task)) {
+                    isNeedUpdate = true
+                    break
+                }
+            }
+        } else {
+            isNeedUpdate = true
+        }
+        
+        if (isNeedUpdate) {
+            self.tasks = tasks
+            self.tasksList.reloadData()
+            self.textNoItems.isHidden = !self.tasks.isEmpty
         }
     }
 }

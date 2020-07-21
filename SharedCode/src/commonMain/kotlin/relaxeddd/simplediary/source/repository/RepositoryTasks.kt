@@ -2,6 +2,7 @@ package relaxeddd.simplediary.source.repository
 
 import dev.icerock.moko.mvvm.livedata.LiveData
 import dev.icerock.moko.mvvm.livedata.MutableLiveData
+import kotlinx.coroutines.delay
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.getDataBase
@@ -19,24 +20,19 @@ class RepositoryTasks(private val apiTask: ApiTask) {
     private val exception_ = MutableLiveData<Throwable?>(null)
     val exception: LiveData<Throwable?> = exception_
 
-    suspend fun createTask(title: String, desc: String): Response<Unit> {
-        createTaskInDb(title, desc)
-        tasks_.postValue(fetchTasksFromDb())
-        return Response()
-    }
-
     suspend fun init() {
         if (isInitialized) {
             tasks_.postValue(tasks_.value)
             return
         }
 
+        delay(1000) //TODO for testing
         fetchTasksFromDb().let { tasks ->
             if (tasks.isEmpty()) {
                 apiTask.requestTasks().also { tasksResponse ->
                     if (tasksResponse.isValid) {
                         isInitialized = true
-                        tasksResponse.data?.forEach { createTaskInDb(it.title, it.desc) }
+                        tasksResponse.data?.forEach { daoTask.create(it.title, it.desc) }
                         tasks_.postValue(tasksResponse.data ?: ArrayList())
                     } else {
                         exception_.postValue(tasksResponse.exception)
@@ -48,6 +44,18 @@ class RepositoryTasks(private val apiTask: ApiTask) {
                 Response(tasks)
             }
         }
+    }
+
+    suspend fun createTask(title: String, desc: String): Response<Unit> {
+        return performDbOperation { daoTask.create(title, desc) }
+    }
+
+    suspend fun deleteTask(id: Long): Response<Unit> {
+        return performDbOperation { daoTask.delete(id) }
+    }
+
+    suspend fun updateTask(id: Long, title: String, desc: String): Response<Unit> {
+        return performDbOperation { daoTask.update(id, title, desc) }
     }
 
     /*suspend fun deleteLocation(location: Task): Response<List<Task>> {
@@ -83,7 +91,16 @@ class RepositoryTasks(private val apiTask: ApiTask) {
         }
     }*/
 
-    private suspend fun createTaskInDb(title: String, desc: String) = daoTask.create(title, desc)
-
     private suspend fun fetchTasksFromDb() = daoTask.select().map { cachedTask -> Task(cachedTask) } ?: emptyList<Task>()
+
+    private suspend fun performDbOperation(operation: () -> Unit) : Response<Unit> {
+        try {
+            operation()
+            delay(1000) //TODO for testing
+            tasks_.postValue(fetchTasksFromDb())
+            return Response()
+        } catch (e: Exception) {
+            return Response(exception = e)
+        }
+    }
 }

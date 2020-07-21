@@ -5,14 +5,17 @@ CREATE TABLE taskModel (
     desc TEXT
 );
 
+selectAll:
+SELECT * FROM taskModel;
+
 lastInsertRowId:
 SELECT last_insert_rowid();
 
 insertItem:
 INSERT OR FAIL INTO taskModel(title, desc) VALUES (?, ?);
 
-selectAll:
-SELECT * FROM taskModel;
-
 deleteItem:
 DELETE FROM taskModel WHERE id = ?;
+
+updateItem:
+REPLACE INTO taskModel(id, title, desc) VALUES (?, ?, ?);
