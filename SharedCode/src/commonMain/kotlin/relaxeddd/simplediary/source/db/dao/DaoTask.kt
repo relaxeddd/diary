@@ -7,6 +7,8 @@ class DaoTask(database: Database) {
 
     private val db = database.taskModelQueries
 
+    internal fun select() : List<TaskModel> = db.selectAll().executeAsList()
+
     internal fun create(title: String, desc: String) : Long {
         db.insertItem(title, desc)
         return db.lastInsertRowId().executeAsOne()
@@ -16,5 +18,7 @@ class DaoTask(database: Database) {
         db.deleteItem(id)
     }
 
-    internal fun select() : List<TaskModel> = db.selectAll().executeAsList()
+    internal fun update(id: Long, title: String, desc: String) {
+        db.updateItem(id, title, desc)
+    }
 }

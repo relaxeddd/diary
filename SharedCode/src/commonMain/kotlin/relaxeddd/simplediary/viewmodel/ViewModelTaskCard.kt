@@ -10,7 +10,7 @@ class ViewModelTaskCard : ViewModelBase() {
 
     private val repositoryTasks by KodeinInjector.instance<RepositoryTasks>()
 
-    val state = MutableLiveData<TaskCreateState>(NothingTaskCreateState())
+    val state = MutableLiveData<TaskCreateState>(EmptyTaskCreateState())
 
     fun createTask(title: String, desc: String) = launchSilent(coroutineContext, exceptionHandler, job) {
         state.postValue(LoadingTaskCreateState())
@@ -18,9 +18,21 @@ class ViewModelTaskCard : ViewModelBase() {
         val response = repositoryTasks.createTask(title, desc)
 
         if (response.isValid) {
-            state.postValue(SuccessTaskCreateState(response))
+            state.postValue(SuccessTaskCardState(response))
         } else {
-            state.postValue(ErrorTaskCreateState(response))
+            state.postValue(ErrorTaskCardState(response))
+        }
+    }
+
+    fun updateTask(id: Long, title: String, desc: String) = launchSilent(coroutineContext, exceptionHandler, job) {
+        state.postValue(LoadingTaskCreateState())
+
+        val response = repositoryTasks.updateTask(id, title, desc)
+
+        if (response.isValid) {
+            state.postValue(SuccessTaskCardState(response))
+        } else {
+            state.postValue(ErrorTaskCardState(response))
         }
     }
 }
