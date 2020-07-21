@@ -14,7 +14,7 @@ data class NotLoadedTaskListState(override val response: Response<List<Task>>? =
 sealed class TaskCreateState {
     abstract val response: Response<Unit>?
 }
-data class SuccessTaskCreateState(override val response: Response<Unit>) : TaskCreateState()
+data class SuccessTaskCardState(override val response: Response<Unit>) : TaskCreateState()
 data class LoadingTaskCreateState(override val response: Response<Unit>? = null) : TaskCreateState()
-data class ErrorTaskCreateState(override val response: Response<Unit>) : TaskCreateState()
-data class NothingTaskCreateState(override val response: Response<Unit>? = null) : TaskCreateState()
+data class ErrorTaskCardState(override val response: Response<Unit>) : TaskCreateState()
+data class EmptyTaskCreateState(override val response: Response<Unit>? = null) : TaskCreateState()

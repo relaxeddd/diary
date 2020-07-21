@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskCell" textLabel="5Gq-Mz-Fs7" detailTextLabel="oAY-qo-4Tj" style="IBUITableViewCellStyleSubtitle" id="Tes-s2-O5b" customClass="ViewCellTaskTableViewCell" customModule="My_ToDo_List" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="TaskCell" textLabel="5Gq-Mz-Fs7" detailTextLabel="oAY-qo-4Tj" style="IBUITableViewCellStyleSubtitle" id="Tes-s2-O5b" customClass="ViewCellTaskTableViewCell" customModule="My_ToDo_List" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tes-s2-O5b" id="pUy-n6-IIP">
@@ -45,6 +45,7 @@
                                         <connections>
                                             <outlet property="textDesc" destination="oAY-qo-4Tj" id="OSx-tl-4Cv"/>
                                             <outlet property="textTitle" destination="5Gq-Mz-Fs7" id="Igr-X3-Ied"/>
+                                            <segue destination="ID0-iz-uo1" kind="presentation" identifier="taskEdit" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="26O-UO-1CG"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -140,6 +141,11 @@
                                     <outlet property="delegate" destination="0sp-M7-YtA" id="7eh-c5-DSO"/>
                                 </connections>
                             </textField>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bEX-xe-6qs">
+                                <rect key="frame" x="187" y="428" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -175,6 +181,7 @@
                         <outlet property="buttonSave" destination="M5b-lh-q5s" id="DlO-Mj-nDf"/>
                         <outlet property="editTextDesc" destination="iOS-IN-mE1" id="A49-w7-lL0"/>
                         <outlet property="editTextTitle" destination="bff-qe-39P" id="ncp-bY-lRV"/>
+                        <outlet property="progressBar" destination="bEX-xe-6qs" id="gbh-7w-fQJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhU-Ob-tGA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -219,4 +226,7 @@
             <point key="canvasLocation" x="1528" y="-664"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="26O-UO-1CG"/>
+    </inferredMetricsTieBreakers>
 </document>

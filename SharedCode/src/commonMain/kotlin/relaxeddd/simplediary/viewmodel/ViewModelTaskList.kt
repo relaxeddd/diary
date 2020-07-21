@@ -32,4 +32,9 @@ class ViewModelTaskList : ViewModelBase() {
         state.postValue(LoadingTaskListState())
         repositoryTasks.init()
     }
+
+    fun deleteTask(id: Long) = launchSilent(coroutineContext, exceptionHandler, job) {
+        state.postValue(LoadingTaskListState(Response(repositoryTasks.tasks.value)))
+        repositoryTasks.deleteTask(id)
+    }
 }
