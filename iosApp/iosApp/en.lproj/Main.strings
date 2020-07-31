@@ -1,10 +1,40 @@
 
-/* Class = "UILabel"; text = "No tasks"; ObjectID = "SZM-pS-YXS"; */
-"SZM-pS-YXS.text" = "No tasks";
-"bIg-Ot-lWh.title" = "Task list";
+/* Class = "UILabel"; text = "Title"; ObjectID = "5Gq-Mz-Fs7"; */
+"5Gq-Mz-Fs7.text" = "Task title";
+
+/* Class = "UINavigationItem"; title = "New task"; ObjectID = "Lvx-rI-y3Q"; */
 "Lvx-rI-y3Q.title" = "New task";
 
+/* Class = "UILabel"; text = "Description"; ObjectID = "OMr-gH-STq"; */
+"OMr-gH-STq.text" = "Description";
+
+/* Class = "UILabel"; text = "No tasks"; ObjectID = "SZM-pS-YXS"; */
+"SZM-pS-YXS.text" = "No tasks";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Zs4-Rf-QyQ"; */
+"Zs4-Rf-QyQ.text" = "Title";
+
+/* Class = "UINavigationItem"; title = "Task list"; ObjectID = "bIg-Ot-lWh"; */
+"bIg-Ot-lWh.title" = "Task list";
+
+/* Class = "UITextField"; placeholder = "Enter title"; ObjectID = "bff-qe-39P"; */
 "bff-qe-39P.placeholder" = "Enter title";
+
+/* Class = "UITextField"; placeholder = "Enter description"; ObjectID = "iOS-IN-mE1"; */
 "iOS-IN-mE1.placeholder" = "Enter description";
-"Zs4-Rf-QyQ.placeholder" = "Title";
-"OMr-gH-STq.placeholder" = "Description";
+
+/* Class = "UILabel"; text = "Priority"; ObjectID = "icD-5o-mHo"; */
+"icD-5o-mHo.text" = "Priority";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "oAY-qo-4Tj"; */
+"oAY-qo-4Tj.text" = "Task description";
+
+/* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[0] = "Low"; ObjectID = "tUy-Dr-Otr"; */
+"tUy-Dr-Otr.segmentTitles[0]" = "Low";
+
+/* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[1] = "Normal"; ObjectID = "tUy-Dr-Otr"; */
+"tUy-Dr-Otr.segmentTitles[1]" = "Normal";
+
+/* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[2] = "High"; ObjectID = "tUy-Dr-Otr"; */
+"tUy-Dr-Otr.segmentTitles[2]" = "High";
+

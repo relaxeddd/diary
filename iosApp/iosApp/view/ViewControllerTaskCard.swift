@@ -20,6 +20,9 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     private var editTaskId: Int64?
     private var editTaskTitle: String?
     private var editTaskDesc: String?
+    private var editTaskPriority: Int32?
+    @IBOutlet weak var toolbar: UINavigationItem!
+    @IBOutlet weak var segmentsPriority: UISegmentedControl!
     
     // MARK: - Init
     override func initView() {
@@ -29,10 +32,13 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         if (editTaskId != nil) {
             editTextTitle.text = editTaskTitle ?? ""
             editTextDesc.text = editTaskDesc ?? ""
+            toolbar.title = editTaskTitle ?? ""
+            segmentsPriority.selectedSegmentIndex = Int(editTaskPriority ?? 0)
         }
         
         buttonSave.isEnabled = editTaskId != nil
         editTextTitle.addTarget(self, action: #selector(onTextTitleChanged), for: .editingChanged)
+        updatePriorityControl()
     }
     
     override func initViewModel() {
@@ -54,9 +60,9 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBAction func onSaveClicked(_ sender: Any) {
         view.endEditing(true)
         if (editTaskId != nil) {
-            viewModel.updateTask(id: editTaskId!, title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "")
+            viewModel.updateTask(id: editTaskId!, title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "", priority: Int32(segmentsPriority.selectedSegmentIndex), rrule: "", location: "")
         } else {
-            viewModel.createTask(title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "")
+            viewModel.createTask(title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "", priority: Int32(segmentsPriority.selectedSegmentIndex), rrule: "", location: "")
         }
     }
     
@@ -65,10 +71,15 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         dismiss(animated: true, completion: nil)
     }
     
-    func setEditTaskData(id: Int64, title: String, desc: String) {
+    @IBAction func onPrioritySelected(_ sender: Any) {
+        updatePriorityControl()
+    }
+    
+    func setEditTaskData(id: Int64, title: String, desc: String, priority: Int32) {
         editTaskId = id
         editTaskTitle = title
         editTaskDesc = desc
+        editTaskPriority = priority
     }
     
     /*
@@ -97,6 +108,10 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
                 print(error)
             }
         }
+    }
+    
+    private func updatePriorityControl() {
+        segmentsPriority.selectedSegmentTintColor = getPriorityColor(priority: segmentsPriority.selectedSegmentIndex)
     }
 }
 
