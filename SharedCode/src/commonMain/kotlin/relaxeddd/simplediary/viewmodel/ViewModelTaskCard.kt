@@ -12,10 +12,11 @@ class ViewModelTaskCard : ViewModelBase() {
 
     val state = MutableLiveData<TaskCreateState>(EmptyTaskCreateState())
 
-    fun createTask(title: String, desc: String) = launchSilent(coroutineContext, exceptionHandler, job) {
+    fun createTask(title: String, desc: String? = null, priority: Int = 0, rrule: String? = null,
+                   location: String? = null) = launchSilent(coroutineContext, exceptionHandler, job) {
         state.postValue(LoadingTaskCreateState())
 
-        val response = repositoryTasks.createTask(title, desc)
+        val response = repositoryTasks.createTask(title, desc, priority, rrule, location)
 
         if (response.isValid) {
             state.postValue(SuccessTaskCardState(response))
@@ -24,10 +25,11 @@ class ViewModelTaskCard : ViewModelBase() {
         }
     }
 
-    fun updateTask(id: Long, title: String, desc: String) = launchSilent(coroutineContext, exceptionHandler, job) {
+    fun updateTask(id: Long, title: String, desc: String? = null, priority: Int = 0, rrule: String? = null,
+                   location: String? = null) = launchSilent(coroutineContext, exceptionHandler, job) {
         state.postValue(LoadingTaskCreateState())
 
-        val response = repositoryTasks.updateTask(id, title, desc)
+        val response = repositoryTasks.updateTask(id, title, desc, priority, rrule, location)
 
         if (response.isValid) {
             state.postValue(SuccessTaskCardState(response))

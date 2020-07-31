@@ -32,7 +32,7 @@ class RepositoryTasks(private val apiTask: ApiTask) {
                 apiTask.requestTasks().also { tasksResponse ->
                     if (tasksResponse.isValid) {
                         isInitialized = true
-                        tasksResponse.data?.forEach { daoTask.create(it.title, it.desc) }
+                        tasksResponse.data?.forEach { daoTask.update(it.id, it.title, it.desc, it.priority, it.rrule, it.location) }
                         tasks_.postValue(tasksResponse.data ?: ArrayList())
                     } else {
                         exception_.postValue(tasksResponse.exception)
@@ -46,16 +46,18 @@ class RepositoryTasks(private val apiTask: ApiTask) {
         }
     }
 
-    suspend fun createTask(title: String, desc: String): Response<Unit> {
-        return performDbOperation { daoTask.create(title, desc) }
+    suspend fun createTask(title: String, desc: String? = null, priority: Int = 0, rrule: String? = null,
+                           location: String? = null): Response<Unit> {
+        return performDbOperation { daoTask.create(title, desc, priority, rrule, location) }
     }
 
     suspend fun deleteTask(id: Long): Response<Unit> {
         return performDbOperation { daoTask.delete(id) }
     }
 
-    suspend fun updateTask(id: Long, title: String, desc: String): Response<Unit> {
-        return performDbOperation { daoTask.update(id, title, desc) }
+    suspend fun updateTask(id: Long, title: String, desc: String? = null, priority: Int = 0, rrule: String? = null,
+                           location: String? = null): Response<Unit> {
+        return performDbOperation { daoTask.update(id, title, desc, priority, rrule, location) }
     }
 
     /*suspend fun deleteLocation(location: Task): Response<List<Task>> {

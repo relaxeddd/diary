@@ -34,15 +34,6 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
         viewModel.load()
     }
     
-//    @IBAction func onSaveTaskCard(_ segue: UIStoryboardSegue) {
-//        guard let viewControllerTaskCard = segue.source as? ViewControllerTaskCard else { return }
-//        let (title, desc) = viewControllerTaskCard.getTaskData()
-//        let task = Task(id: 412, title: title, desc: desc)
-//
-//        tasks.append(task)
-//        tasksList.reloadData()
-//    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "taskEdit") {
             if let taskIx = tasksList?.indexPathForSelectedRow?.row {
@@ -50,7 +41,7 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
                 let navigationController = segue.destination as? UINavigationController
                 let viewControllerTaskCard = navigationController?.topViewController as? ViewControllerTaskCard
                 
-                viewControllerTaskCard?.setEditTaskData(id: task.id, title: task.title, desc: task.desc)
+                viewControllerTaskCard?.setEditTaskData(id: task.id, title: task.title, desc: task.desc, priority: task.priority)
             }
         }
     }
@@ -62,8 +53,8 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell") as! ViewCellTaskTableViewCell
-        cell.textTitle?.text = tasks[indexPath.row].title
-        cell.textDesc?.text = tasks[indexPath.row].desc
+        let task = tasks[indexPath.row]
+        cell.update(title: task.title, desc: task.desc, priority: Int(task.priority))
         return cell
     }
     
