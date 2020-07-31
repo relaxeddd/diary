@@ -1,10 +1,39 @@
 
-/* Class = "UILabel"; text = "No tasks"; ObjectID = "SZM-pS-YXS"; */
-"SZM-pS-YXS.text" = "No tasks";
-"bIg-Ot-lWh.title" = "Список задач";
+/* Class = "UILabel"; text = "Title"; ObjectID = "5Gq-Mz-Fs7"; */
+"5Gq-Mz-Fs7.text" = "Название задачи";
+
+/* Class = "UINavigationItem"; title = "New task"; ObjectID = "Lvx-rI-y3Q"; */
 "Lvx-rI-y3Q.title" = "Новая задача";
 
+/* Class = "UILabel"; text = "Description"; ObjectID = "OMr-gH-STq"; */
+"OMr-gH-STq.text" = "Описание";
+
+/* Class = "UILabel"; text = "No tasks"; ObjectID = "SZM-pS-YXS"; */
+"SZM-pS-YXS.text" = "Нет задач";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Zs4-Rf-QyQ"; */
+"Zs4-Rf-QyQ.text" = "Заголовок";
+
+/* Class = "UINavigationItem"; title = "Task list"; ObjectID = "bIg-Ot-lWh"; */
+"bIg-Ot-lWh.title" = "Список задач";
+
+/* Class = "UITextField"; placeholder = "Enter title"; ObjectID = "bff-qe-39P"; */
 "bff-qe-39P.placeholder" = "Введите заголовок";
+
+/* Class = "UITextField"; placeholder = "Enter description"; ObjectID = "iOS-IN-mE1"; */
 "iOS-IN-mE1.placeholder" = "Введите описание";
-"Zs4-Rf-QyQ.placeholder" = "Заголовок";
-"OMr-gH-STq.placeholder" = "Описание";
+
+/* Class = "UILabel"; text = "Priority"; ObjectID = "icD-5o-mHo"; */
+"icD-5o-mHo.text" = "Приоритет";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "oAY-qo-4Tj"; */
+"oAY-qo-4Tj.text" = "Описание задачи";
+
+/* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[0] = "Low"; ObjectID = "tUy-Dr-Otr"; */
+"tUy-Dr-Otr.segmentTitles[0]" = "Низкий";
+
+/* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[1] = "Normal"; ObjectID = "tUy-Dr-Otr"; */
+"tUy-Dr-Otr.segmentTitles[1]" = "Средний";
+
+/* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[2] = "High"; ObjectID = "tUy-Dr-Otr"; */
+"tUy-Dr-Otr.segmentTitles[2]" = "Высокий";

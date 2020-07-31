@@ -17,3 +17,14 @@ func showToast(controller: UIViewController, message : String) {
         toast.dismiss(animated: true)
     }
 }
+
+func getPriorityColor(priority: Int) -> UIColor {
+    switch priority {
+        case 1:
+            return UIColor.yellow
+        case 2:
+            return UIColor.red
+        default:
+            return UIColor.green
+    }
+}

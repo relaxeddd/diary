@@ -9,16 +9,16 @@ class DaoTask(database: Database) {
 
     internal fun select() : List<TaskModel> = db.selectAll().executeAsList()
 
-    internal fun create(title: String, desc: String) : Long {
-        db.insertItem(title, desc)
+    internal fun create(title: String, desc: String?, priority: Int, rrule: String?, location: String?) : Long {
+        db.insertItem(title, desc, priority, rrule, location)
         return db.lastInsertRowId().executeAsOne()
+    }
+
+    internal fun update(id: Long, title: String, desc: String?, priority: Int, rrule: String?, location: String?) {
+        db.updateItem(id, title, desc, priority, rrule, location)
     }
 
     internal fun delete(id: Long) {
         db.deleteItem(id)
-    }
-
-    internal fun update(id: Long, title: String, desc: String) {
-        db.updateItem(id, title, desc)
     }
 }
