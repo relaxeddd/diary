@@ -13,7 +13,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.EventType
 import relaxeddd.simplediary.ui.main.ActivityMain
@@ -81,7 +80,7 @@ abstract class FragmentBase<VM : ViewModelBase, B : ViewDataBinding> : Fragment(
 
     @CallSuper
     protected open fun configureBinding() {
-        viewModel.navigateEvent.addObserver {
+        viewModel.action.addObserver {
             it?.getTypeIfNotHandled()?.let { type ->
                 //onNavigationEvent(type, it?.args)
             }

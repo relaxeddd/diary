@@ -17,101 +17,90 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBOutlet weak var buttonCancel: UIBarButtonItem!
     @IBOutlet weak var progressBar: UIActivityIndicatorView!
     
-    private var editTaskId: Int64?
-    private var editTaskTitle: String?
-    private var editTaskDesc: String?
-    private var editTaskPriority: Int32?
+    private var editTaskId: Int64? = nil
     @IBOutlet weak var toolbar: UINavigationItem!
     @IBOutlet weak var segmentsPriority: UISegmentedControl!
     
+    private var isTaskEditing: Bool { self.editTaskId != nil }
+    
+    // MARK: - Arguments
+    func setEditTaskData(id: Int64) {
+        editTaskId = id
+    }
+    
     // MARK: - Init
+    override func createViewModel() -> ViewModelTaskCard { ViewModelTaskCard() }
+    override func getProgressBar() -> UIActivityIndicatorView? { progressBar }
+    
     override func initView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
         
-        if (editTaskId != nil) {
-            editTextTitle.text = editTaskTitle ?? ""
-            editTextDesc.text = editTaskDesc ?? ""
-            toolbar.title = editTaskTitle ?? ""
-            segmentsPriority.selectedSegmentIndex = Int(editTaskPriority ?? 0)
-        }
-        
-        buttonSave.isEnabled = editTaskId != nil
         editTextTitle.addTarget(self, action: #selector(onTextTitleChanged), for: .editingChanged)
-        updatePriorityControl()
+        editTextDesc.addTarget(self, action: #selector(onTextDescChanged), for: .editingChanged)
     }
     
     override func initViewModel() {
-        viewModel = ViewModelTaskCard()
-        viewModel.state.addObserver { (state) in
-            self.onStateChanged(state: (state as? TaskCreateState))
+        super.initViewModel()
+        
+        viewModel.taskTitle.addObserver { (value) in
+            let title = value as? String ?? ""
+            if (self.editTextTitle.text != title) {
+                self.editTextTitle.text = title
+            }
+            if (self.isTaskEditing) {
+                self.toolbar.title = title
+            }
         }
+        viewModel.taskDesc.addObserver { (value) in
+            let desc = value as? String ?? ""
+            if (self.editTextDesc.text != desc) {
+                self.editTextDesc.text = desc
+            }
+        }
+        viewModel.taskPriority.addObserver { value in
+            let priority = Int(value as? Int ?? 0)
+            if (self.segmentsPriority.selectedSegmentIndex != priority) {
+                self.segmentsPriority.selectedSegmentIndex = priority
+            }
+            self.segmentsPriority.selectedSegmentTintColor = getPriorityColor(priority: priority)
+        }
+        viewModel.isEnabledButtonSave.addObserver { value in
+            self.buttonSave.isEnabled = value as? Bool ?? false
+        }
+        
+        var convertedTaskId: KotlinLong? = nil
+        if let swiftTaskId = editTaskId {
+            convertedTaskId = KotlinLong(value: swiftTaskId)
+        }
+        viewModel.load(editTaskId: convertedTaskId)
     }
     
-    // MARK: - View
-    @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
-        view.endEditing(true)
-    }
-    
+    // MARK: - User interacion
     @objc private func onTextTitleChanged() {
-        buttonSave.isEnabled = !(editTextTitle.text?.isEmpty ?? false)
+        viewModel.onChangedTitle(value: editTextTitle.text ?? "")
+    }
+    
+    @objc private func onTextDescChanged() {
+        viewModel.onChangedDesc(value: editTextDesc.text ?? "")
+    }
+    
+    @IBAction func onPrioritySelected(_ sender: Any) {
+        viewModel.onChangedPriority(value: Int32(self.segmentsPriority.selectedSegmentIndex))
     }
     
     @IBAction func onSaveClicked(_ sender: Any) {
         view.endEditing(true)
-        if (editTaskId != nil) {
-            viewModel.updateTask(id: editTaskId!, title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "", priority: Int32(segmentsPriority.selectedSegmentIndex), rrule: "", location: "")
-        } else {
-            viewModel.createTask(title: editTextTitle.text ?? "", desc: editTextDesc.text ?? "", priority: Int32(segmentsPriority.selectedSegmentIndex), rrule: "", location: "")
-        }
+        viewModel.onClickedSave()
     }
     
     @IBAction func onCancelClicked(_ sender: Any) {
         view.endEditing(true)
-        dismiss(animated: true, completion: nil)
+        viewModel.onClickedCancel()
     }
     
-    @IBAction func onPrioritySelected(_ sender: Any) {
-        updatePriorityControl()
-    }
-    
-    func setEditTaskData(id: Int64, title: String, desc: String, priority: Int32) {
-        editTaskId = id
-        editTaskTitle = title
-        editTaskDesc = desc
-        editTaskPriority = priority
-    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    // MARK: - Common
-    private func onStateChanged(state: TaskCreateState?) {
-        if state is SuccessTaskCardState {
-            progressBar.stopAnimating()
-            dismiss(animated: true, completion: nil)
-        } else if state is LoadingTaskCreateState {
-            progressBar.startAnimating()
-        } else if state is EmptyTaskCreateState {
-            progressBar.stopAnimating()
-        } else if state is ErrorTaskCardState {
-            progressBar.stopAnimating()
-            if let error = (state as? ErrorTaskCardState)?.response.exception?.message {
-                showError(text: error)
-                print(error)
-            }
-        }
-    }
-    
-    private func updatePriorityControl() {
-        segmentsPriority.selectedSegmentTintColor = getPriorityColor(priority: segmentsPriority.selectedSegmentIndex)
+    @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
 }
 

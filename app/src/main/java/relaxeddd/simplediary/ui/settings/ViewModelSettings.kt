@@ -1,16 +1,14 @@
 package relaxeddd.simplediary.ui.settings
 
 import android.os.Build
-import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import relaxeddd.simplediary.App
-import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.User
 import relaxeddd.simplediary.domain.model.EventType
-import relaxeddd.simplediary.domain.model.NavigationEvent
+import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.model.repository.RepositoryPreferences
 import relaxeddd.simplediary.model.repository.RepositoryUsers
 import relaxeddd.simplediary.viewmodel.ViewModelBase
@@ -31,7 +29,7 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
     val isVisibleReceiveHelp = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
     val clickListenerAppInfo = View.OnClickListener {
-        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_APP_ABOUT)
+        actionM.value = Action(EventType.NAVIGATION_DIALOG_APP_ABOUT)
     }
     val clickListenerSubscription = View.OnClickListener {
         //if (ViewModelBilling.isBillingInit) {
@@ -41,19 +39,19 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
         //}
     }
     val clickListenerSubscriptionInfo = View.OnClickListener {
-        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SUBSCRIPTION_INFO)
+        actionM.value = Action(EventType.NAVIGATION_DIALOG_SUBSCRIPTION_INFO)
     }
     val clickListenerSendFeedback = View.OnClickListener {
-        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_SEND_FEEDBACK)
+        actionM.value = Action(EventType.NAVIGATION_DIALOG_SEND_FEEDBACK)
     }
     val clickListenerLogout = View.OnClickListener {
-        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_CONFIRM_LOGOUT)
+        actionM.value = Action(EventType.NAVIGATION_DIALOG_CONFIRM_LOGOUT)
     }
     val clickListenerRate = View.OnClickListener {
-        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_WEB_PLAY_MARKET)
+        actionM.value = Action(EventType.NAVIGATION_WEB_PLAY_MARKET)
     }
     val clickListenerReceiveHelp = View.OnClickListener {
-        navigateEvent.value = NavigationEvent(EventType.NAVIGATION_DIALOG_RECEIVE_HELP)
+        actionM.value = Action(EventType.NAVIGATION_DIALOG_RECEIVE_HELP)
     }
     val clickListenerTheme = View.OnClickListener {
         /*val args = Bundle()
@@ -72,7 +70,7 @@ class ViewModelSettings(app: App, private val repositoryUsers: RepositoryUsers, 
 
     fun onLogoutDialogResult(isConfirmed: Boolean) {
         if (isConfirmed) {
-            navigateEvent.value = NavigationEvent(EventType.NAVIGATION_GOOGLE_LOGOUT)
+            actionM.value = Action(EventType.NAVIGATION_GOOGLE_LOGOUT)
         }
     }
 

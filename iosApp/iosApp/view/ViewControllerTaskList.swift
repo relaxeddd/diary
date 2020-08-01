@@ -20,17 +20,23 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
     internal var tasks: [Task] = []
     
     // MARK: - View
-    override func initView() {
-        self.tasksList.isHidden = true
-        self.textNoItems.isHidden = false
-        self.progressBar.isHidden = true
-    }
+    override func createViewModel() -> ViewModelTaskList { ViewModelTaskList() }
+    override func getProgressBar() -> UIActivityIndicatorView? { progressBar }
     
     override func initViewModel() {
-        viewModel = ViewModelTaskList()
-        viewModel.state.addObserver { (state) in
-            self.onStateChanged(state: (state as? TaskListState))
+        super.initViewModel()
+        
+        viewModel.isVisibleTaskList.addObserver { value in
+            self.tasksList.isHidden = !(value as? Bool ?? false)
         }
+        viewModel.isVisibleTextNoItems.addObserver { value in
+            self.textNoItems.isHidden = !(value as? Bool ?? true)
+        }
+        viewModel.tasks.addObserver { value in
+            let tasks = value as? [Task] ?? []
+            self.updateList(tasks: tasks)
+        }
+        
         viewModel.load()
     }
     
@@ -41,7 +47,7 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
                 let navigationController = segue.destination as? UINavigationController
                 let viewControllerTaskCard = navigationController?.topViewController as? ViewControllerTaskCard
                 
-                viewControllerTaskCard?.setEditTaskData(id: task.id, title: task.title, desc: task.desc, priority: task.priority)
+                viewControllerTaskCard?.setEditTaskData(id: task.id)
             }
         }
     }
@@ -72,36 +78,6 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
     }
     
     // MARK: - Common
-    private func onStateChanged(state: TaskListState?) {
-        if state is NotLoadedTaskListState {
-            self.tasksList.isHidden = true
-            self.textNoItems.isHidden = false
-            self.progressBar.stopAnimating()
-        } else if state is LoadingTaskListState {
-            let tasks = (state as? LoadingTaskListState)?.response?.data as? [Task] ?? []
-            
-            self.tasksList.isHidden = tasks.isEmpty
-            self.textNoItems.isHidden = true
-            self.progressBar.startAnimating()
-            updateList(tasks: tasks)
-        } else if state is SuccessTaskListState {
-            let tasks = (state as? SuccessTaskListState)?.response.data as? [Task] ?? []
-            
-            self.progressBar.stopAnimating()
-            self.tasksList.isHidden = false
-            updateList(tasks: tasks)
-        } else if state is ErrorTaskListState {
-            self.tasksList.isHidden = true
-            self.textNoItems.isHidden = false
-            self.progressBar.stopAnimating()
-
-            if let error = (state as? ErrorTaskListState)?.response.exception?.message {
-                showError(text: error)
-                print(error)
-            }
-        }
-    }
-    
     private func updateList(tasks: [Task]) {
         var isNeedUpdate = false
         
@@ -119,7 +95,6 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
         if (isNeedUpdate) {
             self.tasks = tasks
             self.tasksList.reloadData()
-            self.textNoItems.isHidden = !self.tasks.isEmpty
         }
     }
 }
