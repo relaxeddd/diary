@@ -7,8 +7,6 @@ import relaxeddd.simplediary.common.OnItemClickListener
 import relaxeddd.simplediary.databinding.FragmentTodoListBinding
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.ui.AdapterTasks
-import relaxeddd.simplediary.viewmodel.LoadingTaskListState
-import relaxeddd.simplediary.viewmodel.SuccessTaskListState
 import relaxeddd.simplediary.viewmodel.ViewModelTaskList
 
 class FragmentTodoList : FragmentBase<ViewModelTaskList, FragmentTodoListBinding>() {
@@ -34,15 +32,8 @@ class FragmentTodoList : FragmentBase<ViewModelTaskList, FragmentTodoListBinding
         binding.recyclerViewTodoList.adapter = adapterTasks
         binding.viewModel = viewModel
 
-        viewModel.state.addObserver { state ->
-            when(state) {
-                is LoadingTaskListState -> {
-
-                }
-                is SuccessTaskListState -> {
-                    adapterTasks.submitList(state.response.data)
-                }
-            }
+        viewModel.tasks.addObserver {
+            adapterTasks.submitList(it)
         }
         viewModel.load()
     }

@@ -1,7 +1,6 @@
 package relaxeddd.simplediary.domain.model
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import relaxeddd.simplediary.data.TaskModel
 
 @Serializable
@@ -11,13 +10,16 @@ data class Task(
     val desc: String = "",
     val priority: Int = 0,
     val rrule: String = "",
-    val location: String = ""
+    val location: String = "",
+    val startDate: Long? = null,
+    val endDate: Long? = null
 ) {
     constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc ?: "",
-        taskModel.priority, taskModel.rrule ?: "", taskModel.location ?: "")
+        taskModel.priority, taskModel.rrule ?: "", taskModel.location ?: "", taskModel.startDate,
+        taskModel.endDate)
 }
 
-class NavigationEvent(private val type: EventType, var args: Map<String, Any>? = null) {
+class Action(private val type: EventType, var args: Map<String, Any>? = null) {
 
     private var isHandled = false
 
@@ -37,6 +39,7 @@ enum class EventType {
     LOADING_HIDE,
     PRESS_BACK,
     EXIT,
+    ERROR,
     INIT_BILLING,
     GOOGLE_AUTH,
     GOOGLE_LOGOUT,

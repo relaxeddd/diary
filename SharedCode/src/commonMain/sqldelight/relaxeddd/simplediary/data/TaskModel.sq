@@ -5,7 +5,9 @@ CREATE TABLE taskModel (
     desc TEXT,
     priority INTEGER as Int NOT NULL DEFAULT 0,
     rrule TEXT,
-    location TEXT
+    location TEXT,
+    startDate INTEGER,
+    endDate INTEGER
 );
 
 selectAll:
@@ -15,10 +17,10 @@ lastInsertRowId:
 SELECT last_insert_rowid();
 
 insertItem:
-INSERT OR FAIL INTO taskModel(title, desc, priority, rrule, location) VALUES (?, ?, ?, ?, ?);
+INSERT OR FAIL INTO taskModel(title, desc, priority, rrule, location, startDate, endDate) VALUES (?, ?, ?, ?, ?, ?, ?);
 
 deleteItem:
 DELETE FROM taskModel WHERE id = ?;
 
 updateItem:
-REPLACE INTO taskModel(id, title, desc, priority, rrule, location) VALUES (?, ?, ?, ?, ?, ?);
+REPLACE INTO taskModel(id, title, desc, priority, rrule, location, startDate, endDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
