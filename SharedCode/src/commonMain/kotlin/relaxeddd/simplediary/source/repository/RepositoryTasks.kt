@@ -33,8 +33,8 @@ class RepositoryTasks(private val apiTask: ApiTask) {
                     if (tasksResponse.isValid) {
                         isInitialized = true
                         tasksResponse.data?.forEach {
-                            daoTask.update(it.id, it.title, it.desc, it.priority, it.rrule, it.location, it.startDate,
-                                it.endDate)
+                            daoTask.update(it.id, it.title, it.desc, it.priority, it.rrule, it.location, it.start,
+                                it.end)
                         }
                         tasks_.postValue(tasksResponse.data ?: ArrayList())
                     } else {

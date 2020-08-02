@@ -20,6 +20,9 @@ class ViewModelTaskCard : ViewModelBase() {
     private val repositoryTasks by KodeinInjector.instance<RepositoryTasks>()
     private var editTaskId: Long? = null
 
+    private val isEnabledButtonSaveM = MutableLiveData(false)
+    val isEnabledButtonSave: LiveData<Boolean> = isEnabledButtonSaveM
+
     private val taskTitleM = MutableLiveData("")
     val taskTitle: LiveData<String> = taskTitleM
 
@@ -29,8 +32,11 @@ class ViewModelTaskCard : ViewModelBase() {
     private val taskPriorityM = MutableLiveData(DEFAULT_PRIORITY)
     val taskPriority: LiveData<Int> = taskPriorityM
 
-    private val isEnabledButtonSaveM = MutableLiveData(false)
-    val isEnabledButtonSave: LiveData<Boolean> = isEnabledButtonSaveM
+    private val taskStartM = MutableLiveData<Long?>(null)
+    val taskStart: LiveData<Long?> = taskStartM
+
+    private val taskEndM = MutableLiveData<Long?>(null)
+    val taskEnd: LiveData<Long?> = taskStartM
 
     private val observerTitle: (String) -> Unit = {
         isEnabledButtonSaveM.value = it.isNotEmpty()
@@ -49,9 +55,11 @@ class ViewModelTaskCard : ViewModelBase() {
         this.editTaskId = editTaskId
         if (editTaskId != null) {
             val editTask = repositoryTasks.tasks.value.find { it.id == editTaskId }
-            taskTitleM.value =  editTask?.title ?: ""
-            taskDescM.value =  editTask?.desc ?: ""
-            taskPriorityM.value =  editTask?.priority ?: DEFAULT_PRIORITY
+            taskTitleM.value = editTask?.title ?: ""
+            taskDescM.value = editTask?.desc ?: ""
+            taskPriorityM.value = editTask?.priority ?: DEFAULT_PRIORITY
+            taskStartM.value = editTask?.start
+            taskEndM.value = editTask?.end
             isEnabledButtonSaveM.value = true
         }
     }
@@ -64,13 +72,13 @@ class ViewModelTaskCard : ViewModelBase() {
         val priority = taskPriority.value
         val rrule: String? = null
         val location: String? = null
-        val startDate: Long? = null
-        val endDate: Long? = null
+        val start: Long? = taskStart.value
+        val end: Long? = taskEnd.value
 
         if (taskId != null) {
-            updateTask(taskId, title, desc, priority, rrule, location, startDate, endDate)
+            updateTask(taskId, title, desc, priority, rrule, location, start, end)
         } else {
-            createTask(title, desc, priority, rrule, location, startDate, endDate)
+            createTask(title, desc, priority, rrule, location, start, end)
         }
     }
 
@@ -88,6 +96,14 @@ class ViewModelTaskCard : ViewModelBase() {
 
     fun onChangedPriority(value: Int) {
         taskPriorityM.postValue(value)
+    }
+
+    fun onChangedStart(value: Long?) {
+        taskStartM.postValue(value)
+    }
+
+    fun onChangedEnd(value: Long?) {
+        taskEndM.postValue(value)
     }
 
     //------------------------------------------------------------------------------------------------------------------

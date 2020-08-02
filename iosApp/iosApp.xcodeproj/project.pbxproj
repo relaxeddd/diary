@@ -21,6 +21,7 @@
 		836B0C6B24BB2796009A39F2 /* Func.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C6A24BB2796009A39F2 /* Func.swift */; };
 		836B0C7524BCD72E009A39F2 /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 836B0C6D24BCCDE6009A39F2 /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		836B0C7724BCD7A4009A39F2 /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836B0C6D24BCCDE6009A39F2 /* SharedCode.framework */; };
+		839394B524D6B3E400897B27 /* EditTextDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839394B424D6B3E400897B27 /* EditTextDate.swift */; };
 		83F1A0A524C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1A0A424C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		836B0C6A24BB2796009A39F2 /* Func.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Func.swift; sourceTree = "<group>"; };
 		836B0C6C24BCCDCD009A39F2 /* SharedCode.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SharedCode.framework.dSYM; path = "../SharedCode/build/xcode-frameworks/SharedCode.framework.dSYM"; sourceTree = "<group>"; };
 		836B0C6D24BCCDE6009A39F2 /* SharedCode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedCode.framework; path = "../SharedCode/build/xcode-frameworks/SharedCode.framework"; sourceTree = "<group>"; };
+		839394B424D6B3E400897B27 /* EditTextDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextDate.swift; sourceTree = "<group>"; };
 		83CD686624D44CA3009146C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		83CD686824D44CFF009146C1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		83F1A0A424C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCellTaskTableViewCell.swift; sourceTree = "<group>"; };
@@ -141,9 +143,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		839394B324D6B3CA00897B27 /* custom */ = {
+			isa = PBXGroup;
+			children = (
+				839394B424D6B3E400897B27 /* EditTextDate.swift */,
+			);
+			path = custom;
+			sourceTree = "<group>";
+		};
 		83F1A0A224C3251900EB1F6B /* view */ = {
 			isa = PBXGroup;
 			children = (
+				839394B324D6B3CA00897B27 /* custom */,
 				836B0C5724B9DFC4009A39F2 /* ViewControllerTaskList.swift */,
 				83F1A0A424C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift */,
 				836A0C7D24C442D8003B0538 /* ViewControllerTaskCard.swift */,
@@ -302,6 +313,7 @@
 				836A0C8024C58F01003B0538 /* ViewControllerBase.swift in Sources */,
 				836A0C7E24C442D8003B0538 /* ViewControllerTaskCard.swift in Sources */,
 				83F1A0A524C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift in Sources */,
+				839394B524D6B3E400897B27 /* EditTextDate.swift in Sources */,
 				836B0C6B24BB2796009A39F2 /* Func.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

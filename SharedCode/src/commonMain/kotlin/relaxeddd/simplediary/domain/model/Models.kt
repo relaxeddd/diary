@@ -11,12 +11,12 @@ data class Task(
     val priority: Int = 0,
     val rrule: String = "",
     val location: String = "",
-    val startDate: Long? = null,
-    val endDate: Long? = null
+    val start: Long? = null,
+    val end: Long? = null
 ) {
     constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc ?: "",
-        taskModel.priority, taskModel.rrule ?: "", taskModel.location ?: "", taskModel.startDate,
-        taskModel.endDate)
+        taskModel.priority, taskModel.rrule ?: "", taskModel.location ?: "",
+        taskModel.start, taskModel.end)
 }
 
 class Action(private val type: EventType, var args: Map<String, Any>? = null) {
