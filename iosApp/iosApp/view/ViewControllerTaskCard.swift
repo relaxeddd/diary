@@ -16,6 +16,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBOutlet weak var buttonSave: UIBarButtonItem!
     @IBOutlet weak var buttonCancel: UIBarButtonItem!
     @IBOutlet weak var progressBar: UIActivityIndicatorView!
+    @IBOutlet weak var editTextStartDate: EditTextDate!
     
     private var editTaskId: Int64? = nil
     @IBOutlet weak var toolbar: UINavigationItem!
@@ -38,11 +39,17 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         
         editTextTitle.addTarget(self, action: #selector(onTextTitleChanged), for: .editingChanged)
         editTextDesc.addTarget(self, action: #selector(onTextDescChanged), for: .editingChanged)
+        editTextStartDate.onDateChanged = { millis in
+            self.onStartDateChanged(startTime: millis)
+        }
     }
     
     override func initViewModel() {
         super.initViewModel()
         
+        viewModel.isEnabledButtonSave.addObserver { value in
+            self.buttonSave.isEnabled = value as? Bool ?? false
+        }
         viewModel.taskTitle.addObserver { (value) in
             let title = value as? String ?? ""
             if (self.editTextTitle.text != title) {
@@ -65,15 +72,12 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             }
             self.segmentsPriority.selectedSegmentTintColor = getPriorityColor(priority: priority)
         }
-        viewModel.isEnabledButtonSave.addObserver { value in
-            self.buttonSave.isEnabled = value as? Bool ?? false
+        viewModel.taskStart.addObserver { (value) in
+            let startDate = value as? Int64
+            self.editTextStartDate.setDate(millis: startDate)
         }
         
-        var convertedTaskId: KotlinLong? = nil
-        if let swiftTaskId = editTaskId {
-            convertedTaskId = KotlinLong(value: swiftTaskId)
-        }
-        viewModel.load(editTaskId: convertedTaskId)
+        viewModel.load(editTaskId: intToKotlinLong(value: editTaskId))
     }
     
     // MARK: - User interacion
@@ -87,6 +91,10 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     
     @IBAction func onPrioritySelected(_ sender: Any) {
         viewModel.onChangedPriority(value: Int32(self.segmentsPriority.selectedSegmentIndex))
+    }
+    
+    private func onStartDateChanged(startTime: Int64?) {
+        viewModel.onChangedStart(value: intToKotlinLong(value: startTime))
     }
     
     @IBAction func onSaveClicked(_ sender: Any) {
