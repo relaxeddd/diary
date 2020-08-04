@@ -5,6 +5,7 @@ import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import platform.UIKit.UIDevice
 import kotlinx.coroutines.*
 import platform.darwin.*
+import platform.posix.time
 import kotlin.coroutines.CoroutineContext
 
 actual class ContextArgs
@@ -21,6 +22,10 @@ actual fun platformName() : String {
 actual fun getSqlDriver(): SqlDriver {
     val driver: SqlDriver = NativeSqliteDriver(Database.Schema, "relaxeddd.diary.db")
     return driver
+}
+
+actual fun getCurrentTime() : Long {
+    return time(null) * 1000
 }
 
 internal actual val ApplicationDispatcher: CoroutineContext = NsQueueDispatcher(dispatch_get_main_queue())

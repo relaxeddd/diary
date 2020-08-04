@@ -6,8 +6,8 @@ CREATE TABLE taskModel (
     priority INTEGER as Int NOT NULL DEFAULT 0,
     rrule TEXT,
     location TEXT,
-    start INTEGER,
-    end INTEGER
+    start INTEGER NOT NULL DEFAULT 0,
+    end INTEGER NOT NULL DEFAULT 0
 );
 
 selectAll:

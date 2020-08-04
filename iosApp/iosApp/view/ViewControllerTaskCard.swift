@@ -17,6 +17,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBOutlet weak var buttonCancel: UIBarButtonItem!
     @IBOutlet weak var progressBar: UIActivityIndicatorView!
     @IBOutlet weak var editTextStartDate: EditTextDate!
+    @IBOutlet weak var editTextEndDate: EditTextDate!
     
     private var editTaskId: Int64? = nil
     @IBOutlet weak var toolbar: UINavigationItem!
@@ -40,7 +41,10 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         editTextTitle.addTarget(self, action: #selector(onTextTitleChanged), for: .editingChanged)
         editTextDesc.addTarget(self, action: #selector(onTextDescChanged), for: .editingChanged)
         editTextStartDate.onDateChanged = { millis in
-            self.onStartDateChanged(startTime: millis)
+            self.onStartDateChanged(dateInMillis: millis)
+        }
+        editTextEndDate.onDateChanged = { millis in
+            self.onEndDateChanged(dateInMillis: millis)
         }
     }
     
@@ -73,8 +77,12 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             self.segmentsPriority.selectedSegmentTintColor = getPriorityColor(priority: priority)
         }
         viewModel.taskStart.addObserver { (value) in
-            let startDate = value as? Int64
+            let startDate = value as? Int64 ?? 0
             self.editTextStartDate.setDate(millis: startDate)
+        }
+        viewModel.taskEnd.addObserver { (value) in
+            let endDate = value as? Int64 ?? 0
+            self.editTextEndDate.setDate(millis: endDate)
         }
         
         viewModel.load(editTaskId: intToKotlinLong(value: editTaskId))
@@ -93,8 +101,12 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         viewModel.onChangedPriority(value: Int32(self.segmentsPriority.selectedSegmentIndex))
     }
     
-    private func onStartDateChanged(startTime: Int64?) {
-        viewModel.onChangedStart(value: intToKotlinLong(value: startTime))
+    private func onStartDateChanged(dateInMillis: Int64) {
+        viewModel.onChangedStart(value: dateInMillis)
+    }
+    
+    private func onEndDateChanged(dateInMillis: Int64) {
+        viewModel.onChangedEnd(value: dateInMillis)
     }
     
     @IBAction func onSaveClicked(_ sender: Any) {

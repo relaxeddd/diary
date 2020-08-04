@@ -31,7 +31,7 @@ func getPriorityColor(priority: Int) -> UIColor {
 }
 
 func millisToDate(millis: Int64) -> Date {
-    return Date(timeIntervalSince1970: TimeInterval(millis) / 1000)
+    return Date(timeIntervalSince1970: TimeInterval(millis / 1000))
 }
 
 func millisToDateString(millis: Int64) -> String {
@@ -52,4 +52,8 @@ func intToKotlinLong(value: Int64?) -> KotlinLong? {
         convertedValue = KotlinLong(value: nonNilValue)
     }
     return convertedValue
+}
+
+func intToKotlinLong(value: Int64) -> KotlinLong {
+    return KotlinLong(value: value)
 }

@@ -2,6 +2,8 @@ package relaxeddd.simplediary.domain.model
 
 import kotlinx.serialization.Serializable
 import relaxeddd.simplediary.data.TaskModel
+import relaxeddd.simplediary.getCurrentTime
+import relaxeddd.simplediary.utils.TIME_15_MINUTE
 
 @Serializable
 data class Task(
@@ -11,12 +13,31 @@ data class Task(
     val priority: Int = 0,
     val rrule: String = "",
     val location: String = "",
-    val start: Long? = null,
-    val end: Long? = null
+    val startDate: Long? = null,
+    val endDate: Long? = null
 ) {
     constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc ?: "",
         taskModel.priority, taskModel.rrule ?: "", taskModel.location ?: "",
-        taskModel.start, taskModel.end)
+        if (taskModel.start == 0L) getCurrentTime() else taskModel.start,
+        if (taskModel.end == 0L) getCurrentTime() else taskModel.end)
+
+    val start: Long
+        get() {
+            return startDate ?: if (endDate != null) {
+                endDate - TIME_15_MINUTE
+            } else {
+                getCurrentTime()
+            }
+        }
+
+    val end: Long
+        get() {
+            return endDate ?: if (startDate != null) {
+                startDate + TIME_15_MINUTE
+            } else {
+                getCurrentTime() + TIME_15_MINUTE
+            }
+        }
 }
 
 class Action(private val type: EventType, var args: Map<String, Any>? = null) {

@@ -211,25 +211,45 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="color" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEE-qf-VsY">
+                                <rect key="frame" x="20" y="509" width="374" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="RqL-9A-GaH"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="mc2-ZH-FNB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Click to set date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6uv-9M-lLx" customClass="EditTextDate" customModule="My_ToDo_List" customModuleProvider="target">
+                                <rect key="frame" x="20" y="544" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="OMr-gH-STq" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="0Kk-TH-50O"/>
                             <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="3OE-2W-vc9" secondAttribute="trailing" constant="20" id="3DF-H3-kB8"/>
                             <constraint firstItem="OMr-gH-STq" firstAttribute="top" secondItem="bff-qe-39P" secondAttribute="bottom" constant="32" id="6Kn-c0-3JD"/>
+                            <constraint firstItem="6uv-9M-lLx" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="E3o-Lo-ge0"/>
                             <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="iOS-IN-mE1" secondAttribute="trailing" constant="20" id="GCl-dE-IdI"/>
+                            <constraint firstItem="eEE-qf-VsY" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="GHO-gn-JKj"/>
                             <constraint firstItem="3OE-2W-vc9" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="IgV-jT-gO6"/>
                             <constraint firstItem="Zs4-Rf-QyQ" firstAttribute="top" secondItem="88M-RF-ZOE" secondAttribute="top" constant="20" id="L6u-BU-phN"/>
+                            <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="eEE-qf-VsY" secondAttribute="trailing" constant="20" id="Oft-Dk-3Kx"/>
                             <constraint firstItem="JKn-n5-Pkb" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="QeQ-Pa-TUl"/>
                             <constraint firstItem="bff-qe-39P" firstAttribute="top" secondItem="Zs4-Rf-QyQ" secondAttribute="bottom" constant="14" id="Qp1-UH-pOA"/>
                             <constraint firstItem="icD-5o-mHo" firstAttribute="top" secondItem="iOS-IN-mE1" secondAttribute="bottom" constant="32" id="X4O-P5-RrG"/>
                             <constraint firstItem="tUy-Dr-Otr" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="aLe-Js-Qe2"/>
                             <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="tUy-Dr-Otr" secondAttribute="trailing" constant="20" id="al6-rK-bHQ"/>
+                            <constraint firstItem="eEE-qf-VsY" firstAttribute="top" secondItem="JKn-n5-Pkb" secondAttribute="bottom" constant="32" id="cBh-rL-ZWk"/>
                             <constraint firstItem="icD-5o-mHo" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="f6e-tk-1qQ"/>
                             <constraint firstItem="iOS-IN-mE1" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="gJO-Dd-3Pz"/>
                             <constraint firstItem="tUy-Dr-Otr" firstAttribute="top" secondItem="icD-5o-mHo" secondAttribute="bottom" constant="14" id="jRC-jb-UPN"/>
                             <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="icD-5o-mHo" secondAttribute="trailing" constant="20" id="jpu-8J-9xL"/>
                             <constraint firstItem="Zs4-Rf-QyQ" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="ngc-EQ-ble"/>
+                            <constraint firstItem="6uv-9M-lLx" firstAttribute="top" secondItem="eEE-qf-VsY" secondAttribute="bottom" constant="14" id="oci-rb-5Gq"/>
                             <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="Zs4-Rf-QyQ" secondAttribute="trailing" constant="20" id="tMh-vg-blY"/>
                             <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="bff-qe-39P" secondAttribute="trailing" constant="20" id="vkv-vV-b0a"/>
                             <constraint firstItem="bff-qe-39P" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="wfK-KC-t10"/>
@@ -238,6 +258,7 @@
                             <constraint firstItem="3OE-2W-vc9" firstAttribute="top" secondItem="tUy-Dr-Otr" secondAttribute="bottom" constant="32" id="xnj-D0-JQj"/>
                             <constraint firstItem="JKn-n5-Pkb" firstAttribute="top" secondItem="3OE-2W-vc9" secondAttribute="bottom" constant="14" id="xqj-e9-mGd"/>
                             <constraint firstItem="iOS-IN-mE1" firstAttribute="top" secondItem="OMr-gH-STq" secondAttribute="bottom" constant="14" id="y7V-n1-KZ0"/>
+                            <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="6uv-9M-lLx" secondAttribute="trailing" constant="20" id="zhZ-fo-qAk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="88M-RF-ZOE"/>
                     </view>
@@ -257,6 +278,7 @@
                         <outlet property="buttonCancel" destination="c8D-Ws-haL" id="EHh-DF-b2S"/>
                         <outlet property="buttonSave" destination="M5b-lh-q5s" id="DlO-Mj-nDf"/>
                         <outlet property="editTextDesc" destination="iOS-IN-mE1" id="A49-w7-lL0"/>
+                        <outlet property="editTextEndDate" destination="6uv-9M-lLx" id="RtC-qn-Sfx"/>
                         <outlet property="editTextStartDate" destination="JKn-n5-Pkb" id="CUA-8M-tB1"/>
                         <outlet property="editTextTitle" destination="bff-qe-39P" id="ncp-bY-lRV"/>
                         <outlet property="progressBar" destination="bEX-xe-6qs" id="gbh-7w-fQJ"/>
