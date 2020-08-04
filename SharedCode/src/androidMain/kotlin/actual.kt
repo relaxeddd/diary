@@ -25,4 +25,8 @@ actual fun getSqlDriver(): SqlDriver {
     return driver
 }
 
+actual fun getCurrentTime() : Long {
+    return System.currentTimeMillis()
+}
+
 internal actual val ApplicationDispatcher: CoroutineContext = Dispatchers.Default

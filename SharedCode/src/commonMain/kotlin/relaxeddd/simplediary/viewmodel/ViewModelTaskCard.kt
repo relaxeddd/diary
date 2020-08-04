@@ -7,8 +7,10 @@ import relaxeddd.simplediary.di.KodeinInjector
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
+import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.source.repository.RepositoryTasks
 import relaxeddd.simplediary.utils.ERROR_TEXT
+import relaxeddd.simplediary.utils.TIME_15_MINUTE
 import relaxeddd.simplediary.utils.launchSilent
 
 class ViewModelTaskCard : ViewModelBase() {
@@ -32,11 +34,11 @@ class ViewModelTaskCard : ViewModelBase() {
     private val taskPriorityM = MutableLiveData(DEFAULT_PRIORITY)
     val taskPriority: LiveData<Int> = taskPriorityM
 
-    private val taskStartM = MutableLiveData<Long?>(null)
-    val taskStart: LiveData<Long?> = taskStartM
+    private val taskStartM = MutableLiveData(getCurrentTime())
+    val taskStart: LiveData<Long> = taskStartM
 
-    private val taskEndM = MutableLiveData<Long?>(null)
-    val taskEnd: LiveData<Long?> = taskStartM
+    private val taskEndM = MutableLiveData(getCurrentTime() + TIME_15_MINUTE)
+    val taskEnd: LiveData<Long> = taskEndM
 
     private val observerTitle: (String) -> Unit = {
         isEnabledButtonSaveM.value = it.isNotEmpty()
@@ -58,8 +60,8 @@ class ViewModelTaskCard : ViewModelBase() {
             taskTitleM.value = editTask?.title ?: ""
             taskDescM.value = editTask?.desc ?: ""
             taskPriorityM.value = editTask?.priority ?: DEFAULT_PRIORITY
-            taskStartM.value = editTask?.start
-            taskEndM.value = editTask?.end
+            taskStartM.value = editTask?.start ?: 0L
+            taskEndM.value = editTask?.end ?: 0L
             isEnabledButtonSaveM.value = true
         }
     }
@@ -72,8 +74,8 @@ class ViewModelTaskCard : ViewModelBase() {
         val priority = taskPriority.value
         val rrule: String? = null
         val location: String? = null
-        val start: Long? = taskStart.value
-        val end: Long? = taskEnd.value
+        val start: Long = taskStart.value
+        val end: Long = taskEnd.value
 
         if (taskId != null) {
             updateTask(taskId, title, desc, priority, rrule, location, start, end)
@@ -98,26 +100,36 @@ class ViewModelTaskCard : ViewModelBase() {
         taskPriorityM.postValue(value)
     }
 
-    fun onChangedStart(value: Long?) {
-        taskStartM.postValue(value)
+    fun onChangedStart(value: Long) {
+        if (taskEndM.value <= value) {
+            taskEndM.value = value + TIME_15_MINUTE
+        }
+        if (taskStartM.value != value) {
+            taskStartM.value = value
+        }
     }
 
-    fun onChangedEnd(value: Long?) {
-        taskEndM.postValue(value)
+    fun onChangedEnd(value: Long) {
+        if (taskStartM.value >= value) {
+            taskStartM.value = value - TIME_15_MINUTE
+        }
+        if (taskEndM.value != value) {
+            taskEndM.value = value
+        }
     }
 
     //------------------------------------------------------------------------------------------------------------------
     private fun createTask(title: String, desc: String?, priority: Int, rrule: String?, location: String?,
-                           startDate: Long?, endDate: Long?) = launchSilent(coroutineContext, exceptionHandler, job) {
+                           start: Long, end: Long) = launchSilent(coroutineContext, exceptionHandler, job) {
         performTaskOperation {
-            repositoryTasks.createTask(title, desc, priority, rrule, location, startDate, endDate)
+            repositoryTasks.createTask(title, desc, priority, rrule, location, start, end)
         }
     }
 
     private fun updateTask(id: Long, title: String, desc: String?, priority: Int, rrule: String?, location: String?,
-                           startDate: Long?, endDate: Long?) = launchSilent(coroutineContext, exceptionHandler, job) {
+                           start: Long, end: Long) = launchSilent(coroutineContext, exceptionHandler, job) {
         performTaskOperation {
-            repositoryTasks.updateTask(id, title, desc, priority, rrule, location, startDate, endDate)
+            repositoryTasks.updateTask(id, title, desc, priority, rrule, location, start, end)
         }
     }
 

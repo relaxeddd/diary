@@ -8,6 +8,7 @@ expect class ContextArgs
 expect fun platformName(): String
 expect fun isNetworkAvailable(): Boolean
 expect fun getSqlDriver(): SqlDriver
+expect fun getCurrentTime() : Long
 
 internal expect val ApplicationDispatcher: CoroutineContext
 

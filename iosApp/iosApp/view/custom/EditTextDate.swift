@@ -18,8 +18,8 @@ class EditTextDate: UITextField, UITextFieldDelegate {
     private let BORDER_COLOR_UNSELECTED = UIColor.lightGray.cgColor
     private let datePicker = UIDatePicker.init()
     
-    private var currentTimeMillis: Int64?
-    internal var onDateChanged: ((_: Int64?) -> ())?
+    private var currentTimeMillis: Int64 = dateToMillis(date: Date())
+    internal var onDateChanged: ((_: Int64) -> ())?
     
     // MARK: - View Init
     required init(coder aDecoder: NSCoder) {
@@ -62,16 +62,18 @@ class EditTextDate: UITextField, UITextFieldDelegate {
         onCurrentTimeChanged(newTimeMillis: dateToMillis(date: datePicker.date))
     }
     
-    func setDate(millis: Int64?) {
-        onCurrentTimeChanged(newTimeMillis: millis)
+    func setDate(millis: Int64) {
+        onCurrentTimeChanged(newTimeMillis: millis, isNotify: false)
     }
     
-    private func onCurrentTimeChanged(newTimeMillis: Int64?) {
+    private func onCurrentTimeChanged(newTimeMillis: Int64, isNotify: Bool = true) {
         if (newTimeMillis != currentTimeMillis) {
             currentTimeMillis = newTimeMillis
-            text = newTimeMillis != nil ? millisToDateString(millis: newTimeMillis!) : ""
-            datePicker.date = newTimeMillis != nil ? millisToDate(millis: newTimeMillis!) : Date()
-            onDateChanged?.self(newTimeMillis)
+            text = millisToDateString(millis: newTimeMillis)
+            datePicker.date = millisToDate(millis: newTimeMillis)
+            if (isNotify) {
+                onDateChanged?.self(newTimeMillis)
+            }
         }
     }
 }
