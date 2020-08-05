@@ -15,7 +15,8 @@ class ViewModelTaskList : ViewModelBase() {
 
     private val repositoryTasks by KodeinInjector.instance<RepositoryTasks>()
 
-    val tasks: LiveData<List<Task>> = repositoryTasks.tasks
+    private val tasksM: MutableLiveData<List<Task>> = MutableLiveData(ArrayList())
+    val tasks: LiveData<List<Task>> = tasksM
 
     private val isVisibleTextNoItemsM = MutableLiveData(true)
     val isVisibleTextNoItems: LiveData<Boolean> = isVisibleTextNoItemsM
@@ -24,6 +25,7 @@ class ViewModelTaskList : ViewModelBase() {
     val isVisibleTaskList: LiveData<Boolean> = isVisibleTaskListM
 
     private val observerTasks: (List<Task>) -> Unit = {
+        tasksM.postValue(it.sortedBy { task -> task.startDate })
         isVisibleTaskListM.postValue(it.isNotEmpty())
         isVisibleTextNoItemsM.postValue(it.isEmpty() && !isVisibleProgressBar.value)
     }

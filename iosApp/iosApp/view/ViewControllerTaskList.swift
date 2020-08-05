@@ -60,7 +60,26 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell") as! ViewCellTaskTableViewCell
         let task = tasks[indexPath.row]
-        cell.update(title: task.title, desc: task.desc, priority: Int(task.priority))
+        var isShowDate = false
+        var isShowSeparator = false
+        
+        if (indexPath.row < (tasks.count - 1)) {
+            let nextTask = tasks[indexPath.row + 1]
+            
+            if (roundMillisToDayDate(millis: nextTask.startDate as! Int64) != roundMillisToDayDate(millis: task.startDate as! Int64)) {
+                isShowSeparator = true
+            }
+        }
+        if (indexPath.row > 0) {
+            let previousTask = tasks[indexPath.row - 1]
+            if (roundMillisToDayDate(millis: previousTask.startDate as! Int64) != roundMillisToDayDate(millis: task.startDate as! Int64)) {
+                isShowDate = true
+            }
+        } else {
+            isShowDate = true
+        }
+        
+        cell.update(title: task.title, desc: task.desc, priority: Int(task.priority), date: isShowDate ? task.startDate as? Int64 : nil, isShowSeparator: isShowSeparator)
         return cell
     }
     
