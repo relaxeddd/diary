@@ -89,32 +89,38 @@ class ViewModelTaskCard : ViewModelBase() {
     }
 
     fun onChangedTitle(value: String) {
-        taskTitleM.postValue(value)
+        if (taskTitleM.value != value) {
+            taskTitleM.postValue(value)
+        }
     }
 
     fun onChangedDesc(value: String) {
-        taskDescM.postValue(value)
+        if (taskDescM.value != value) {
+            taskDescM.postValue(value)
+        }
     }
 
     fun onChangedPriority(value: Int) {
-        taskPriorityM.postValue(value)
+        if (taskPriorityM.value != value) {
+            taskPriorityM.postValue(value)
+        }
     }
 
     fun onChangedStart(value: Long) {
         if (taskEndM.value <= value) {
-            taskEndM.value = value + TIME_15_MINUTE
+            taskEndM.postValue(value + TIME_15_MINUTE)
         }
         if (taskStartM.value != value) {
-            taskStartM.value = value
+            taskStartM.postValue(value)
         }
     }
 
     fun onChangedEnd(value: Long) {
         if (taskStartM.value >= value) {
-            taskStartM.value = value - TIME_15_MINUTE
+            taskStartM.postValue(value - TIME_15_MINUTE)
         }
         if (taskEndM.value != value) {
-            taskEndM.value = value
+            taskEndM.postValue(value)
         }
     }
 

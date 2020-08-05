@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import SharedCode
 
+let DAY_IN_MILLIS = 1000 * 60 * 60 * 24
+
 func showToast(controller: UIViewController, message : String) {
     let toast = UIAlertController(title: nil, message: message, preferredStyle: .alert)
     
@@ -34,12 +36,24 @@ func millisToDate(millis: Int64) -> Date {
     return Date(timeIntervalSince1970: TimeInterval(millis / 1000))
 }
 
-func millisToDateString(millis: Int64) -> String {
+func millisToDateTimeString(millis: Int64) -> String {
     let formatter = DateFormatter()
     //formatter.dateFormat = "HH:mm:ss dd-MM-yyyy"
     formatter.dateStyle = .medium
     formatter.timeStyle = .medium
     return formatter.string(from: millisToDate(millis: millis))
+}
+
+func millisToDateString(millis: Int64) -> String {
+    let formatter = DateFormatter()
+    //formatter.dateFormat = "HH:mm:ss dd-MM-yyyy"
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .none
+    return formatter.string(from: millisToDate(millis: millis))
+}
+
+func roundMillisToDayDate(millis: Int64) -> Int64 {
+    return Int64(Int(millis) / DAY_IN_MILLIS * DAY_IN_MILLIS)
 }
 
 func dateToMillis(date: Date) -> Int64 {

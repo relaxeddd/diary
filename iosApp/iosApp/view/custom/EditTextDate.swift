@@ -69,7 +69,7 @@ class EditTextDate: UITextField, UITextFieldDelegate {
     private func onCurrentTimeChanged(newTimeMillis: Int64, isNotify: Bool = true) {
         if (newTimeMillis != currentTimeMillis) {
             currentTimeMillis = newTimeMillis
-            text = millisToDateString(millis: newTimeMillis)
+            text = millisToDateTimeString(millis: newTimeMillis)
             datePicker.date = millisToDate(millis: newTimeMillis)
             if (isNotify) {
                 onDateChanged?.self(newTimeMillis)
