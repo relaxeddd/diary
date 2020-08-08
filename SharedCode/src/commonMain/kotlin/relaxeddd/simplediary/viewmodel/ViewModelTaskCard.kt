@@ -11,6 +11,7 @@ import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.source.repository.RepositoryTasks
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
+import relaxeddd.simplediary.utils.TIME_DAY
 import relaxeddd.simplediary.utils.launchSilent
 
 class ViewModelTaskCard : ViewModelBase() {
@@ -107,8 +108,16 @@ class ViewModelTaskCard : ViewModelBase() {
     }
 
     fun onChangedStart(value: Long) {
-        if (taskEndM.value <= value) {
-            taskEndM.postValue(value + TIME_15_MINUTE)
+        val startDaysInMillis = value / TIME_DAY * TIME_DAY
+        val startTime = value - startDaysInMillis
+        val endDaysInMillis = taskEndM.value / TIME_DAY * TIME_DAY
+        var endTime = taskEndM.value - endDaysInMillis
+
+        if (startDaysInMillis + startTime >= startDaysInMillis + endTime) {
+            endTime = startTime + TIME_15_MINUTE
+        }
+        if (taskEndM.value != startDaysInMillis + endTime) {
+            taskEndM.postValue(startDaysInMillis + endTime)
         }
         if (taskStartM.value != value) {
             taskStartM.postValue(value)
@@ -116,8 +125,20 @@ class ViewModelTaskCard : ViewModelBase() {
     }
 
     fun onChangedEnd(value: Long) {
+        val startDaysInMillis = taskStartM.value / TIME_DAY * TIME_DAY
+        var startTime = taskStartM.value - startDaysInMillis
+        val endDaysInMillis = value / TIME_DAY * TIME_DAY
+        val endTime = value - endDaysInMillis
+
         if (taskStartM.value >= value) {
             taskStartM.postValue(value - TIME_15_MINUTE)
+        }
+
+        if (endDaysInMillis + startTime >= endDaysInMillis + endTime) {
+            startTime = endTime - TIME_15_MINUTE
+        }
+        if (taskStartM.value != endDaysInMillis + startTime) {
+            taskStartM.postValue(endDaysInMillis + startTime)
         }
         if (taskEndM.value != value) {
             taskEndM.postValue(value)

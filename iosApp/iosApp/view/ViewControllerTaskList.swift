@@ -79,7 +79,8 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
             isShowDate = true
         }
         
-        cell.update(title: task.title, desc: task.desc, priority: Int(task.priority), date: isShowDate ? task.startDate as? Int64 : nil, isShowSeparator: isShowSeparator)
+        cell.update(title: task.title, desc: task.desc, priority: Int(task.priority), startTime: task.startDate as? Int64 ?? 0, endTime: task.endDate as? Int64 ?? 0,
+                    date: isShowDate ? task.startDate as? Int64 : nil, isShowSeparator: isShowSeparator)
         return cell
     }
     

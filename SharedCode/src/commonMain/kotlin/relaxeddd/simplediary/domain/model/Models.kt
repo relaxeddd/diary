@@ -14,7 +14,9 @@ data class Task(
     val rrule: String = "",
     val location: String = "",
     val startDate: Long? = null,
-    val endDate: Long? = null
+    val endDate: Long? = null,
+    var isShowHeaderDate: Boolean = false,
+    var isShowBottomDivider: Boolean = false
 ) {
     constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc ?: "",
         taskModel.priority, taskModel.rrule ?: "", taskModel.location ?: "",

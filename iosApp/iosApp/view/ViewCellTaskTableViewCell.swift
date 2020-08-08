@@ -16,14 +16,30 @@ class ViewCellTaskTableViewCell: UITableViewCell {
     @IBOutlet weak var textDate: UILabel!
     @IBOutlet weak var constraintHeightDate: NSLayoutConstraint!
     @IBOutlet weak var constraintTopContainerText: NSLayoutConstraint!
+    @IBOutlet weak var textStartTime: UILabel!
+    @IBOutlet weak var textEndTime: UILabel!
     
-    internal func update(title: String, desc: String, priority: Int, date: Int64? = nil, isShowSeparator: Bool) {
+    internal func update(title: String, desc: String, priority: Int, startTime: Int64, endTime: Int64, date: Int64? = nil, isShowSeparator: Bool) {
         textTitle?.text = title
         textDesc?.text = desc
+        textStartTime?.text = millisToTimeString(millis: startTime)
+        textEndTime?.text = millisToTimeString(millis: endTime)
         viewPriority.backgroundColor = getPriorityColor(priority: Int(priority))
         textDate.isHidden = date == nil
         if let setDate = date {
-            textDate.text = millisToDateString(millis: setDate)
+            let textDayStr: String
+            
+            if (isToday(millis: setDate)) {
+                textDayStr = NSLocalizedString("today", comment: "")
+            } else if (isYesterday(millis: setDate)) {
+                textDayStr = NSLocalizedString("yesterday", comment: "")
+            } else if (isTomorrow(millis: setDate)) {
+                textDayStr = NSLocalizedString("tomorrow", comment: "")
+            } else {
+                textDayStr = millisToDateString(millis: setDate)
+            }
+            
+            textDate.text = textDayStr
             constraintHeightDate.constant = 32
             constraintTopContainerText.constant = 12
         } else {
