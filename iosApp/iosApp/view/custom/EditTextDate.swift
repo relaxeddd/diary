@@ -9,7 +9,11 @@
 import UIKit
 import CoreGraphics
 
+@IBDesignable
 class EditTextDate: UITextField, UITextFieldDelegate {
+    
+    @IBInspectable
+    var isTimePicker: Bool = false
     
     private let BORDER_RADIUS: CGFloat = 5
     private let BORDER_WIDTH_UNSELECTED: CGFloat = 0.25
@@ -22,13 +26,17 @@ class EditTextDate: UITextField, UITextFieldDelegate {
     internal var onDateChanged: ((_: Int64) -> ())?
     
     // MARK: - View Init
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-        initView()
-    }
+//    required init(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)!
+//        initView()
+//    }
+//
+//    required override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        initView()
+//    }
     
-    required override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func didMoveToWindow() {
         initView()
     }
     
@@ -40,6 +48,11 @@ class EditTextDate: UITextField, UITextFieldDelegate {
         layer.borderWidth = BORDER_WIDTH_UNSELECTED
         layer.borderColor = BORDER_COLOR_UNSELECTED
         
+        if (isTimePicker) {
+            datePicker.datePickerMode = .time
+        } else {
+            datePicker.datePickerMode = .date
+        }
         datePicker.addTarget(self, action: #selector(onDateChanged(_:)), for: .valueChanged)
     }
     
@@ -69,7 +82,11 @@ class EditTextDate: UITextField, UITextFieldDelegate {
     private func onCurrentTimeChanged(newTimeMillis: Int64, isNotify: Bool = true) {
         if (newTimeMillis != currentTimeMillis) {
             currentTimeMillis = newTimeMillis
-            text = millisToDateTimeString(millis: newTimeMillis)
+            if (isTimePicker) {
+                text = millisToTimeString(millis: newTimeMillis)
+            } else {
+                text = millisToDateString(millis: newTimeMillis)
+            }
             datePicker.date = millisToDate(millis: newTimeMillis)
             if (isNotify) {
                 onDateChanged?.self(newTimeMillis)

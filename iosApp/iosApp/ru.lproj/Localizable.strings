@@ -9,3 +9,6 @@
 "error" = "Ошибка";
 "dismiss" = "Закрыть";
 "delete" = "Удалить";
+"today" = "Сегодня";
+"yesterday" = "Вчера";
+"tomorrow" = "Завтра";

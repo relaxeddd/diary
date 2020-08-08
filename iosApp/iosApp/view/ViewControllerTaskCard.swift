@@ -16,8 +16,9 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBOutlet weak var buttonSave: UIBarButtonItem!
     @IBOutlet weak var buttonCancel: UIBarButtonItem!
     @IBOutlet weak var progressBar: UIActivityIndicatorView!
-    @IBOutlet weak var editTextStartDate: EditTextDate!
-    @IBOutlet weak var editTextEndDate: EditTextDate!
+    @IBOutlet weak var editTextDate: EditTextDate!
+    @IBOutlet weak var editTextStartTime: EditTextDate!
+    @IBOutlet weak var editTextEndTime: EditTextDate!
     
     private var editTaskId: Int64? = nil
     @IBOutlet weak var toolbar: UINavigationItem!
@@ -40,10 +41,13 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         
         editTextTitle.addTarget(self, action: #selector(onTextTitleChanged), for: .editingChanged)
         editTextDesc.addTarget(self, action: #selector(onTextDescChanged), for: .editingChanged)
-        editTextStartDate.onDateChanged = { millis in
+        editTextDate.onDateChanged = { millis in
             self.onStartDateChanged(dateInMillis: millis)
         }
-        editTextEndDate.onDateChanged = { millis in
+        editTextStartTime.onDateChanged = { millis in
+            self.onStartDateChanged(dateInMillis: millis)
+        }
+        editTextEndTime.onDateChanged = { millis in
             self.onEndDateChanged(dateInMillis: millis)
         }
     }
@@ -78,11 +82,12 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         }
         viewModel.taskStart.addObserver { (value) in
             let startDate = value as? Int64 ?? 0
-            self.editTextStartDate.setDate(millis: startDate)
+            self.editTextDate.setDate(millis: startDate)
+            self.editTextStartTime.setDate(millis: startDate)
         }
         viewModel.taskEnd.addObserver { (value) in
             let endDate = value as? Int64 ?? 0
-            self.editTextEndDate.setDate(millis: endDate)
+            self.editTextEndTime.setDate(millis: endDate)
         }
         
         viewModel.load(editTaskId: intToKotlinLong(value: editTaskId))

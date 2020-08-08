@@ -9,3 +9,6 @@
 "error" = "Error";
 "dismiss" = "Dismiss";
 "delete" = "Delete";
+"today" = "Today";
+"yesterday" = "Yesterday";
+"tomorrow" = "Tomorrow";

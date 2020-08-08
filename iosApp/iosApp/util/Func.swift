@@ -40,16 +40,38 @@ func millisToDateTimeString(millis: Int64) -> String {
     let formatter = DateFormatter()
     //formatter.dateFormat = "HH:mm:ss dd-MM-yyyy"
     formatter.dateStyle = .medium
-    formatter.timeStyle = .medium
+    formatter.timeStyle = .short
+    return formatter.string(from: millisToDate(millis: millis))
+}
+
+func millisToTimeString(millis: Int64) -> String {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .none
+    formatter.timeStyle = .short
     return formatter.string(from: millisToDate(millis: millis))
 }
 
 func millisToDateString(millis: Int64) -> String {
     let formatter = DateFormatter()
-    //formatter.dateFormat = "HH:mm:ss dd-MM-yyyy"
-    formatter.dateStyle = .medium
+    //formatter.dateStyle = .medium
     formatter.timeStyle = .none
+    formatter.dateFormat = "d MMMM"
     return formatter.string(from: millisToDate(millis: millis))
+}
+
+func isToday(millis: Int64) -> Bool {
+    let currentDayMillis = roundMillisToDayDate(millis: dateToMillis(date: Date()))
+    return currentDayMillis == roundMillisToDayDate(millis: millis)
+}
+
+func isYesterday(millis: Int64) -> Bool {
+    let currentDayMillis = roundMillisToDayDate(millis: dateToMillis(date: Date()))
+    return currentDayMillis == (roundMillisToDayDate(millis: millis) + Int64(DAY_IN_MILLIS))
+}
+
+func isTomorrow(millis: Int64) -> Bool {
+    let currentDayMillis = roundMillisToDayDate(millis: dateToMillis(date: Date()))
+    return currentDayMillis == (roundMillisToDayDate(millis: millis) - Int64(DAY_IN_MILLIS))
 }
 
 func roundMillisToDayDate(millis: Int64) -> Int64 {
