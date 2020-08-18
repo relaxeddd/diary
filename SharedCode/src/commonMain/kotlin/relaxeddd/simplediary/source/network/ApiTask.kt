@@ -1,7 +1,6 @@
 package relaxeddd.simplediary.source.network
 
 import io.ktor.client.HttpClient
-import io.ktor.client.request.get
 import kotlinx.coroutines.delay
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.UnstableDefault
@@ -21,7 +20,7 @@ class ApiTask {
         val responseJson = "[" +
                 "{\"id\":\"1\", \"title\":\"Отправить показания\", \"desc\":\"Показания за электричество, воду, отопление\"}, " +
                 "{\"id\":\"2\", \"title\":\"Заплатить за квартиру\", \"desc\":\"Квитанции за квартиру, электричество, отопление\"}, " +
-                "{\"id\":\"3\", \"title\":\"Заплатить за интернет\", \"desc\":\"Номер договора 54523423\"}" +
+                "{\"id\":\"3\", \"title\":\"Заплатить за интернет\", \"desc\":\"Номер договора 54523423\", \"isCompleted\":\"true\"}" +
                 "]"
         val tasks = Json.nonstrict.parseList<Task>(responseJson)
         delay(2000)

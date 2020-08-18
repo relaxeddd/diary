@@ -2,25 +2,20 @@ package relaxeddd.simplediary.viewmodel
 
 import dev.icerock.moko.mvvm.livedata.LiveData
 import dev.icerock.moko.mvvm.livedata.MutableLiveData
-import org.kodein.di.erased.instance
-import relaxeddd.simplediary.di.KodeinInjector
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.getCurrentTime
-import relaxeddd.simplediary.source.repository.RepositoryTasks
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
 import relaxeddd.simplediary.utils.TIME_DAY
-import relaxeddd.simplediary.utils.launchSilent
 
-class ViewModelTaskCard : ViewModelBase() {
+class ViewModelTaskCard : ViewModelTask() {
 
     companion object {
         private const val DEFAULT_PRIORITY = 0
     }
 
-    private val repositoryTasks by KodeinInjector.instance<RepositoryTasks>()
     private var editTaskId: Long? = null
 
     private val isEnabledButtonSaveM = MutableLiveData(false)
@@ -40,6 +35,9 @@ class ViewModelTaskCard : ViewModelBase() {
 
     private val taskEndM = MutableLiveData(getCurrentTime() + TIME_15_MINUTE)
     val taskEnd: LiveData<Long> = taskEndM
+
+    private val taskIsCompletedM = MutableLiveData(false)
+    val taskIsCompleted: LiveData<Boolean> = taskIsCompletedM
 
     private val observerTitle: (String) -> Unit = {
         isEnabledButtonSaveM.value = it.isNotEmpty()
@@ -63,6 +61,7 @@ class ViewModelTaskCard : ViewModelBase() {
             taskPriorityM.value = editTask?.priority ?: DEFAULT_PRIORITY
             taskStartM.value = editTask?.start ?: 0L
             taskEndM.value = editTask?.end ?: 0L
+            taskIsCompletedM.value = editTask?.isCompleted ?: false
             isEnabledButtonSaveM.value = true
         }
     }
@@ -77,11 +76,19 @@ class ViewModelTaskCard : ViewModelBase() {
         val location: String? = null
         val start: Long = taskStart.value
         val end: Long = taskEnd.value
+        val isCompleted: Boolean = taskIsCompleted.value
+        val callback = { response: Response<Unit> ->
+            if (response.isValid) {
+                actionM.postValue(Action(EventType.EXIT))
+            } else {
+                actionM.postValue(Action(EventType.ERROR, mapOf(Pair(ERROR_TEXT, response.exception.toString()))))
+            }
+        }
 
         if (taskId != null) {
-            updateTask(taskId, title, desc, priority, rrule, location, start, end)
+            updateTask(taskId, title, desc, priority, rrule, location, start, end, isCompleted, callback)
         } else {
-            createTask(title, desc, priority, rrule, location, start, end)
+            createTask(title, desc, priority, rrule, location, start, end, isCompleted, callback)
         }
     }
 
@@ -145,31 +152,9 @@ class ViewModelTaskCard : ViewModelBase() {
         }
     }
 
-    //------------------------------------------------------------------------------------------------------------------
-    private fun createTask(title: String, desc: String?, priority: Int, rrule: String?, location: String?,
-                           start: Long, end: Long) = launchSilent(coroutineContext, exceptionHandler, job) {
-        performTaskOperation {
-            repositoryTasks.createTask(title, desc, priority, rrule, location, start, end)
-        }
-    }
-
-    private fun updateTask(id: Long, title: String, desc: String?, priority: Int, rrule: String?, location: String?,
-                           start: Long, end: Long) = launchSilent(coroutineContext, exceptionHandler, job) {
-        performTaskOperation {
-            repositoryTasks.updateTask(id, title, desc, priority, rrule, location, start, end)
-        }
-    }
-
-    private suspend fun performTaskOperation(operation: suspend () -> Response<Unit>) {
-        var response: Response<Unit>? = null
-
-        operationWithLoading {
-            response = operation()
-        }
-        if (response?.isValid == true) {
-            actionM.postValue(Action(EventType.EXIT))
-        } else {
-            actionM.postValue(Action(EventType.ERROR, mapOf(Pair(ERROR_TEXT, response?.exception?.message ?: ""))))
+    fun onChangedIsCompleted(value: Boolean) {
+        if (taskIsCompletedM.value != value) {
+            taskIsCompletedM.postValue(value)
         }
     }
 }

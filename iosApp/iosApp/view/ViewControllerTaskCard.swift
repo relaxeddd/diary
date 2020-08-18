@@ -15,10 +15,11 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBOutlet weak var editTextDesc: UITextField!
     @IBOutlet weak var buttonSave: UIBarButtonItem!
     @IBOutlet weak var buttonCancel: UIBarButtonItem!
-    @IBOutlet weak var progressBar: UIActivityIndicatorView!
+    @IBOutlet weak var progressBarCard: UIActivityIndicatorView!
     @IBOutlet weak var editTextDate: EditTextDate!
     @IBOutlet weak var editTextStartTime: EditTextDate!
     @IBOutlet weak var editTextEndTime: EditTextDate!
+    @IBOutlet weak var switchIsCompleted: UISwitch!
     
     private var editTaskId: Int64? = nil
     @IBOutlet weak var toolbar: UINavigationItem!
@@ -26,15 +27,15 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     
     private var isTaskEditing: Bool { self.editTaskId != nil }
     
+    override func createViewModel() -> ViewModelTaskCard { ViewModelTaskCard() }
+    override var progressBar: UIActivityIndicatorView? { progressBarCard }
+    
     // MARK: - Arguments
     func setEditTaskData(id: Int64) {
         editTaskId = id
     }
     
     // MARK: - Init
-    override func createViewModel() -> ViewModelTaskCard { ViewModelTaskCard() }
-    override func getProgressBar() -> UIActivityIndicatorView? { progressBar }
-    
     override func initView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
@@ -89,6 +90,10 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             let endDate = value as? Int64 ?? 0
             self.editTextEndTime.setDate(millis: endDate)
         }
+        viewModel.taskIsCompleted.addObserver { (value) in
+            let isCompleted = value as? Bool ?? false
+            self.switchIsCompleted.isOn = isCompleted
+        }
         
         viewModel.load(editTaskId: intToKotlinLong(value: editTaskId))
     }
@@ -112,6 +117,10 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     
     private func onEndDateChanged(dateInMillis: Int64) {
         viewModel.onChangedEnd(value: dateInMillis)
+    }
+    
+    @IBAction func onIsCompletedChanged(_ sender: Any) {
+        viewModel.onChangedIsCompleted(value: switchIsCompleted.isOn)
     }
     
     @IBAction func onSaveClicked(_ sender: Any) {

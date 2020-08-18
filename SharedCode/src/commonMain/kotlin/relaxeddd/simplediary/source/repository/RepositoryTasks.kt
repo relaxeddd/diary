@@ -2,7 +2,7 @@ package relaxeddd.simplediary.source.repository
 
 import dev.icerock.moko.mvvm.livedata.LiveData
 import dev.icerock.moko.mvvm.livedata.MutableLiveData
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.getDataBase
@@ -20,93 +20,79 @@ class RepositoryTasks(private val apiTask: ApiTask) {
     private val exceptionM = MutableLiveData<Throwable?>(null)
     val exception: LiveData<Throwable?> = exceptionM
 
+    private val callback = MutableLiveData<Runnable?>(null).apply {
+        addObserver {
+            it?.run()
+        }
+    }
+
     suspend fun init() {
         if (isInitialized) {
-            tasksM.postValue(tasksM.value)
             return
         }
 
         delay(1000) //TODO for testing
-        fetchTasksFromDb().let { tasks ->
-            if (tasks.isEmpty()) { //TODO true request
-                apiTask.requestTasks().also { tasksResponse ->
-                    if (tasksResponse.isValid) {
-                        isInitialized = true
-                        tasksResponse.data?.forEach {
-                            daoTask.update(it.id, it.title, it.desc, it.priority, it.rrule, it.location, it.start,
-                                it.end)
+        try {
+            fetchTasksFromDb().let { tasks ->
+                if (tasks.isEmpty()) { //TODO true request
+                    apiTask.requestTasks().also { tasksResponse ->
+                        if (tasksResponse.isValid) {
+                            isInitialized = true
+                            tasksResponse.data?.forEach {
+                                daoTask.update(
+                                    it.id, it.title, it.desc, it.priority, it.rrule, it.location, it.start,
+                                    it.end, it.isCompleted
+                                )
+                            }
+                            tasksM.postValue(tasksResponse.data ?: ArrayList())
+                        } else {
+                            exceptionM.postValue(tasksResponse.exception)
                         }
-                        tasksM.postValue(tasksResponse.data ?: ArrayList())
-                    } else {
-                        exceptionM.postValue(tasksResponse.exception)
                     }
+                } else {
+                    isInitialized = true
+                    tasksM.postValue(tasks)
                 }
-            } else {
-                isInitialized = true
-                tasksM.postValue(tasks)
-                Response(tasks)
+                //exceptionM.postValue(Exception("Test exception"))
             }
-            //exceptionM.postValue(Exception("Test exception"))
+        } catch (e: Exception) {
+            exceptionM.postValue(e)
         }
     }
 
     suspend fun createTask(title: String, desc: String? = null, priority: Int = 0, rrule: String? = null,
-                           location: String? = null, start: Long, end: Long): Response<Unit> {
-        return performDbOperation { daoTask.create(title, desc, priority, rrule, location, start, end) }
+                   location: String? = null, start: Long, end: Long, isCompleted: Boolean, onCompleted: ((Response<Unit>) -> Unit)? = null) {
+        performDbOperation(onCompleted) { daoTask.create(title, desc, priority, rrule, location, start, end, isCompleted) }
     }
 
-    suspend fun deleteTask(id: Long): Response<Unit> {
-        return performDbOperation { daoTask.delete(id) }
+    suspend fun deleteTask(id: Long) {
+        performDbOperation { daoTask.delete(id) }
     }
 
     suspend fun updateTask(id: Long, title: String, desc: String? = null, priority: Int = 0, rrule: String? = null,
-                           location: String? = null, start: Long, end: Long): Response<Unit> {
-        return performDbOperation { daoTask.update(id, title, desc, priority, rrule, location, start, end) }
+                   location: String? = null, start: Long, end: Long, isCompleted: Boolean, onCompleted: ((Response<Unit>) -> Unit)? = null) {
+        performDbOperation(onCompleted) { daoTask.update(id, title, desc, priority, rrule, location, start, end, isCompleted) }
     }
-
-    /*suspend fun deleteLocation(location: Task): Response<List<Task>> {
-        val dao = DaoTask(database!!)
-        dao.delete(location.id)
-        return Response.Success(dao.select().map { Task(it) })
-    }*/
-
-    /*fun selectFromDb() {
-        val dao = DaoTask(database!!)
-        dao.select()
-    }
-
-    fun saveAsync(item: Task, success: (List<TaskModel>) -> Unit, failure: (Throwable?) -> Unit) {
-        GlobalScope.launch(ApplicationDispatcher) {
-            try {
-                val dao = DaoTask(database!!)
-                dao.insert(item)
-
-                val listLocation = getTasks() as Response.Success
-                success(listLocation.data)
-            } catch (ex: Exception) {
-                failure(ex)
-            }
-        }
-    }
-
-    fun getLocationListAsync(success: (List<TaskModel>) -> Unit, failure: (Throwable?) -> Unit) {
-        GlobalScope.launch(ApplicationDispatcher) {
-            val dao = DaoTask(database!!)
-            val items = dao.select()
-            success(items)
-        }
-    }*/
 
     private suspend fun fetchTasksFromDb() = daoTask.select().map { cachedTask -> Task(cachedTask) } ?: emptyList<Task>()
 
-    private suspend fun performDbOperation(operation: () -> Unit) : Response<Unit> {
+    private suspend fun performDbOperation(onCompleted: ((Response<Unit>) -> Unit)? = null, operation: suspend () -> Unit) {
         try {
             operation()
             delay(1000) //TODO for testing
             tasksM.postValue(fetchTasksFromDb())
-            return Response()
+            callback.postValue(object: Runnable {
+                override fun run() {
+                    onCompleted?.invoke(Response())
+                }
+            })
         } catch (e: Exception) {
-            return Response(exception = e)
+            exceptionM.postValue(e)
+            callback.postValue(object: Runnable {
+                override fun run() {
+                    onCompleted?.invoke(Response(exception = e))
+                }
+            })
         }
     }
 }
