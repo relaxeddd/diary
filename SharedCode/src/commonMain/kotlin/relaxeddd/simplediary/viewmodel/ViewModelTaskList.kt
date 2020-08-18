@@ -2,18 +2,12 @@ package relaxeddd.simplediary.viewmodel
 
 import dev.icerock.moko.mvvm.livedata.LiveData
 import dev.icerock.moko.mvvm.livedata.MutableLiveData
-import org.kodein.di.erased.instance
-import relaxeddd.simplediary.di.KodeinInjector
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.domain.model.Task
-import relaxeddd.simplediary.source.repository.RepositoryTasks
 import relaxeddd.simplediary.utils.ERROR_TEXT
-import relaxeddd.simplediary.utils.launchSilent
 
-class ViewModelTaskList : ViewModelBase() {
-
-    private val repositoryTasks by KodeinInjector.instance<RepositoryTasks>()
+abstract class ViewModelTaskList : ViewModelTask() {
 
     private val tasksM: MutableLiveData<List<Task>> = MutableLiveData(ArrayList())
     val tasks: LiveData<List<Task>> = tasksM
@@ -24,10 +18,14 @@ class ViewModelTaskList : ViewModelBase() {
     private val isVisibleTaskListM = MutableLiveData(false)
     val isVisibleTaskList: LiveData<Boolean> = isVisibleTaskListM
 
+    abstract fun filterRule(task: Task) : Boolean
+
     private val observerTasks: (List<Task>) -> Unit = {
-        tasksM.postValue(it.sortedBy { task -> task.startDate })
-        isVisibleTaskListM.postValue(it.isNotEmpty())
-        isVisibleTextNoItemsM.postValue(it.isEmpty() && !isVisibleProgressBar.value)
+        val tasks = ArrayList(it).filter(::filterRule).sortedBy { task -> task.start }
+
+        tasksM.value = tasks
+        isVisibleTaskListM.value = tasks.isNotEmpty()
+        isVisibleTextNoItemsM.postValue(tasks.isEmpty() && !isVisibleProgressBar.value)
     }
 
     private val observerLoading: (Boolean) -> Unit = {
@@ -38,7 +36,7 @@ class ViewModelTaskList : ViewModelBase() {
         if (exception != null) {
             isVisibleTaskListM.postValue(false)
             isVisibleTextNoItemsM.postValue(true)
-            actionM.postValue(Action(EventType.ERROR, mapOf(Pair(ERROR_TEXT, exception.message ?: ""))))
+            actionM.postValue(Action(EventType.ERROR, mapOf(Pair(ERROR_TEXT, exception.toString()))))
         }
     }
 
@@ -55,11 +53,11 @@ class ViewModelTaskList : ViewModelBase() {
         repositoryTasks.exception.removeObserver(observerException)
     }
 
-    fun load() = launchSilent(coroutineContext, exceptionHandler, job) {
+    fun load() {
         operationWithLoading(repositoryTasks::init)
     }
 
-    fun deleteTask(id: Long) = launchSilent(coroutineContext, exceptionHandler, job) {
+    fun deleteTask(id: Long) {
         operationWithLoading { repositoryTasks.deleteTask(id) }
     }
 }

@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 import relaxeddd.simplediary.data.TaskModel
 import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
+import kotlin.native.concurrent.ThreadLocal
 
 @Serializable
 data class Task(
@@ -13,15 +14,15 @@ data class Task(
     val priority: Int = 0,
     val rrule: String = "",
     val location: String = "",
-    val startDate: Long? = null,
-    val endDate: Long? = null,
-    var isShowHeaderDate: Boolean = false,
-    var isShowBottomDivider: Boolean = false
+    private val startDate: Long? = null,
+    private val endDate: Long? = null,
+    val isCompleted: Boolean = false
 ) {
     constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc ?: "",
         taskModel.priority, taskModel.rrule ?: "", taskModel.location ?: "",
         if (taskModel.start == 0L) getCurrentTime() else taskModel.start,
-        if (taskModel.end == 0L) getCurrentTime() else taskModel.end)
+        if (taskModel.end == 0L) getCurrentTime() else taskModel.end,
+        taskModel.isCompleted)
 
     val start: Long
         get() {

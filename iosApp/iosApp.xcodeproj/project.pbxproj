@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8324989224DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8324989124DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift */; };
+		8324989424DEE7BC00EA9BB8 /* ViewControllerTaskListActual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8324989324DEE7BC00EA9BB8 /* ViewControllerTaskListActual.swift */; };
 		83635D5D24715A84008222C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83635D5C24715A84008222C3 /* AppDelegate.swift */; };
 		83635D5F24715A84008222C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83635D5E24715A84008222C3 /* SceneDelegate.swift */; };
 		83635D6324715A85008222C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83635D6224715A85008222C3 /* Assets.xcassets */; };
@@ -43,6 +45,8 @@
 /* Begin PBXFileReference section */
 		3C00DE253AF320D8CDC83ED0 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BCE4F3C12EF56F4B6C7508B /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
+		8324989124DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskListArchive.swift; sourceTree = "<group>"; };
+		8324989324DEE7BC00EA9BB8 /* ViewControllerTaskListActual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskListActual.swift; sourceTree = "<group>"; };
 		83635D5924715A84008222C3 /* My ToDo List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My ToDo List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		83635D5C24715A84008222C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83635D5E24715A84008222C3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 				83F1A0A424C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift */,
 				836A0C7D24C442D8003B0538 /* ViewControllerTaskCard.swift */,
 				836A0C7F24C58F01003B0538 /* ViewControllerBase.swift */,
+				8324989124DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift */,
+				8324989324DEE7BC00EA9BB8 /* ViewControllerTaskListActual.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -310,7 +316,9 @@
 				83635D5D24715A84008222C3 /* AppDelegate.swift in Sources */,
 				83635D5F24715A84008222C3 /* SceneDelegate.swift in Sources */,
 				836B0C5824B9DFC4009A39F2 /* ViewControllerTaskList.swift in Sources */,
+				8324989224DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift in Sources */,
 				836A0C8024C58F01003B0538 /* ViewControllerBase.swift in Sources */,
+				8324989424DEE7BC00EA9BB8 /* ViewControllerTaskListActual.swift in Sources */,
 				836A0C7E24C442D8003B0538 /* ViewControllerTaskCard.swift in Sources */,
 				83F1A0A524C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift in Sources */,
 				839394B524D6B3E400897B27 /* EditTextDate.swift in Sources */,

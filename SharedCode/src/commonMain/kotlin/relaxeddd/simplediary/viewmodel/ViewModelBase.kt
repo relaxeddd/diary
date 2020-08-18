@@ -8,23 +8,26 @@ import kotlinx.coroutines.Job
 import org.kodein.di.erased.instance
 import relaxeddd.simplediary.di.KodeinInjector
 import relaxeddd.simplediary.domain.model.Action
+import relaxeddd.simplediary.utils.launchSilent
 import kotlin.coroutines.CoroutineContext
 
 open class ViewModelBase : ViewModel() {
 
-    protected val coroutineContext by KodeinInjector.instance<CoroutineContext>()
-    protected var job: Job = Job()
-    protected val exceptionHandler = CoroutineExceptionHandler { _, e -> print(e) }
+    private val coroutineContext by KodeinInjector.instance<CoroutineContext>()
+    private val job: Job = Job()
+    private val exceptionHandler = CoroutineExceptionHandler { _, e -> print(e) }
 
     protected val actionM = MutableLiveData<Action?>(null)
     val action: LiveData<Action?> = actionM
 
-    protected val isVisibleProgressBarM = MutableLiveData(false)
+    private val isVisibleProgressBarM = MutableLiveData(false)
     val isVisibleProgressBar: LiveData<Boolean> = isVisibleProgressBarM
 
-    protected suspend fun operationWithLoading(operation: suspend () -> Unit) {
-        isVisibleProgressBarM.postValue(true)
-        operation()
-        isVisibleProgressBarM.postValue(false)
+    protected fun operationWithLoading(operation: suspend () -> Unit) {
+        launchSilent(coroutineContext, exceptionHandler, job) {
+            isVisibleProgressBarM.postValue(true)
+            operation()
+            isVisibleProgressBarM.postValue(false)
+        }
     }
 }

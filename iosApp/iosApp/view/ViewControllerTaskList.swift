@@ -10,27 +10,24 @@ import UIKit
 import SharedCode
 import MaterialComponents
 
-class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableViewDataSource, UITableViewDelegate {
+class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Fields
-    @IBOutlet weak var tasksList: UITableView!
-    @IBOutlet weak var textNoItems: UILabel!
-    @IBOutlet weak var progressBar: UIActivityIndicatorView!
-    
     internal var tasks: [Task] = []
     
-    // MARK: - View
-    override func createViewModel() -> ViewModelTaskList { ViewModelTaskList() }
-    override func getProgressBar() -> UIActivityIndicatorView? { progressBar }
+    internal var tableViewTasks: UITableView? { get { return nil } }
+    internal var textNoItems: UILabel? { get { return nil } }
+    internal func getCompleteMenuItem(id: Int64) -> UIContextualAction { return nil!! }
     
+    // MARK: - View
     override func initViewModel() {
         super.initViewModel()
         
         viewModel.isVisibleTaskList.addObserver { value in
-            self.tasksList.isHidden = !(value as? Bool ?? false)
+            self.tableViewTasks?.isHidden = !(value as? Bool ?? false)
         }
         viewModel.isVisibleTextNoItems.addObserver { value in
-            self.textNoItems.isHidden = !(value as? Bool ?? true)
+            self.textNoItems?.isHidden = !(value as? Bool ?? true)
         }
         viewModel.tasks.addObserver { value in
             let tasks = value as? [Task] ?? []
@@ -42,7 +39,7 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "taskEdit") {
-            if let taskIx = tasksList?.indexPathForSelectedRow?.row {
+            if let taskIx = tableViewTasks?.indexPathForSelectedRow?.row {
                 let task = tasks[taskIx]
                 let navigationController = segue.destination as? UINavigationController
                 let viewControllerTaskCard = navigationController?.topViewController as? ViewControllerTaskCard
@@ -66,29 +63,33 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
         if (indexPath.row < (tasks.count - 1)) {
             let nextTask = tasks[indexPath.row + 1]
             
-            if (roundMillisToDayDate(millis: nextTask.startDate as! Int64) != roundMillisToDayDate(millis: task.startDate as! Int64)) {
+            if (roundMillisToDayDate(millis: nextTask.start) != roundMillisToDayDate(millis: task.start)) {
                 isShowSeparator = true
             }
+        } else {
+            isShowSeparator = true
         }
         if (indexPath.row > 0) {
             let previousTask = tasks[indexPath.row - 1]
-            if (roundMillisToDayDate(millis: previousTask.startDate as! Int64) != roundMillisToDayDate(millis: task.startDate as! Int64)) {
+            if (roundMillisToDayDate(millis: previousTask.start) != roundMillisToDayDate(millis: task.start)) {
                 isShowDate = true
             }
         } else {
             isShowDate = true
         }
         
-        cell.update(title: task.title, desc: task.desc, priority: Int(task.priority), startTime: task.startDate as? Int64 ?? 0, endTime: task.endDate as? Int64 ?? 0,
-                    date: isShowDate ? task.startDate as? Int64 : nil, isShowSeparator: isShowSeparator)
+        cell.update(title: task.title, desc: task.desc, priority: Int(task.priority), startTime: task.start, endTime: task.end,
+                    date: isShowDate ? task.start : nil, isShowSeparator: isShowSeparator)
         return cell
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let task = self.tasks[indexPath.row]
         let deleteItem = UIContextualAction(style: .destructive, title: NSLocalizedString("delete", comment: "")) { (contextualAction, view, boolValue) in
-            self.viewModel.deleteTask(id: self.tasks[indexPath.row].id)
+            self.viewModel.deleteTask(id: task.id)
         }
-        let swipeActions = UISwipeActionsConfiguration(actions: [deleteItem])
+        let completeItem = getCompleteMenuItem(id: task.id)
+        let swipeActions = UISwipeActionsConfiguration(actions: [completeItem, deleteItem])
 
         return swipeActions
     }
@@ -114,7 +115,7 @@ class ViewControllerTaskList: ViewControllerBase<ViewModelTaskList>, UITableView
         
         if (isNeedUpdate) {
             self.tasks = tasks
-            self.tasksList.reloadData()
+            self.tableViewTasks?.reloadData()
         }
     }
 }

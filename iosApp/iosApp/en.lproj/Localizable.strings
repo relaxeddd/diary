@@ -5,10 +5,12 @@
   Created by Chechin Vadim on 12.07.2020.
   Copyright © 2020 Chechin Vadim. All rights reserved.
 */
-"no_tasks" = "No Tasks";
-"error" = "Error";
+"complete" = "Complete";
 "dismiss" = "Dismiss";
 "delete" = "Delete";
+"error" = "Error";
+"no_tasks" = "No Tasks";
+"restore" = "Restore";
 "today" = "Today";
-"yesterday" = "Yesterday";
 "tomorrow" = "Tomorrow";
+"yesterday" = "Yesterday";

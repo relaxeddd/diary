@@ -13,6 +13,7 @@ import MaterialComponents
 class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     
     internal var viewModel: VM!
+    internal var progressBar: UIActivityIndicatorView? { get { return nil } }
     
     internal func createViewModel() -> VM { fatalError("This method must be overridden") }
     internal func handleAction(action: Action, type: EventType) {}
@@ -25,18 +26,14 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
         initViewModel()
     }
     
-    internal func getProgressBar() -> UIActivityIndicatorView? {
-        return nil
-    }
-    
     internal func initViewModel() {
         viewModel = createViewModel()
         
         viewModel.isVisibleProgressBar.addObserver { value in
             if (value as? Bool ?? false) {
-                self.getProgressBar()?.startAnimating()
+                self.progressBar?.startAnimating()
             } else {
-                self.getProgressBar()?.stopAnimating()
+                self.progressBar?.stopAnimating()
             }
         }
         viewModel.action.addObserver { value in
@@ -44,7 +41,7 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
             let type = action.getTypeIfNotHandled()
             
             if (type == EventType.exit) {
-                self.getProgressBar()?.stopAnimating()
+                self.progressBar?.stopAnimating()
                 self.dismiss(animated: true, completion: nil)
             } else if (type == EventType.error) {
                 let errorText = (value as? Action)?.args?["errorText"] as? String ?? ""
