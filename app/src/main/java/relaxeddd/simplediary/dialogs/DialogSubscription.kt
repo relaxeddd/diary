@@ -7,7 +7,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.ListenerResult
 import relaxeddd.simplediary.common.SELECTED_ITEM
-import relaxeddd.simplediary.ui.billing.ViewModelBilling
 
 class DialogSubscription(private val listener: ListenerResult<Int>?) : DialogFragment() {
 

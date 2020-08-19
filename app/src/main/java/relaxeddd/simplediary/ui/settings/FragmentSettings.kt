@@ -9,24 +9,23 @@ import android.os.PowerManager
 import android.provider.Settings
 import androidx.core.content.ContextCompat
 import com.firebase.ui.auth.AuthUI
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.databinding.FragmentSettingsBinding
 import relaxeddd.simplediary.dialogs.*
-import relaxeddd.simplediary.ui.ActivityBase
 import relaxeddd.simplediary.ui.FragmentBase
 import relaxeddd.simplediary.ui.main.ActivityMain
+import relaxeddd.simplediary.viewmodel.ViewModelBase
 import java.lang.Exception
 
-class FragmentSettings : FragmentBase<ViewModelSettings, FragmentSettingsBinding>() {
+class FragmentSettings : FragmentBase<ViewModelBase, FragmentSettingsBinding>() {
 
     override fun getLayoutResId() = R.layout.fragment_settings
-    override val viewModel: ViewModelSettings by viewModel()
+    override val viewModel = ViewModelBase()
 
     override fun configureBinding() {
         super.configureBinding()
-        binding.viewModel = viewModel
+        //binding.viewModel = viewModel
     }
 
     @SuppressLint("BatteryLife")
@@ -57,24 +56,24 @@ class FragmentSettings : FragmentBase<ViewModelSettings, FragmentSettingsBinding
             EventType.NAVIGATION_DIALOG_CONFIRM_LOGOUT -> {
                 showDialog(DialogConfirmLogout(object: ListenerResult<Boolean> {
                     override fun onResult(result: Boolean) {
-                        viewModel.onLogoutDialogResult(result)
+                        //viewModel.onLogoutDialogResult(result)
                     }
                 }))
             }
             EventType.NAVIGATION_GOOGLE_LOGOUT -> {
                 if (isResumed) {
                     AuthUI.getInstance().signOut(activity ?: return).addOnCompleteListener { resultTask ->
-                        viewModel.onLogoutResult(resultTask.isSuccessful)
+                        //viewModel.onLogoutResult(resultTask.isSuccessful)
                     }
                 }
             }
             EventType.NAVIGATION_WEB_PLAY_MARKET -> {
-                activity?.let { (activity as ActivityBase<*, *>).openWebApplication() }
+                //activity?.let { (activity as ActivityBase<*, *>).openWebApplication() }
             }
             EventType.NAVIGATION_DIALOG_THEME -> {
                 val dialog = DialogAppTheme(object: ListenerResult<Int> {
                     override fun onResult(result: Int) {
-                        viewModel.onAppThemeDialogResult(result)
+                        //viewModel.onAppThemeDialogResult(result)
                     }
                 })
                 dialog.arguments = args

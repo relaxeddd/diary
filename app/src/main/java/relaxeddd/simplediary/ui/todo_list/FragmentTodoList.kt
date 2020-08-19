@@ -8,6 +8,7 @@ import relaxeddd.simplediary.databinding.FragmentTodoListBinding
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.ui.AdapterTasks
 import relaxeddd.simplediary.viewmodel.ViewModelTaskList
+import relaxeddd.simplediary.viewmodel.ViewModelTaskListActual
 
 class FragmentTodoList : FragmentBase<ViewModelTaskList, FragmentTodoListBinding>() {
 
@@ -16,7 +17,7 @@ class FragmentTodoList : FragmentBase<ViewModelTaskList, FragmentTodoListBinding
     override fun getLayoutResId() = R.layout.fragment_todo_list
 
     override val viewModel: ViewModelTaskList by lazy {
-        ViewModelProviders.of(this).get(ViewModelTaskList::class.java)
+        ViewModelProviders.of(this).get(ViewModelTaskListActual::class.java)
     }
 
     override fun configureBinding() {

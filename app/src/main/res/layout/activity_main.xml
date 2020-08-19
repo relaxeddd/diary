@@ -6,9 +6,9 @@
     <data>
 
         <import type="android.view.View"/>
-        <variable
+        <!--<variable
             name="viewModel"
-            type="relaxeddd.simplediary.ui.main.ViewModelMain"/>
+            type="relaxeddd.simplediary.ui.main.ViewModelMain"/>-->
 
     </data>
 

@@ -1,13 +1,11 @@
 package relaxeddd.simplediary.viewmodel
 
-import org.kodein.di.erased.instance
-import relaxeddd.simplediary.di.KodeinInjector
+import relaxeddd.simplediary.di.repoTasks
 import relaxeddd.simplediary.domain.Response
-import relaxeddd.simplediary.source.repository.RepositoryTasks
 
 abstract class ViewModelTask : ViewModelBase() {
 
-    protected val repositoryTasks by KodeinInjector.instance<RepositoryTasks>()
+    protected val repositoryTasks = repoTasks
 
     protected fun updateTask(id: Long, title: String, desc: String?, priority: Int, rrule: String?, location: String?,
                            start: Long, end: Long, isCompleted: Boolean, onCompleted: ((Response<Unit>) -> Unit)? = null) {
