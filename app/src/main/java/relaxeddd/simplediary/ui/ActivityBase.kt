@@ -14,14 +14,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import relaxeddd.simplediary.common.*
 
-abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompatActivity(), LifecycleOwner {
+abstract class ActivityBase<B : ViewDataBinding> : AppCompatActivity(), LifecycleOwner {
 
     private var listenerHomeMenuButton: () -> Unit = {}
     protected lateinit var binding: B
-    abstract val viewModel: VM
     var isActivityResumed = false
         private set
 
@@ -45,7 +43,6 @@ abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompat
     override fun onResume() {
         super.onResume()
         isActivityResumed = true
-        viewModel.onViewResume()
     }
 
     override fun onPause() {
@@ -87,13 +84,7 @@ abstract class ActivityBase<VM : ViewModelBase, B : ViewDataBinding> : AppCompat
     }
 
     @CallSuper
-    protected open fun configureBinding() {
-        viewModel.navigateEvent.observe(this, Observer {
-            it.getTypeIfNotHandled()?.let {type ->
-                onNavigationEvent(type, it?.args)
-            }
-        })
-    }
+    protected open fun configureBinding() {}
 
     protected fun showDialog(dialog: DialogFragment) {
         if (isActivityResumed) {

@@ -1,6 +1,5 @@
 package relaxeddd.simplediary.source.network
 
-import io.ktor.client.HttpClient
 import kotlinx.coroutines.delay
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.UnstableDefault
@@ -11,7 +10,7 @@ import relaxeddd.simplediary.domain.model.Task
 
 class ApiTask {
 
-    private val httpClient = HttpClient()
+    //private val httpClient = HttpClient()
 
     @OptIn(ImplicitReflectionSerializer::class, UnstableDefault::class)
     suspend fun requestTasks() = try {

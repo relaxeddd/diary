@@ -5,15 +5,13 @@ import dev.icerock.moko.mvvm.livedata.MutableLiveData
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
-import org.kodein.di.erased.instance
-import relaxeddd.simplediary.di.KodeinInjector
+import relaxeddd.simplediary.di.coroutineCtx
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.utils.launchSilent
-import kotlin.coroutines.CoroutineContext
 
 open class ViewModelBase : ViewModel() {
 
-    private val coroutineContext by KodeinInjector.instance<CoroutineContext>()
+    private val coroutineContext = coroutineCtx
     private val job: Job = Job()
     private val exceptionHandler = CoroutineExceptionHandler { _, e -> print(e) }
 
