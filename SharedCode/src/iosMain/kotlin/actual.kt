@@ -7,6 +7,9 @@ import kotlinx.coroutines.*
 import platform.darwin.*
 import platform.posix.time
 import kotlin.coroutines.CoroutineContext
+import platform.darwin.dispatch_async
+import platform.darwin.dispatch_get_current_queue
+import platform.darwin.dispatch_get_main_queue
 
 actual class ContextArgs
 
@@ -76,5 +79,14 @@ internal class NsQueueDispatcher(private val dispatchQueue: dispatch_queue_t) : 
         }
 
         return handle
+    }
+}
+
+actual fun postOnMainThread(run: () -> Unit) {
+    val mainQueue = dispatch_get_main_queue()
+    if (dispatch_get_current_queue() == mainQueue) {
+        run()
+    } else {
+        dispatch_async(mainQueue) { run() }
     }
 }

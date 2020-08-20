@@ -1,13 +1,13 @@
 package relaxeddd.simplediary.source.repository
 
-import dev.icerock.moko.mvvm.livedata.LiveData
-import dev.icerock.moko.mvvm.livedata.MutableLiveData
 import kotlinx.coroutines.*
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Task
 //import relaxeddd.simplediary.getDataBase
 //import relaxeddd.simplediary.source.db.dao.DaoTask
 import relaxeddd.simplediary.source.network.ApiTask
+import relaxeddd.simplediary.utils.live_data.LiveData
+import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
 class RepositoryTasks(private val apiTask: ApiTask) {
 

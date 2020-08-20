@@ -9,6 +9,7 @@ expect fun platformName(): String
 expect fun isNetworkAvailable(): Boolean
 //expect fun getSqlDriver(): SqlDriver
 expect fun getCurrentTime() : Long
+expect fun postOnMainThread(run: () -> Unit)
 
 internal expect val ApplicationDispatcher: CoroutineContext
 

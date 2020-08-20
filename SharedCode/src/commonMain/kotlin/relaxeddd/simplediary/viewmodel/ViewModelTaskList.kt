@@ -1,11 +1,11 @@
 package relaxeddd.simplediary.viewmodel
 
-import dev.icerock.moko.mvvm.livedata.LiveData
-import dev.icerock.moko.mvvm.livedata.MutableLiveData
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.utils.ERROR_TEXT
+import relaxeddd.simplediary.utils.live_data.LiveData
+import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
 abstract class ViewModelTaskList : ViewModelTask() {
 

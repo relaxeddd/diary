@@ -1,7 +1,5 @@
 package relaxeddd.simplediary.viewmodel
 
-import dev.icerock.moko.mvvm.livedata.LiveData
-import dev.icerock.moko.mvvm.livedata.MutableLiveData
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
@@ -9,6 +7,8 @@ import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
 import relaxeddd.simplediary.utils.TIME_DAY
+import relaxeddd.simplediary.utils.live_data.LiveData
+import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
 class ViewModelTaskCard : ViewModelTask() {
 
