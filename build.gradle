@@ -5,20 +5,13 @@ buildscript {
         google()
         jcenter()
         mavenCentral()
-        maven { url "https://kotlin.bintray.com/kotlinx" }
-        maven { url "https://dl.bintray.com/soywiz/soywiz" }
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
-        maven { url "https://dl.bintray.com/kodein-framework/Kodein-DI/org/kodein/di/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath "com.android.tools.build:gradle:4.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.github.jengelman.gradle.plugins:shadow:5.0.0"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         classpath "com.squareup.sqldelight:gradle-plugin:$sqldelight_version"
         classpath "com.squareup.sqldelight:runtime:$sqldelight_version"
-        classpath 'com.google.gms:google-services:4.3.3'
     }
 }
 

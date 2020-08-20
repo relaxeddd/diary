@@ -11,8 +11,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
 import kotlinx.android.synthetic.main.activity_main.*
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
@@ -150,7 +148,7 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
     }
 
     private fun initGooglePlayServices() {
-        val googleApiAvailability = GoogleApiAvailability.getInstance()
+        /*val googleApiAvailability = GoogleApiAvailability.getInstance()
         val status = googleApiAvailability.isGooglePlayServicesAvailable(this)
 
         if (status != ConnectionResult.SUCCESS) {
@@ -161,7 +159,7 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
             }
         } else {
             GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this)
-        }
+        }*/
     }
 
     private fun initPrivacyPolicyText() {

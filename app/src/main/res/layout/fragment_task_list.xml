@@ -47,21 +47,28 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_todo_list"
+                android:id="@+id/recycler_view_task_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:visibility="@{safeUnbox(viewModel.isVisibleTaskList.value) ? View.VISIBLE : View.GONE}"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
             <TextView
-                android:id="@+id/text_todo_list_no_items"
+                android:id="@+id/text_task_list_no_items"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/no_tasks_desc"
-                android:textSize="@dimen/font_16"
-                android:visibility="@{safeUnbox(viewModel.isVisibleTextNoItems.value) ? View.VISIBLE : View.GONE}"/>
+                android:textSize="@dimen/font_16"/>
+
+            <ProgressBar
+                android:id="@+id/progress_bar_task_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
