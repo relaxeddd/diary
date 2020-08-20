@@ -67,22 +67,15 @@ kotlin {
             languageSettings.useExperimentalAnnotation("org.mylibrary.OptInAnnotation")
         }
         commonMain.dependencies {
-            api 'org.jetbrains.kotlin:kotlin-stdlib-common'
-
-            implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
-            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutine_version"
+            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
         }
 
         androidMain.dependencies {
-            implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-            implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
-            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
             implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
         }
 
         iosMain.dependencies {
-            implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
-            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutine_version"
+            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutine_native_version"
         }
     }
 }
