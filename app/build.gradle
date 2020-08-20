@@ -25,10 +25,6 @@ android {
         dataBinding = true
     }
     buildTypes {
-        def STRING = "String"
-        all {
-            buildConfigField STRING, "DATABASE_NAME", '"relaxeddd_simplediary.db"'
-        }
         release {
             debuggable true
             minifyEnabled false
@@ -62,9 +58,6 @@ dependencies {
     def nav_version = "2.3.0"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-
-    // SQL DELIGHT
-    implementation "com.squareup.sqldelight:android-driver:$sqldelight_version"
 
     implementation "dev.icerock.moko:mvvm:0.3.1"
 }

@@ -1,7 +1,7 @@
 package relaxeddd.simplediary
 
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+//import com.squareup.sqldelight.db.SqlDriver
+//import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import platform.UIKit.UIDevice
 import kotlinx.coroutines.*
 import platform.darwin.*
@@ -19,10 +19,10 @@ actual fun platformName() : String {
     return UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
 }
 
-actual fun getSqlDriver(): SqlDriver {
+/*actual fun getSqlDriver(): SqlDriver {
     val driver: SqlDriver = NativeSqliteDriver(Database.Schema, "relaxeddd.diary.db")
     return driver
-}
+}*/
 
 actual fun getCurrentTime() : Long {
     return time(null) * 1000
