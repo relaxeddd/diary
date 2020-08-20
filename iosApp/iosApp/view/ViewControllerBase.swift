@@ -8,7 +8,6 @@
 
 import UIKit
 import SharedCode
-import MaterialComponents
 
 class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     
@@ -54,14 +53,10 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     }
     
     internal func showError(text: String) {
-        let action = MDCSnackbarMessageAction()
-        action.title = NSLocalizedString("dismiss", comment: "")
-        
-        let message = MDCSnackbarMessage()
-        message.automaticallyDismisses = false
-        message.shouldDismissOnOverlayTap = false
-        message.text = NSLocalizedString("error", comment: "") + ": " + text
-        message.action = action
-        MDCSnackbarManager.show(message)
+        let alert = UIAlertController(title: NSLocalizedString("error", comment: ""), message: text, preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: NSLocalizedString("dismiss", comment: ""), style: .cancel, handler: { (UIAlertAction) in
+            alert.dismiss(animated: true)
+        }))
+        self.present(alert, animated: true)
     }
 }

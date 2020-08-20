@@ -8,7 +8,6 @@
 
 import UIKit
 import SharedCode
-import MaterialComponents
 
 class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UITableViewDataSource, UITableViewDelegate {
     
