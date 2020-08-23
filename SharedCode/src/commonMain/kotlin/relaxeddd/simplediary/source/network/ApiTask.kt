@@ -1,15 +1,15 @@
 package relaxeddd.simplediary.source.network
 
-import kotlinx.coroutines.delay
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Task
+import relaxeddd.simplediary.freezeThread
 
 class ApiTask {
 
     //private val httpClient = HttpClient()
 
     //@OptIn(ImplicitReflectionSerializer::class, UnstableDefault::class)
-    suspend fun requestTasks() = try {
+    fun requestTasks() = try {
         //val url = ""
         //val json = httpClient.get<String>(url)
         /*val responseJson = "[" +
@@ -23,12 +23,12 @@ class ApiTask {
             Task(1, "Заплатить за квартиру", "Квитанции за квартиру, электричество, отопление"),
             Task(2, "Заплатить за интернет", "Номер договора 54523423")
         )
-        delay(2000)
+        freezeThread(1)
 
         //throw Exception("Test exception")
 
         Response(tasks)
     } catch (e: Exception) {
-        Response<List<Task>>(exception = e)
+        Response(exception = e)
     }
 }

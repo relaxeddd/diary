@@ -7,10 +7,11 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import kotlinx.coroutines.Dispatchers
 import relaxeddd.simplediary.di.InjectorCommon
+import relaxeddd.simplediary.domain.Response
 import java.lang.reflect.InvocationTargetException
-import kotlin.coroutines.CoroutineContext
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 actual class ContextArgs(var context: Context)
 
@@ -33,10 +34,14 @@ actual fun getCurrentTime() : Long {
     return System.currentTimeMillis()
 }
 
-internal actual val ApplicationDispatcher: CoroutineContext = Dispatchers.Default
+actual fun freezeThread(seconds: Int) {
+    Thread.sleep((seconds * 1000).toLong())
+}
 
+//----------------------------------------------------------------------------------------------------------------------
 private val lock = Any()
 private var mainHandler: Handler? = null
+private val executorService: ExecutorService by lazy { Executors.newFixedThreadPool(4) }
 
 actual fun postOnMainThread(run: () -> Unit) {
     if (mainHandler == null) {
@@ -52,7 +57,7 @@ actual fun postOnMainThread(run: () -> Unit) {
 private fun createHandler() : Handler {
     val looper = Looper.getMainLooper()
 
-    if (Build.VERSION.SDK_INT >= 28) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         return Handler.createAsync(looper)
     }
     try {
@@ -64,4 +69,19 @@ private fun createHandler() : Handler {
     } catch (e: InvocationTargetException) {}
 
     return Handler(looper)
+}
+
+actual fun <T> async(run: () -> T?, onCompleted: (T?, Exception?) -> Unit) {
+    executorService.execute {
+        var result: T? = null
+        var exception: Exception? = null
+        try {
+            run().let {
+                result = it
+            }
+        } catch (e: Exception) {
+            exception = e
+        }
+        postOnMainThread { onCompleted(result, exception) }
+    }
 }

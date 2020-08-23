@@ -36,14 +36,14 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
             }
         }
         viewModel.action.addObserver { value in
-            guard let action = value as? Action else { return }
+            guard let action = value else { return }
             let type = action.getTypeIfNotHandled()
             
             if (type == EventType.exit) {
                 self.progressBar?.stopAnimating()
                 self.dismiss(animated: true, completion: nil)
             } else if (type == EventType.error) {
-                let errorText = (value as? Action)?.args?["errorText"] as? String ?? ""
+                let errorText = (value)?.args?["errorText"] as? String ?? ""
                 self.showError(text: errorText)
                 print(errorText)
             } else if (type != nil) {

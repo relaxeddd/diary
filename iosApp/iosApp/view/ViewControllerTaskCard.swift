@@ -60,7 +60,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             self.buttonSave.isEnabled = value as? Bool ?? false
         }
         viewModel.taskTitle.addObserver { (value) in
-            let title = value as? String ?? ""
+            let title = value as String? ?? ""
             if (self.editTextTitle.text != title) {
                 self.editTextTitle.text = title
             }
@@ -69,7 +69,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             }
         }
         viewModel.taskDesc.addObserver { (value) in
-            let desc = value as? String ?? ""
+            let desc = value as String? ?? ""
             if (self.editTextDesc.text != desc) {
                 self.editTextDesc.text = desc
             }
@@ -124,6 +124,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     }
     
     @IBAction func onSaveClicked(_ sender: Any) {
+        //TODO check multiple saving
         view.endEditing(true)
         viewModel.onClickedSave()
     }

@@ -66,17 +66,11 @@ kotlin {
         all {
             languageSettings.useExperimentalAnnotation("org.mylibrary.OptInAnnotation")
         }
-        commonMain.dependencies {
-            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
-        }
+        commonMain.dependencies {}
 
-        androidMain.dependencies {
-            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
-        }
+        androidMain.dependencies {}
 
-        iosMain.dependencies {
-            implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutine_native_version"
-        }
+        iosMain.dependencies {}
     }
 }
 

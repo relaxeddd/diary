@@ -54,10 +54,16 @@ abstract class ViewModelTaskList : ViewModelTask() {
     }
 
     fun load() {
-        operationWithLoading(repositoryTasks::init)
+        isVisibleProgressBarM.value = true
+        repositoryTasks.init {
+            isVisibleProgressBarM.value = false
+        }
     }
 
     fun deleteTask(id: Long) {
-        operationWithLoading { repositoryTasks.deleteTask(id) }
+        isVisibleProgressBarM.value = true
+        repositoryTasks.deleteTask(id) {
+            isVisibleProgressBarM.value = false
+        }
     }
 }

@@ -3,6 +3,7 @@ package relaxeddd.simplediary.viewmodel
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
+import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
@@ -77,7 +78,7 @@ class ViewModelTaskCard : ViewModelTask() {
         val start: Long = taskStart.value
         val end: Long = taskEnd.value
         val isCompleted: Boolean = taskIsCompleted.value
-        val callback = { response: Response<Unit> ->
+        val callback = { response: Response<List<Task>> ->
             if (response.isValid) {
                 actionM.postValue(Action(EventType.EXIT))
             } else {
