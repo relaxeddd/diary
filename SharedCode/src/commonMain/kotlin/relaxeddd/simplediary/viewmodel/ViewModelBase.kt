@@ -15,10 +15,4 @@ open class ViewModelBase {
     open fun onCleared() {
         //TODO
     }
-
-    protected fun operationWithLoading(operation: () -> Unit): () -> Unit = {
-        isVisibleProgressBarM.postValue(true)
-        operation()
-        isVisibleProgressBarM.postValue(false)
-    }
 }
