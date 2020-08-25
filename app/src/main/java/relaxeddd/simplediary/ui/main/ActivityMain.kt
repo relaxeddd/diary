@@ -11,9 +11,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
-import kotlinx.android.synthetic.main.activity_main.*
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.databinding.ActivityMainBinding
@@ -68,10 +65,10 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
                 DrawerLayout.LOCK_MODE_LOCKED_CLOSED
             }
 
-            drawer_layout_main.setDrawerLockMode(lockMode)
+            binding.drawerLayoutMain.setDrawerLockMode(lockMode)
         }
 
-        navigation_view_main.apply {
+        binding.navigationViewMain.apply {
             /*val menuView = findViewById<RecyclerView>(R.id.design_navigation_view)
 
             navigationHeaderBinding.root.doOnApplyWindowInsets { v, insets, padding ->
@@ -88,7 +85,7 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
 
         if (savedInstanceState == null) {
             val initialNavId = intent.getIntExtra(EXTRA_NAVIGATION_ID, R.id.navigation_todo_list)
-            navigation_view_main.setCheckedItem(initialNavId)
+            binding.navigationViewMain.setCheckedItem(initialNavId)
             navigateTo(initialNavId)
         }
 
@@ -113,11 +110,11 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        currentNavId = navigation_view_main.checkedItem?.itemId ?: NAV_ID_NONE
+        currentNavId = binding.navigationViewMain.checkedItem?.itemId ?: NAV_ID_NONE
     }
 
     override fun registerToolbarWithNavigation(toolbar: Toolbar) {
-        val appBarConfiguration = AppBarConfiguration.Builder(TOP_LEVEL_DESTINATIONS).setDrawerLayout(drawer_layout_main).build()
+        val appBarConfiguration = AppBarConfiguration.Builder(TOP_LEVEL_DESTINATIONS).setDrawerLayout(binding.drawerLayoutMain).build()
         setupWithNavController(toolbar, navigationController, appBarConfiguration)
     }
 
@@ -150,7 +147,7 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
     }
 
     private fun initGooglePlayServices() {
-        val googleApiAvailability = GoogleApiAvailability.getInstance()
+        /*val googleApiAvailability = GoogleApiAvailability.getInstance()
         val status = googleApiAvailability.isGooglePlayServicesAvailable(this)
 
         if (status != ConnectionResult.SUCCESS) {
@@ -161,7 +158,7 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
             }
         } else {
             GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this)
-        }
+        }*/
     }
 
     private fun initPrivacyPolicyText() {

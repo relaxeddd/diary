@@ -1,14 +1,15 @@
 package relaxeddd.simplediary.viewmodel
 
-import dev.icerock.moko.mvvm.livedata.LiveData
-import dev.icerock.moko.mvvm.livedata.MutableLiveData
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
+import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
 import relaxeddd.simplediary.utils.TIME_DAY
+import relaxeddd.simplediary.utils.live_data.LiveData
+import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
 class ViewModelTaskCard : ViewModelTask() {
 
@@ -43,12 +44,21 @@ class ViewModelTaskCard : ViewModelTask() {
         isEnabledButtonSaveM.value = it.isNotEmpty()
     }
 
-    init {
+    override fun onFill() {
+        super.onFill()
         taskTitle.addObserver(observerTitle)
     }
 
     override fun onCleared() {
         super.onCleared()
+        isEnabledButtonSaveM.removeAllObservers()
+        taskTitleM.removeAllObservers()
+        taskDescM.removeAllObservers()
+        taskPriorityM.removeAllObservers()
+        taskStartM.removeAllObservers()
+        taskEndM.removeAllObservers()
+        taskIsCompletedM.removeAllObservers()
+
         taskTitle.removeObserver(observerTitle)
     }
 
@@ -77,7 +87,7 @@ class ViewModelTaskCard : ViewModelTask() {
         val start: Long = taskStart.value
         val end: Long = taskEnd.value
         val isCompleted: Boolean = taskIsCompleted.value
-        val callback = { response: Response<Unit> ->
+        val callback = { response: Response<List<Task>> ->
             if (response.isValid) {
                 actionM.postValue(Action(EventType.EXIT))
             } else {

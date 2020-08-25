@@ -36,6 +36,11 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     }
     
     // MARK: - Init
+    override func initViewModel() {
+        super.initViewModel()
+        viewModel.load(editTaskId: intToKotlinLong(value: editTaskId))
+    }
+    
     override func initView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
@@ -53,14 +58,14 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         }
     }
     
-    override func initViewModel() {
-        super.initViewModel()
+    override func observeViewModel() {
+        super.observeViewModel()
         
         viewModel.isEnabledButtonSave.addObserver { value in
             self.buttonSave.isEnabled = value as? Bool ?? false
         }
         viewModel.taskTitle.addObserver { (value) in
-            let title = value as? String ?? ""
+            let title = value as String? ?? ""
             if (self.editTextTitle.text != title) {
                 self.editTextTitle.text = title
             }
@@ -69,7 +74,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             }
         }
         viewModel.taskDesc.addObserver { (value) in
-            let desc = value as? String ?? ""
+            let desc = value as String? ?? ""
             if (self.editTextDesc.text != desc) {
                 self.editTextDesc.text = desc
             }
@@ -94,8 +99,6 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             let isCompleted = value as? Bool ?? false
             self.switchIsCompleted.isOn = isCompleted
         }
-        
-        viewModel.load(editTaskId: intToKotlinLong(value: editTaskId))
     }
     
     // MARK: - User interacion
@@ -124,6 +127,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     }
     
     @IBAction func onSaveClicked(_ sender: Any) {
+        //TODO check multiple saving
         view.endEditing(true)
         viewModel.onClickedSave()
     }

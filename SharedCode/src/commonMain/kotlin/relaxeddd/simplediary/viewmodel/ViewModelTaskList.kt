@@ -1,11 +1,11 @@
 package relaxeddd.simplediary.viewmodel
 
-import dev.icerock.moko.mvvm.livedata.LiveData
-import dev.icerock.moko.mvvm.livedata.MutableLiveData
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.utils.ERROR_TEXT
+import relaxeddd.simplediary.utils.live_data.LiveData
+import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
 abstract class ViewModelTaskList : ViewModelTask() {
 
@@ -40,7 +40,8 @@ abstract class ViewModelTaskList : ViewModelTask() {
         }
     }
 
-    init {
+    override fun onFill() {
+        super.onFill()
         isVisibleProgressBar.addObserver(observerLoading)
         repositoryTasks.tasks.addObserver(observerTasks)
         repositoryTasks.exception.addObserver(observerException)
@@ -48,16 +49,26 @@ abstract class ViewModelTaskList : ViewModelTask() {
 
     override fun onCleared() {
         super.onCleared()
+        tasksM.removeAllObservers()
+        isVisibleTextNoItemsM.removeAllObservers()
+        isVisibleTaskListM.removeAllObservers()
+
         isVisibleProgressBar.removeObserver(observerLoading)
         repositoryTasks.tasks.removeObserver(observerTasks)
         repositoryTasks.exception.removeObserver(observerException)
     }
 
     fun load() {
-        operationWithLoading(repositoryTasks::init)
+        isVisibleProgressBarM.value = true
+        repositoryTasks.init {
+            isVisibleProgressBarM.value = false
+        }
     }
 
     fun deleteTask(id: Long) {
-        operationWithLoading { repositoryTasks.deleteTask(id) }
+        isVisibleProgressBarM.value = true
+        repositoryTasks.deleteTask(id) {
+            isVisibleProgressBarM.value = false
+        }
     }
 }

@@ -4,13 +4,11 @@ import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.RemoteMessage
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.NOTIFICATIONS_CHANNEL_REMIND
 import relaxeddd.simplediary.common.SharedPreferenceStorage
 
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+class MyFirebaseMessagingService {
 
     companion object {
         var pushToken: String = ""
@@ -28,7 +26,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    override fun onNewToken(p0: String) {
+    /*override fun onNewToken(p0: String) {
         super.onNewToken(p0)
         pushToken = p0
         if (p0.isNotEmpty()) {
@@ -38,5 +36,5 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-    }
+    }*/
 }

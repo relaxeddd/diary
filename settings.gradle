@@ -1,5 +1,2 @@
 include ':app'
 include ':SharedCode'
-
-// Deshabilitar para Android / Habilitar para iOS
-enableFeaturePreview('GRADLE_METADATA')

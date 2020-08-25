@@ -72,3 +72,11 @@ fun AppCompatActivity.updateForTheme(theme: Theme) = when (theme) {
 fun <X, Y> LiveData<X>.map(body: (X) -> Y): LiveData<Y> {
     return Transformations.map(this, body)
 }
+
+fun View.visibleOrGone(isVisible: Boolean) {
+    visibility = if (isVisible) View.VISIBLE else View.GONE
+}
+
+fun View.visibleOrInvisible(isVisible: Boolean) {
+    visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+}

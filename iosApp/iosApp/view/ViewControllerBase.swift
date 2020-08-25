@@ -8,7 +8,6 @@
 
 import UIKit
 import SharedCode
-import MaterialComponents
 
 class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     
@@ -22,13 +21,24 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initView()
         initViewModel()
+        initView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.onFill()
+        observeViewModel()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.onCleared()
     }
     
     internal func initViewModel() {
         viewModel = createViewModel()
-        
+    }
+    
+    internal func observeViewModel() {
         viewModel.isVisibleProgressBar.addObserver { value in
             if (value as? Bool ?? false) {
                 self.progressBar?.startAnimating()
@@ -37,14 +47,14 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
             }
         }
         viewModel.action.addObserver { value in
-            guard let action = value as? Action else { return }
+            guard let action = value else { return }
             let type = action.getTypeIfNotHandled()
             
             if (type == EventType.exit) {
                 self.progressBar?.stopAnimating()
                 self.dismiss(animated: true, completion: nil)
             } else if (type == EventType.error) {
-                let errorText = (value as? Action)?.args?["errorText"] as? String ?? ""
+                let errorText = (value)?.args?["errorText"] as? String ?? ""
                 self.showError(text: errorText)
                 print(errorText)
             } else if (type != nil) {
@@ -54,14 +64,10 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     }
     
     internal func showError(text: String) {
-        let action = MDCSnackbarMessageAction()
-        action.title = NSLocalizedString("dismiss", comment: "")
-        
-        let message = MDCSnackbarMessage()
-        message.automaticallyDismisses = false
-        message.shouldDismissOnOverlayTap = false
-        message.text = NSLocalizedString("error", comment: "") + ": " + text
-        message.action = action
-        MDCSnackbarManager.show(message)
+        let alert = UIAlertController(title: NSLocalizedString("error", comment: ""), message: text, preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: NSLocalizedString("dismiss", comment: ""), style: .cancel, handler: { (UIAlertAction) in
+            alert.dismiss(animated: true)
+        }))
+        self.present(alert, animated: true)
     }
 }

@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
 import androidx.core.content.ContextCompat
-import com.firebase.ui.auth.AuthUI
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.databinding.FragmentSettingsBinding
@@ -61,11 +60,11 @@ class FragmentSettings : FragmentBase<ViewModelBase, FragmentSettingsBinding>() 
                 }))
             }
             EventType.NAVIGATION_GOOGLE_LOGOUT -> {
-                if (isResumed) {
+                /*if (isResumed) {
                     AuthUI.getInstance().signOut(activity ?: return).addOnCompleteListener { resultTask ->
-                        //viewModel.onLogoutResult(resultTask.isSuccessful)
+                        viewModel.onLogoutResult(resultTask.isSuccessful)
                     }
-                }
+                }*/
             }
             EventType.NAVIGATION_WEB_PLAY_MARKET -> {
                 //activity?.let { (activity as ActivityBase<*, *>).openWebApplication() }

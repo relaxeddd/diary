@@ -1,15 +1,15 @@
 package relaxeddd.simplediary.di
 
-import relaxeddd.simplediary.ApplicationDispatcher
 import relaxeddd.simplediary.ContextArgs
 import relaxeddd.simplediary.source.network.ApiTask
 import relaxeddd.simplediary.source.repository.RepositoryTasks
+import kotlin.native.concurrent.SharedImmutable
 import kotlin.native.concurrent.ThreadLocal
 
-private val apiTask by lazy { ApiTask() }
+@SharedImmutable
+val apiTask by lazy { ApiTask() }
 
-val coroutineCtx get() = ApplicationDispatcher
-val repoTasks by lazy { RepositoryTasks(apiTask) }
+val repoTasks by lazy { RepositoryTasks() }
 
 @ThreadLocal
 object InjectorCommon {
