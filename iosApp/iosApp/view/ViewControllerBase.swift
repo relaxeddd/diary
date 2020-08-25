@@ -21,13 +21,24 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initView()
         initViewModel()
+        initView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.onFill()
+        observeViewModel()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.onCleared()
     }
     
     internal func initViewModel() {
         viewModel = createViewModel()
-        
+    }
+    
+    internal func observeViewModel() {
         viewModel.isVisibleProgressBar.addObserver { value in
             if (value as? Bool ?? false) {
                 self.progressBar?.startAnimating()

@@ -21,6 +21,11 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
     // MARK: - View
     override func initViewModel() {
         super.initViewModel()
+        viewModel.load()
+    }
+    
+    override func observeViewModel() {
+        super.observeViewModel()
         
         viewModel.isVisibleTaskList.addObserver { value in
             self.tableViewTasks?.isHidden = !(value as? Bool ?? false)
@@ -32,8 +37,6 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
             let tasks = value as? [Task] ?? []
             self.updateList(tasks: tasks)
         }
-        
-        viewModel.load()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

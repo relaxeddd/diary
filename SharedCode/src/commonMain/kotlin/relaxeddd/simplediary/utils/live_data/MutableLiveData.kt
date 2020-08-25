@@ -18,6 +18,10 @@ class MutableLiveData<T>(value: T) : LiveData<T>() {
         }
     }
 
+    fun removeAllObservers() {
+        observers.clear()
+    }
+
     private fun notifyValueChanged() {
         observers.forEach { it(value) }
     }

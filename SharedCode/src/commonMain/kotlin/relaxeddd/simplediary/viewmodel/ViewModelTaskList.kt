@@ -40,7 +40,8 @@ abstract class ViewModelTaskList : ViewModelTask() {
         }
     }
 
-    init {
+    override fun onFill() {
+        super.onFill()
         isVisibleProgressBar.addObserver(observerLoading)
         repositoryTasks.tasks.addObserver(observerTasks)
         repositoryTasks.exception.addObserver(observerException)
@@ -48,6 +49,10 @@ abstract class ViewModelTaskList : ViewModelTask() {
 
     override fun onCleared() {
         super.onCleared()
+        tasksM.removeAllObservers()
+        isVisibleTextNoItemsM.removeAllObservers()
+        isVisibleTaskListM.removeAllObservers()
+
         isVisibleProgressBar.removeObserver(observerLoading)
         repositoryTasks.tasks.removeObserver(observerTasks)
         repositoryTasks.exception.removeObserver(observerException)

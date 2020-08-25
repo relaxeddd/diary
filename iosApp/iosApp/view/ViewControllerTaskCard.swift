@@ -36,6 +36,11 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     }
     
     // MARK: - Init
+    override func initViewModel() {
+        super.initViewModel()
+        viewModel.load(editTaskId: intToKotlinLong(value: editTaskId))
+    }
+    
     override func initView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
@@ -53,8 +58,8 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         }
     }
     
-    override func initViewModel() {
-        super.initViewModel()
+    override func observeViewModel() {
+        super.observeViewModel()
         
         viewModel.isEnabledButtonSave.addObserver { value in
             self.buttonSave.isEnabled = value as? Bool ?? false
@@ -94,8 +99,6 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             let isCompleted = value as? Bool ?? false
             self.switchIsCompleted.isOn = isCompleted
         }
-        
-        viewModel.load(editTaskId: intToKotlinLong(value: editTaskId))
     }
     
     // MARK: - User interacion

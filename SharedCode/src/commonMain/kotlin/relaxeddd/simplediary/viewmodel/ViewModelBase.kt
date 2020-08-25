@@ -12,7 +12,10 @@ open class ViewModelBase {
     protected val isVisibleProgressBarM = MutableLiveData(false)
     val isVisibleProgressBar: LiveData<Boolean> = isVisibleProgressBarM
 
+    open fun onFill() {}
+
     open fun onCleared() {
-        //TODO
+        actionM.removeAllObservers()
+        isVisibleProgressBarM.removeAllObservers()
     }
 }

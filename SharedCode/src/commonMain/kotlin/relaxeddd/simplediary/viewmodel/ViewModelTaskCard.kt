@@ -44,12 +44,21 @@ class ViewModelTaskCard : ViewModelTask() {
         isEnabledButtonSaveM.value = it.isNotEmpty()
     }
 
-    init {
+    override fun onFill() {
+        super.onFill()
         taskTitle.addObserver(observerTitle)
     }
 
     override fun onCleared() {
         super.onCleared()
+        isEnabledButtonSaveM.removeAllObservers()
+        taskTitleM.removeAllObservers()
+        taskDescM.removeAllObservers()
+        taskPriorityM.removeAllObservers()
+        taskStartM.removeAllObservers()
+        taskEndM.removeAllObservers()
+        taskIsCompletedM.removeAllObservers()
+
         taskTitle.removeObserver(observerTitle)
     }
 
