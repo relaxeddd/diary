@@ -1,1 +1,0 @@
-ALTER TABLE taskModel ADD COLUMN description TEXT;

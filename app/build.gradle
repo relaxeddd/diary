@@ -23,6 +23,10 @@ android {
         dataBinding = true
     }
     buildTypes {
+        /*def STRING = "String"
+        all {
+            buildConfigField STRING, "DATABASE_NAME", '"relaxeddd.simplediary.diaryDB"'
+        }*/
         release {
             debuggable true
             minifyEnabled false
@@ -56,4 +60,6 @@ dependencies {
     def nav_version = "2.3.0"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    //implementation "com.squareup.sqldelight:android-driver:1.4.1"
 }

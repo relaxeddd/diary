@@ -5,8 +5,6 @@ import relaxeddd.simplediary.di.apiTask
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.freezeThread
-//import relaxeddd.simplediary.getDataBase
-//import relaxeddd.simplediary.source.db.dao.DaoTask
 import relaxeddd.simplediary.utils.live_data.LiveData
 import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
