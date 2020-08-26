@@ -1,7 +1,7 @@
 package relaxeddd.simplediary
 
-//import com.squareup.sqldelight.db.SqlDriver
-//import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import platform.UIKit.UIDevice
 import platform.darwin.*
 import platform.posix.time
@@ -9,7 +9,6 @@ import platform.darwin.dispatch_async
 import platform.darwin.dispatch_get_current_queue
 import platform.darwin.dispatch_get_main_queue
 import platform.posix.sleep
-import relaxeddd.simplediary.domain.Response
 import kotlin.native.concurrent.*
 
 actual class ContextArgs
@@ -24,8 +23,7 @@ actual fun platformName() : String {
 }
 
 /*actual fun getSqlDriver(): SqlDriver {
-    val driver: SqlDriver = NativeSqliteDriver(Database.Schema, "relaxeddd.diary.db")
-    return driver
+    return NativeSqliteDriver(Database.Schema, "relaxeddd.simplediary.diaryDB")
 }*/
 
 actual fun getCurrentTime() : Long {

@@ -17,6 +17,24 @@ class FragmentTaskList : FragmentBase<ViewModelTaskListActual, FragmentTaskListB
 
     override val viewModel by lazy { ViewModelTaskListActual() }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.onFill()
+
+        viewModel.isVisibleProgressBar.addObserver {
+            binding.progressBarTaskList.visibleOrGone(it)
+        }
+        viewModel.isVisibleTextNoItems.addObserver {
+            binding.textTaskListNoItems.visibleOrGone(it)
+        }
+        viewModel.isVisibleTaskList.addObserver {
+            binding.recyclerViewTaskList.visibleOrGone(it)
+        }
+        viewModel.tasks.addObserver {
+            adapterTasks.submitList(it)
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         if (activity == null || activity?.isFinishing == true) {
@@ -37,18 +55,6 @@ class FragmentTaskList : FragmentBase<ViewModelTaskListActual, FragmentTaskListB
         binding.recyclerViewTaskList.adapter = adapterTasks
         binding.viewModel = viewModel
 
-        viewModel.isVisibleProgressBar.addObserver {
-            binding.progressBarTaskList.visibleOrGone(it)
-        }
-        viewModel.isVisibleTextNoItems.addObserver {
-            binding.textTaskListNoItems.visibleOrGone(it)
-        }
-        viewModel.isVisibleTaskList.addObserver {
-            binding.recyclerViewTaskList.visibleOrGone(it)
-        }
-        viewModel.tasks.addObserver {
-            adapterTasks.submitList(it)
-        }
         viewModel.load()
     }
 }

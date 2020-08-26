@@ -1,7 +1,5 @@
 package relaxeddd.simplediary
 
-import relaxeddd.simplediary.domain.Response
-
 //import com.squareup.sqldelight.db.SqlDriver
 
 expect class ContextArgs
