@@ -5,8 +5,8 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-//import com.squareup.sqldelight.android.AndroidSqliteDriver
-//import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.android.AndroidSqliteDriver
+import com.squareup.sqldelight.db.SqlDriver
 import relaxeddd.simplediary.di.InjectorCommon
 import java.lang.reflect.InvocationTargetException
 import java.util.concurrent.ExecutorService
@@ -24,9 +24,9 @@ actual fun platformName(): String {
     return "Android"
 }
 
-/*actual fun getSqlDriver(): SqlDriver {
+actual fun getSqlDriver(): SqlDriver {
     return AndroidSqliteDriver(Database.Schema,  InjectorCommon.contextArgs.context, "relaxeddd.simplediary.diaryDB")
-}*/
+}
 
 actual fun getCurrentTime() : Long {
     return System.currentTimeMillis()

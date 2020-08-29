@@ -1,6 +1,9 @@
 package relaxeddd.simplediary.source.db.dao
 
-/*class DaoTask(database: Database) {
+import relaxeddd.simplediary.Database
+import relaxeddd.simplediary.TaskModel
+
+class DaoTask(database: Database) {
 
     private val db = database.taskModelQueries
 
@@ -20,4 +23,4 @@ package relaxeddd.simplediary.source.db.dao
     internal fun delete(id: Long) {
         db.deleteItem(id)
     }
-}*/
+}

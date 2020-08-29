@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     id( "com.android.library")
     kotlin("multiplatform")
-    //id("com.squareup.sqldelight")
+    id("com.squareup.sqldelight")
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -44,30 +44,32 @@ kotlin {
     }
 
     sourceSets {
+        val versionSqldelight: String by project
+
         commonMain {
             dependencies {
-                //implementation("com.squareup.sqldelight:runtime:1.4.1")
+
             }
         }
 
         named<org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet>("androidMain") {
             dependencies {
-                //implementation("com.squareup.sqldelight:android-driver:1.4.1")
+                implementation("com.squareup.sqldelight:android-driver:${versionSqldelight}")
             }
         }
         named<org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet>("iosMain") {
             dependencies {
-                //implementation("com.squareup.sqldelight:native-driver:1.4.1")
+                implementation("com.squareup.sqldelight:native-driver:${versionSqldelight}")
             }
         }
     }
 }
 
-/*sqldelight {
+sqldelight {
     database("Database") {
         packageName = "relaxeddd.simplediary"
     }
-}*/
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 val packForXcode by tasks.creating(Sync::class) {
