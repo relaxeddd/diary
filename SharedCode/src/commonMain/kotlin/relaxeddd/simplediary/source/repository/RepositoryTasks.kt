@@ -2,15 +2,15 @@ package relaxeddd.simplediary.source.repository
 
 import relaxeddd.simplediary.async
 import relaxeddd.simplediary.di.apiTask
+import relaxeddd.simplediary.di.daoTask
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.freezeThread
 import relaxeddd.simplediary.utils.live_data.LiveData
 import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
-class RepositoryTasks() {
+class RepositoryTasks {
 
-    //private val daoTask = DaoTask(getDataBase())
     private var isInitialized = false
     private var isInitializing = false
 
@@ -32,18 +32,30 @@ class RepositoryTasks() {
         isInitializing = true
         async({
             freezeThread(1)
-            apiTask.requestTasks()
+
+            val tasks = ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
+
+            if (tasks.isEmpty()) {
+                val answerTasks = apiTask.requestTasks()
+
+                if (answerTasks.isValid) {
+                    ArrayList(answerTasks.data ?: ArrayList()).forEach {
+                        daoTask.update(
+                            it.id, it.title, it.desc, it.priority, it.rrule, it.location, it.start,
+                            it.end, it.isCompleted
+                        )
+                    }
+                }
+
+                answerTasks
+            } else {
+                Response(tasks)
+            }
         }, { tasks: Response<List<Task>?>?, e: Exception? ->
             isInitializing = false
             isInitialized = true
-            /*tasksResponse.data?.forEach {
-                daoTask.update(
-                    it.id, it.title, it.desc, it.priority, it.rrule, it.location, it.start,
-                    it.end, it.isCompleted
-                )
-            }*/
-            tasksM.postValue(tasks?.data ?: ArrayList())
 
+            tasksM.postValue(ArrayList(tasks?.data ?: ArrayList()))
             e?.let { exceptionM.postValue(e) } ?: run { tasks?.exception?.let { exceptionM.postValue(e) } ?: run { isInitialized = true } }
             onCompleted()
         })
@@ -51,24 +63,12 @@ class RepositoryTasks() {
 
     fun createTask(title: String, desc: String?, priority: Int, rrule: String?, location: String?, start: Long, end: Long,
                    isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
-        val tasks = ArrayList(tasksM.value)
-
         async({
             freezeThread(1)
 
-            val resultTasks = ArrayList<Task>()
-            tasks.forEach { resultTasks.add(it) }
-
-            var id = 0L
-            do {
-                var isUnique = true
-                id += 1
-                tasks.find { it.id == id }?.let { isUnique = false }
-            } while (!isUnique)
-            resultTasks.add(Task(id, title, desc ?: "", priority, rrule ?: "", location ?: "", start, end, isCompleted))
-
-            resultTasks
-        }, { resultTasks: ArrayList<Task>?, e: Exception? ->
+            daoTask.create(title, desc ?: "", priority, rrule ?: "", location ?: "", start, end, isCompleted)
+            ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
+        }, { resultTasks: List<Task>?, e: Exception? ->
             e?.let { exceptionM.postValue(e) }
             tasksM.postValue(resultTasks ?: emptyList())
             onCompleted?.invoke(Response(resultTasks, e))
@@ -76,16 +76,12 @@ class RepositoryTasks() {
     }
 
     fun deleteTask(id: Long, onCompleted: () -> Unit) {
-        val tasks = ArrayList(tasksM.value)
-
         async({
             freezeThread(1)
 
-            val resultTasks = ArrayList<Task>()
-            tasks.forEach { if (it.id != id) resultTasks.add(it) }
-
-            resultTasks
-        }, { resultTasks: ArrayList<Task>?, e: Exception? ->
+            daoTask.delete(id)
+            ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
+        }, { resultTasks: List<Task>?, e: Exception? ->
             e?.let { exceptionM.postValue(e) }
             tasksM.postValue(resultTasks ?: emptyList())
             onCompleted()
@@ -94,22 +90,15 @@ class RepositoryTasks() {
 
     fun updateTask(id: Long, title: String, desc: String?, priority: Int, rrule: String?, location: String?, start: Long,
                    end: Long, isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
-        val tasks = ArrayList(tasksM.value)
-
         async({
             freezeThread(1)
 
-            val resultTasks = ArrayList<Task>()
-            tasks.forEach { if (it.id != id) resultTasks.add(it) }
-            resultTasks.add(Task(id, title, desc ?: "", priority, rrule ?: "", location ?: "", start, end, isCompleted))
-
-            resultTasks
-        }, { resultTasks: ArrayList<Task>?, e: Exception? ->
+            daoTask.update(id, title, desc ?: "", priority, rrule ?: "", location ?: "", start, end, isCompleted)
+            ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
+        }, { resultTasks: List<Task>?, e: Exception? ->
             e?.let { exceptionM.postValue(e) }
             tasksM.postValue(resultTasks ?: emptyList())
             onCompleted?.invoke(Response(resultTasks, e))
         })
     }
-
-    //private suspend fun fetchTasksFromDb() = daoTask.select().map { cachedTask -> Task(cachedTask) } ?: emptyList<Task>()
 }

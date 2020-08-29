@@ -22,9 +22,9 @@ actual fun platformName() : String {
     return UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
 }
 
-/*actual fun getSqlDriver(): SqlDriver {
+actual fun getSqlDriver(): SqlDriver {
     return NativeSqliteDriver(Database.Schema, "relaxeddd.simplediary.diaryDB")
-}*/
+}
 
 actual fun getCurrentTime() : Long {
     return time(null) * 1000
