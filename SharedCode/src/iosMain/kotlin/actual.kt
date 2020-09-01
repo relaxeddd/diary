@@ -2,6 +2,7 @@ package relaxeddd.simplediary
 
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+import kotlinx.coroutines.*
 import platform.UIKit.UIDevice
 import platform.darwin.*
 import platform.posix.time
@@ -45,15 +46,35 @@ actual fun postOnMainThread(run: () -> Unit) {
     }
 }
 
+private val coroutineContext by lazy { NsQueueDispatcher(dispatch_get_main_queue()) }
+private val coroutineExceptionHandler by lazy { CoroutineExceptionHandler { _, e -> print(e) } }
+private val job: Job = Job()
+private val fullCoroutineContext = coroutineContext + job + coroutineExceptionHandler
 private const val MAX_ATTEMPTS = 200
 private val mapFutureAttempts = HashMap<Future<*>, Int>()
 
-actual fun <T> async(run: () -> T?, onCompleted: (T?, Exception?) -> Unit) {
-    val future = Worker.start().execute(TransferMode.SAFE, producer = { run.freeze() }) {
-        it()
+actual fun <T> async(run: suspend () -> T?, onCompleted: (T?, Exception?) -> Unit) {
+    CoroutineScope(fullCoroutineContext).launch(fullCoroutineContext, CoroutineStart.DEFAULT) {
+        var result: T? = null
+        var exception: Exception? = null
+        try {
+            delay(1000)
+            run().let {
+                result = it
+            }
+        } catch (e: Exception) {
+            exception = e
+        }
+        postOnMainThread { onCompleted(result, exception) }
+    }
+
+    /*val future = Worker.start().execute(TransferMode.SAFE, producer = { run.freeze() }) {
+        runBlocking {
+            it()
+        }
     }
     mapFutureAttempts[future] = 0
-    checkFuture(future, onCompleted)
+    checkFuture(future, onCompleted)*/
 }
 
 //TODO Tag for workers to debug

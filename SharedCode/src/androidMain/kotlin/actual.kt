@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
+import kotlinx.coroutines.*
 import relaxeddd.simplediary.di.InjectorCommon
 import java.lang.reflect.InvocationTargetException
 import java.util.concurrent.ExecutorService
@@ -69,17 +70,20 @@ private fun createHandler() : Handler {
     return Handler(looper)
 }
 
-actual fun <T> async(run: () -> T?, onCompleted: (T?, Exception?) -> Unit) {
-    executorService.execute {
+actual fun <T> async(run: suspend () -> T?, onCompleted: (T?, Exception?) -> Unit) {
+    CoroutineScope(Dispatchers.IO).launch {
         var result: T? = null
         var exception: Exception? = null
         try {
+            delay(1000)
             run().let {
                 result = it
             }
         } catch (e: Exception) {
             exception = e
         }
-        postOnMainThread { onCompleted(result, exception) }
+        withContext(Dispatchers.Main) {
+            postOnMainThread { onCompleted(result, exception) }
+        }
     }
 }

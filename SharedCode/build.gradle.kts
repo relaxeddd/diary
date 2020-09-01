@@ -4,6 +4,7 @@ plugins {
     id( "com.android.library")
     kotlin("multiplatform")
     id("com.squareup.sqldelight")
+    kotlin("plugin.serialization") version "1.4.0"
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -44,22 +45,30 @@ kotlin {
     }
 
     sourceSets {
+        val versionCoroutines: String by project
+        val versionSerialization: String by project
         val versionSqldelight: String by project
+        val versionKtor: String by project
 
         commonMain {
             dependencies {
-
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${versionCoroutines}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${versionSerialization}")
+                implementation("io.ktor:ktor-client-core:${versionKtor}")
             }
         }
 
         named<org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet>("androidMain") {
             dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${versionCoroutines}")
                 implementation("com.squareup.sqldelight:android-driver:${versionSqldelight}")
+                implementation("io.ktor:ktor-client-android:${versionKtor}")
             }
         }
         named<org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet>("iosMain") {
             dependencies {
                 implementation("com.squareup.sqldelight:native-driver:${versionSqldelight}")
+                implementation("io.ktor:ktor-client-ios:${versionKtor}")
             }
         }
     }

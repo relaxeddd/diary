@@ -1,9 +1,11 @@
 package relaxeddd.simplediary.domain.model
 
+import kotlinx.serialization.Serializable
 import relaxeddd.simplediary.TaskModel
 import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
 
+@Serializable
 data class Task(
     val id: Long,
     val title: String = "",

@@ -11,7 +11,7 @@ expect fun getCurrentTime() : Long
 expect fun freezeThread(seconds: Int)
 
 expect fun postOnMainThread(run: () -> Unit)
-expect fun <T> async(run: () -> T?, onCompleted: (T?, Exception?) -> Unit)
+expect fun <T> async(run: suspend () -> T?, onCompleted: (T?, Exception?) -> Unit)
 
 fun createApplicationScreenMessage() : String {
     return "Kotlin Rocks on ${platformName()}"

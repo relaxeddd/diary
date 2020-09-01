@@ -31,8 +31,6 @@ class RepositoryTasks {
 
         isInitializing = true
         async({
-            freezeThread(1)
-
             val tasks = ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
 
             if (tasks.isEmpty()) {
@@ -46,7 +44,6 @@ class RepositoryTasks {
                         )
                     }
                 }
-
                 answerTasks
             } else {
                 Response(tasks)
@@ -64,8 +61,6 @@ class RepositoryTasks {
     fun createTask(title: String, desc: String?, priority: Int, rrule: String?, location: String?, start: Long, end: Long,
                    isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
         async({
-            freezeThread(1)
-
             daoTask.create(title, desc ?: "", priority, rrule ?: "", location ?: "", start, end, isCompleted)
             ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
         }, { resultTasks: List<Task>?, e: Exception? ->
@@ -77,8 +72,6 @@ class RepositoryTasks {
 
     fun deleteTask(id: Long, onCompleted: () -> Unit) {
         async({
-            freezeThread(1)
-
             daoTask.delete(id)
             ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
         }, { resultTasks: List<Task>?, e: Exception? ->
@@ -91,8 +84,6 @@ class RepositoryTasks {
     fun updateTask(id: Long, title: String, desc: String?, priority: Int, rrule: String?, location: String?, start: Long,
                    end: Long, isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
         async({
-            freezeThread(1)
-
             daoTask.update(id, title, desc ?: "", priority, rrule ?: "", location ?: "", start, end, isCompleted)
             ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
         }, { resultTasks: List<Task>?, e: Exception? ->
