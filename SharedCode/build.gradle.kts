@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     id( "com.android.library")
     kotlin("multiplatform")
+    //kotlin("native.cocoapods")
     id("com.squareup.sqldelight")
     kotlin("plugin.serialization") version "1.4.0"
 }
@@ -25,6 +26,9 @@ android {
     }
 }
 
+// CocoaPods requires the podspec to have a version.
+//version = "0.1"
+
 kotlin {
     android()
 
@@ -38,6 +42,14 @@ kotlin {
             }
         }
     }
+
+    /*cocoapods {
+        summary = "SharedCode module"
+        homepage = "https://mytodolist.com"
+        frameworkName = "SharedCode"
+
+        pod("Firebase/Auth")
+    }*/
     /*android()
     ios {
         binaries {
