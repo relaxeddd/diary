@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>582018419768-rvgumcc7fvm8396l1o09j2vlh2ko0lej.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.582018419768-rvgumcc7fvm8396l1o09j2vlh2ko0lej</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>582018419768-7m99j4p4ettoi2cmvi5255jft2u7umi0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAKSVW2uDJ-k5MEB9FVxSMu_yVcOBG9hTY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>582018419768</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>relaxeddd.simplediary.iosApp</string>
+	<key>PROJECT_ID</key>
+	<string>my-todo-list-36185</string>
+	<key>STORAGE_BUCKET</key>
+	<string>my-todo-list-36185.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:582018419768:ios:1941c4f4ff27469c83eacd</string>
+	<key>DATABASE_URL</key>
+	<string>https://my-todo-list-36185.firebaseio.com</string>
+</dict>
+</plist>

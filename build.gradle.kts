@@ -20,7 +20,3 @@ allprojects {
         jcenter()
     }
 }
-
-tasks.create<Delete>("clean") {
-    rootProject.buildDir.delete()
-}

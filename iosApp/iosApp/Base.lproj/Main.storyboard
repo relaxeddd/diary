@@ -174,6 +174,7 @@
                         <outlet property="progressBarActual" destination="e24-Ef-DmP" id="MJT-92-5tI"/>
                         <outlet property="tableViewTasksActual" destination="bwj-rY-Qzw" id="KxF-bn-KrO"/>
                         <outlet property="textNoTasksActual" destination="SZM-pS-YXS" id="KJb-n1-MIN"/>
+                        <segue destination="1f7-UE-DsX" kind="presentation" identifier="loginScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="W6N-yh-BQd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lYn-Ec-Zcb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -440,6 +441,75 @@
             </objects>
             <point key="canvasLocation" x="1528" y="-664"/>
         </scene>
+        <!--Login-->
+        <scene sceneID="Lcd-Y1-xFl">
+            <objects>
+                <viewController id="DRg-qq-1hx" customClass="ViewControllerLogin" customModule="My_ToDo_List" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NYT-yG-7Wi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter e-mail" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pe3-37-lBl">
+                                <rect key="frame" x="20" y="308" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XBA-co-EnA">
+                                <rect key="frame" x="20" y="382" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Repeat password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="03E-ZN-VKy">
+                                <rect key="frame" x="20" y="456" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OgO-8a-9pe">
+                                <rect key="frame" x="20" y="530" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OYm-kd-SgS">
+                                <rect key="frame" x="20" y="752" width="374" height="30"/>
+                                <state key="normal" title="Create new account"/>
+                                <connections>
+                                    <action selector="onLoginOrCreateClicked:" destination="DRg-qq-1hx" eventType="touchUpInside" id="NE1-yV-gy9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="pe3-37-lBl" firstAttribute="leading" secondItem="pSM-iv-8i7" secondAttribute="leading" constant="20" id="0jr-nH-fh1"/>
+                            <constraint firstItem="pSM-iv-8i7" firstAttribute="trailing" secondItem="03E-ZN-VKy" secondAttribute="trailing" constant="20" id="3Rz-ca-tcZ"/>
+                            <constraint firstItem="pe3-37-lBl" firstAttribute="top" secondItem="pSM-iv-8i7" secondAttribute="top" constant="220" id="8Bi-bn-noc"/>
+                            <constraint firstItem="pSM-iv-8i7" firstAttribute="trailing" secondItem="XBA-co-EnA" secondAttribute="trailing" constant="20" id="EvS-5k-Ig1"/>
+                            <constraint firstItem="03E-ZN-VKy" firstAttribute="top" secondItem="XBA-co-EnA" secondAttribute="bottom" constant="40" id="HDO-bZ-cyd"/>
+                            <constraint firstItem="pSM-iv-8i7" firstAttribute="bottom" secondItem="OYm-kd-SgS" secondAttribute="bottom" constant="80" id="HGS-cv-mKG"/>
+                            <constraint firstItem="XBA-co-EnA" firstAttribute="top" secondItem="pe3-37-lBl" secondAttribute="bottom" constant="40" id="HW1-ey-Xsj"/>
+                            <constraint firstItem="OYm-kd-SgS" firstAttribute="leading" secondItem="pSM-iv-8i7" secondAttribute="leading" constant="20" id="Jhd-ve-Vp0"/>
+                            <constraint firstItem="OgO-8a-9pe" firstAttribute="leading" secondItem="pSM-iv-8i7" secondAttribute="leading" constant="20" id="LF8-2o-Uja"/>
+                            <constraint firstItem="03E-ZN-VKy" firstAttribute="leading" secondItem="pSM-iv-8i7" secondAttribute="leading" constant="20" id="PSY-ey-jQK"/>
+                            <constraint firstItem="XBA-co-EnA" firstAttribute="leading" secondItem="pSM-iv-8i7" secondAttribute="leading" constant="20" id="Wx7-OR-336"/>
+                            <constraint firstItem="pSM-iv-8i7" firstAttribute="trailing" secondItem="OYm-kd-SgS" secondAttribute="trailing" constant="20" id="b4B-is-X0d"/>
+                            <constraint firstItem="pSM-iv-8i7" firstAttribute="trailing" secondItem="OgO-8a-9pe" secondAttribute="trailing" constant="20" id="grt-va-mSF"/>
+                            <constraint firstItem="OgO-8a-9pe" firstAttribute="top" secondItem="03E-ZN-VKy" secondAttribute="bottom" constant="40" id="wno-l5-G8e"/>
+                            <constraint firstItem="pSM-iv-8i7" firstAttribute="trailing" secondItem="pe3-37-lBl" secondAttribute="trailing" constant="20" id="xuX-s7-BzP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pSM-iv-8i7"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Login" id="vw5-Xe-WKB"/>
+                    <connections>
+                        <outlet property="editTextEmail" destination="pe3-37-lBl" id="Iq2-b6-AJz"/>
+                        <outlet property="editTextPassword" destination="XBA-co-EnA" id="6wk-9F-fMD"/>
+                        <outlet property="editTextRepeatPassword" destination="03E-ZN-VKy" id="zJk-mS-nII"/>
+                        <outlet property="textError" destination="OgO-8a-9pe" id="do0-PP-KOX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yiq-8y-KS1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3213.04347826087" y="-1404.2410714285713"/>
+        </scene>
         <!--Archive-->
         <scene sceneID="uXb-op-U8X">
             <objects>
@@ -606,9 +676,28 @@
             </objects>
             <point key="canvasLocation" x="500" y="108"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SlG-TU-jH3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1f7-UE-DsX" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="V0g-72-A2f"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2WF-z0-jgV">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="DRg-qq-1hx" kind="relationship" relationship="rootViewController" id="DxE-Ba-NfV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2gz-br-nWa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2242" y="-1254"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5Vc-70-Id6"/>
+        <segue reference="26O-UO-1CG"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="archivebox" catalog="system" width="128" height="106"/>

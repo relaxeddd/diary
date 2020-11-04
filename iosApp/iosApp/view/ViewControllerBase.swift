@@ -23,6 +23,8 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
 
         initViewModel()
         initView()
+        
+        performSegue(withIdentifier: "loginScreen", sender: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
