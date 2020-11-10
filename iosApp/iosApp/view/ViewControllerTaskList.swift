@@ -16,7 +16,7 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
     
     internal var tableViewTasks: UITableView? { get { return nil } }
     internal var textNoItems: UILabel? { get { return nil } }
-    internal func getCompleteMenuItem(id: Int64) -> UIContextualAction { return nil!! }
+    internal func getCompleteMenuItem(id: Int64) -> UIContextualAction { return UIContextualAction() }
     
     // MARK: - View
     override func initViewModel() {
