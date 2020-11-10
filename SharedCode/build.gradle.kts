@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     id( "com.android.library")
     kotlin("multiplatform")
-    //kotlin("native.cocoapods")
+    kotlin("native.cocoapods")
     id("com.squareup.sqldelight")
-    kotlin("plugin.serialization") version "1.4.0"
+    kotlin("plugin.serialization") version "1.4.10"
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ android {
 }
 
 // CocoaPods requires the podspec to have a version.
-//version = "0.1"
+version = "1.0"
 
 kotlin {
     android()
@@ -37,27 +37,21 @@ kotlin {
 
     iOSTarget("ios") {
         binaries {
-            framework {
+            /*framework {
                 baseName = "SharedCode"
-            }
+            }*/
         }
     }
 
-    /*cocoapods {
+    cocoapods {
         summary = "SharedCode module"
-        homepage = "https://mytodolist.com"
+        homepage = "https://mytodolist.relaxeddd.com"
         frameworkName = "SharedCode"
 
-        pod("Firebase/Auth")
-    }*/
-    /*android()
-    ios {
-        binaries {
-            framework {
-                baseName = "SharedCode"
-            }
-        }
-    }*/
+        ios.deploymentTarget = "8.0"
+
+        pod("FirebaseAuth")
+    }
 
     sourceSets {
         val versionCoroutines: String by project
