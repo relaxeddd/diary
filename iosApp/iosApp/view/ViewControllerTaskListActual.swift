@@ -27,4 +27,9 @@ class ViewControllerTaskListActual: ViewControllerTaskList<ViewModelTaskListActu
         menuItem.backgroundColor = .green
         return menuItem
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        performSegue(withIdentifier: "loginScreen", sender: nil)
+    }
 }

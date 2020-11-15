@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="okP-mW-LOT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="okP-mW-LOT">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -35,7 +36,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bwj-rY-Qzw">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="TaskCell" id="Tes-s2-O5b" customClass="ViewCellTaskTableViewCell" customModule="My_ToDo_List" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="106"/>
@@ -50,12 +51,12 @@
                                                         <constraint firstAttribute="height" constant="32" id="N4h-Ls-wWh"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGW-Zj-w4q">
                                                     <rect key="frame" x="48" y="56" width="8" height="38"/>
-                                                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="systemGreenColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="8" id="80c-4Y-DLu"/>
                                                     </constraints>
@@ -77,7 +78,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Task description Task description " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8o1-pY-FA0">
                                                             <rect key="frame" x="0.0" y="21" width="298" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -92,7 +93,7 @@
                                                         <constraint firstAttribute="height" constant="34" id="Qya-5m-s6q"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" systemColor="systemBlueColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:38 PM" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IrC-yL-Ih9">
@@ -102,7 +103,7 @@
                                                         <constraint firstAttribute="height" constant="34" id="rJy-UX-N4o"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" systemColor="systemRedColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -148,20 +149,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="e24-Ef-DmP">
-                                <rect key="frame" x="187" y="428" width="40" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="color" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="e24-Ef-DmP">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                <color key="color" systemColor="systemBlueColor"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="yfW-PR-exx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="bwj-rY-Qzw" firstAttribute="top" secondItem="yfW-PR-exx" secondAttribute="top" id="LFs-fc-jwN"/>
                             <constraint firstItem="yfW-PR-exx" firstAttribute="bottom" secondItem="bwj-rY-Qzw" secondAttribute="bottom" id="PF6-2Z-XKM"/>
                             <constraint firstItem="yfW-PR-exx" firstAttribute="trailing" secondItem="bwj-rY-Qzw" secondAttribute="trailing" id="aRw-N7-8bT"/>
                             <constraint firstItem="bwj-rY-Qzw" firstAttribute="leading" secondItem="yfW-PR-exx" secondAttribute="leading" id="ol6-9P-xgz"/>
+                            <constraint firstItem="e24-Ef-DmP" firstAttribute="centerY" secondItem="t7H-HP-ZXu" secondAttribute="centerY" id="q3R-Lf-gv3"/>
+                            <constraint firstItem="e24-Ef-DmP" firstAttribute="centerX" secondItem="t7H-HP-ZXu" secondAttribute="centerX" id="vQO-dL-NtW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="yfW-PR-exx"/>
                     </view>
                     <navigationItem key="navigationItem" title="Task list" id="bIg-Ot-lWh">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="aDT-zO-ZWp">
@@ -206,7 +208,7 @@
                                     <constraint firstAttribute="height" constant="21" id="Q28-Ji-4dX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMr-gH-STq">
@@ -215,7 +217,7 @@
                                     <constraint firstAttribute="height" constant="21" id="sTm-tH-sLu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iOS-IN-mE1">
@@ -236,7 +238,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="qdI-1b-uLO"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="tUy-Dr-Otr">
@@ -261,7 +263,7 @@
                                     <constraint firstAttribute="height" constant="21" id="tTd-aK-C1x"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Click to set date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JKn-n5-Pkb" customClass="EditTextDate" customModule="My_ToDo_List" customModuleProvider="target">
@@ -269,10 +271,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bEX-xe-6qs">
-                                <rect key="frame" x="187" y="428" width="40" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="color" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bEX-xe-6qs">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                <color key="color" systemColor="systemBlueColor"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEE-qf-VsY">
                                 <rect key="frame" x="20" y="497" width="180" height="21"/>
@@ -281,7 +282,7 @@
                                     <constraint firstAttribute="width" constant="180" id="dia-mk-dZW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Click to set date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6uv-9M-lLx" customClass="EditTextDate" customModule="My_ToDo_List" customModuleProvider="target">
@@ -302,7 +303,7 @@
                                     <constraint firstAttribute="height" constant="21" id="rEk-aI-iJa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Click to set date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VKr-8o-LeA" customClass="EditTextDate" customModule="My_ToDo_List" customModuleProvider="target">
@@ -329,14 +330,17 @@
                                 </connections>
                             </switch>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="88M-RF-ZOE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="OMr-gH-STq" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="0Kk-TH-50O"/>
+                            <constraint firstItem="bEX-xe-6qs" firstAttribute="centerY" secondItem="cNs-mk-SA5" secondAttribute="centerY" id="1bX-Uz-wkS"/>
                             <constraint firstItem="Mki-Cl-v0W" firstAttribute="top" secondItem="eEE-qf-VsY" secondAttribute="top" id="1sv-Dq-HPc"/>
                             <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="3OE-2W-vc9" secondAttribute="trailing" constant="20" id="3DF-H3-kB8"/>
                             <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="v6K-Di-uMS" secondAttribute="trailing" constant="20" id="4fP-Ah-KdL"/>
                             <constraint firstItem="OMr-gH-STq" firstAttribute="top" secondItem="bff-qe-39P" secondAttribute="bottom" constant="32" id="6Kn-c0-3JD"/>
                             <constraint firstItem="VKr-8o-LeA" firstAttribute="leading" secondItem="Mki-Cl-v0W" secondAttribute="leading" id="BU0-ro-Ifo"/>
+                            <constraint firstItem="bEX-xe-6qs" firstAttribute="centerX" secondItem="cNs-mk-SA5" secondAttribute="centerX" id="Bgd-C7-yTZ"/>
                             <constraint firstItem="6uv-9M-lLx" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="E3o-Lo-ge0"/>
                             <constraint firstItem="88M-RF-ZOE" firstAttribute="trailing" secondItem="iOS-IN-mE1" secondAttribute="trailing" constant="20" id="GCl-dE-IdI"/>
                             <constraint firstItem="eEE-qf-VsY" firstAttribute="leading" secondItem="88M-RF-ZOE" secondAttribute="leading" constant="20" id="GHO-gn-JKj"/>
@@ -371,7 +375,6 @@
                             <constraint firstItem="JKn-n5-Pkb" firstAttribute="top" secondItem="3OE-2W-vc9" secondAttribute="bottom" constant="14" id="xqj-e9-mGd"/>
                             <constraint firstItem="iOS-IN-mE1" firstAttribute="top" secondItem="OMr-gH-STq" secondAttribute="bottom" constant="14" id="y7V-n1-KZ0"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="88M-RF-ZOE"/>
                     </view>
                     <navigationItem key="navigationItem" title="New task" id="Lvx-rI-y3Q">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="c8D-Ws-haL">
@@ -444,7 +447,7 @@
         <!--Login-->
         <scene sceneID="Lcd-Y1-xFl">
             <objects>
-                <viewController id="DRg-qq-1hx" customClass="ViewControllerLogin" customModule="My_ToDo_List" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DRg-qq-1hx" customClass="ViewControllerLogin" customModule="My_ToDo_List" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NYT-yG-7Wi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -467,18 +470,23 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OgO-8a-9pe">
                                 <rect key="frame" x="20" y="530" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="systemRedColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OYm-kd-SgS">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OYm-kd-SgS">
                                 <rect key="frame" x="20" y="752" width="374" height="30"/>
                                 <state key="normal" title="Create new account"/>
                                 <connections>
                                     <action selector="onLoginOrCreateClicked:" destination="DRg-qq-1hx" eventType="touchUpInside" id="NE1-yV-gy9"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="2UO-NI-qWl">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                <color key="color" systemColor="systemBlueColor"/>
+                            </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="pSM-iv-8i7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="pe3-37-lBl" firstAttribute="leading" secondItem="pSM-iv-8i7" secondAttribute="leading" constant="20" id="0jr-nH-fh1"/>
                             <constraint firstItem="pSM-iv-8i7" firstAttribute="trailing" secondItem="03E-ZN-VKy" secondAttribute="trailing" constant="20" id="3Rz-ca-tcZ"/>
@@ -493,16 +501,18 @@
                             <constraint firstItem="XBA-co-EnA" firstAttribute="leading" secondItem="pSM-iv-8i7" secondAttribute="leading" constant="20" id="Wx7-OR-336"/>
                             <constraint firstItem="pSM-iv-8i7" firstAttribute="trailing" secondItem="OYm-kd-SgS" secondAttribute="trailing" constant="20" id="b4B-is-X0d"/>
                             <constraint firstItem="pSM-iv-8i7" firstAttribute="trailing" secondItem="OgO-8a-9pe" secondAttribute="trailing" constant="20" id="grt-va-mSF"/>
+                            <constraint firstItem="2UO-NI-qWl" firstAttribute="centerY" secondItem="NYT-yG-7Wi" secondAttribute="centerY" id="nw2-0P-Gvy"/>
+                            <constraint firstItem="2UO-NI-qWl" firstAttribute="centerX" secondItem="NYT-yG-7Wi" secondAttribute="centerX" id="ve5-Gu-UxI"/>
                             <constraint firstItem="OgO-8a-9pe" firstAttribute="top" secondItem="03E-ZN-VKy" secondAttribute="bottom" constant="40" id="wno-l5-G8e"/>
                             <constraint firstItem="pSM-iv-8i7" firstAttribute="trailing" secondItem="pe3-37-lBl" secondAttribute="trailing" constant="20" id="xuX-s7-BzP"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="pSM-iv-8i7"/>
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="vw5-Xe-WKB"/>
                     <connections>
                         <outlet property="editTextEmail" destination="pe3-37-lBl" id="Iq2-b6-AJz"/>
                         <outlet property="editTextPassword" destination="XBA-co-EnA" id="6wk-9F-fMD"/>
                         <outlet property="editTextRepeatPassword" destination="03E-ZN-VKy" id="zJk-mS-nII"/>
+                        <outlet property="progressBarAuth" destination="2UO-NI-qWl" id="m3Y-yt-ecA"/>
                         <outlet property="textError" destination="OgO-8a-9pe" id="do0-PP-KOX"/>
                     </connections>
                 </viewController>
@@ -537,7 +547,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pnn-hs-VI2">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="TaskCell" id="rGz-UF-zgU" customClass="ViewCellTaskTableViewCell" customModule="My_ToDo_List" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="106"/>
@@ -552,12 +562,12 @@
                                                         <constraint firstAttribute="height" constant="32" id="kDZ-Nh-5pg"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rop-Nv-c1J">
                                                     <rect key="frame" x="48" y="56" width="8" height="38"/>
-                                                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="systemGreenColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="8" id="tKS-UA-eej"/>
                                                     </constraints>
@@ -579,7 +589,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Task description Task description " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEz-eP-4Xu">
                                                             <rect key="frame" x="0.0" y="21" width="298" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -594,7 +604,7 @@
                                                         <constraint firstAttribute="width" constant="34" id="zNB-gy-pmH"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" systemColor="systemBlueColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:38 PM" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKz-hr-3vN">
@@ -604,7 +614,7 @@
                                                         <constraint firstAttribute="height" constant="34" id="wUq-dd-Csa"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" systemColor="systemRedColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -650,20 +660,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jO4-r7-PEo">
-                                <rect key="frame" x="187" y="428" width="40" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="color" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jO4-r7-PEo">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                <color key="color" systemColor="systemBlueColor"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="7cj-Yf-3Fo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="7cj-Yf-3Fo" firstAttribute="trailing" secondItem="Pnn-hs-VI2" secondAttribute="trailing" id="0gA-dB-V0C"/>
                             <constraint firstItem="Pnn-hs-VI2" firstAttribute="leading" secondItem="7cj-Yf-3Fo" secondAttribute="leading" id="B17-rb-oMk"/>
+                            <constraint firstItem="jO4-r7-PEo" firstAttribute="centerX" secondItem="lce-Rj-XxY" secondAttribute="centerX" id="ChG-p8-oiT"/>
                             <constraint firstItem="7cj-Yf-3Fo" firstAttribute="bottom" secondItem="Pnn-hs-VI2" secondAttribute="bottom" id="c0g-NR-GwS"/>
                             <constraint firstItem="Pnn-hs-VI2" firstAttribute="top" secondItem="7cj-Yf-3Fo" secondAttribute="top" id="qbv-Ad-GzZ"/>
+                            <constraint firstItem="jO4-r7-PEo" firstAttribute="centerY" secondItem="lce-Rj-XxY" secondAttribute="centerY" id="v73-ih-gLR"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="7cj-Yf-3Fo"/>
                     </view>
                     <navigationItem key="navigationItem" title="Archive" id="Apw-MP-LIy"/>
                     <connections>
@@ -696,11 +707,37 @@
             <point key="canvasLocation" x="2242" y="-1254"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="6uv-9M-lLx">
+            <size key="intrinsicContentSize" width="145.5" height="34"/>
+        </designable>
+        <designable name="JKn-n5-Pkb">
+            <size key="intrinsicContentSize" width="145.5" height="34"/>
+        </designable>
+        <designable name="VKr-8o-LeA">
+            <size key="intrinsicContentSize" width="145.5" height="34"/>
+        </designable>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="26O-UO-1CG"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="archivebox" catalog="system" width="128" height="106"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
