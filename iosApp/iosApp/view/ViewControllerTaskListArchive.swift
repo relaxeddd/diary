@@ -27,4 +27,17 @@ class ViewControllerTaskListArchive: ViewControllerTaskList<ViewModelTaskListArc
         menuItem.backgroundColor = .orange
         return menuItem
     }
+    
+    override func handleAction(action: Action, type: EventType) {
+        if (type == EventType.goScreenLogin) {
+            weak var presentingViewController = self.presentingViewController
+            self.dismiss(animated: true) {
+                presentingViewController?.performSegue(withIdentifier: "showAuth", sender: nil)
+            }
+        }
+    }
+    
+    @IBAction func onClickedLogout(_ sender: Any) {
+        viewModel.onClickedLogout()
+    }
 }

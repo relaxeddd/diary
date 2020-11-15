@@ -25,6 +25,7 @@
 		839361D3255ADDFE00053B6D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 839361D2255ADDFD00053B6D /* GoogleService-Info.plist */; };
 		839394B524D6B3E400897B27 /* EditTextDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839394B424D6B3E400897B27 /* EditTextDate.swift */; };
 		83D4AD052510F3370063A248 /* ViewControllerLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D4AD042510F3370063A248 /* ViewControllerLogin.swift */; };
+		83EB22D5256146E000E5C1A3 /* ViewControllerLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB22D4256146E000E5C1A3 /* ViewControllerLogo.swift */; };
 		83F1A0A524C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1A0A424C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift */; };
 		F36FA9D42FC3613E96D0AE0F /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178B8F177FE6E954C3A0D821 /* Pods_iosApp.framework */; };
 /* End PBXBuildFile section */
@@ -71,6 +72,7 @@
 		83CD686624D44CA3009146C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		83CD686824D44CFF009146C1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		83D4AD042510F3370063A248 /* ViewControllerLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLogin.swift; sourceTree = "<group>"; };
+		83EB22D4256146E000E5C1A3 /* ViewControllerLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLogo.swift; sourceTree = "<group>"; };
 		83F1A0A424C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCellTaskTableViewCell.swift; sourceTree = "<group>"; };
 		8E2D1167DDE71CA461716061 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,6 +173,7 @@
 				8324989124DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift */,
 				8324989324DEE7BC00EA9BB8 /* ViewControllerTaskListActual.swift */,
 				83D4AD042510F3370063A248 /* ViewControllerLogin.swift */,
+				83EB22D4256146E000E5C1A3 /* ViewControllerLogo.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				83635D5D24715A84008222C3 /* AppDelegate.swift in Sources */,
 				83635D5F24715A84008222C3 /* SceneDelegate.swift in Sources */,
 				836B0C5824B9DFC4009A39F2 /* ViewControllerTaskList.swift in Sources */,
+				83EB22D5256146E000E5C1A3 /* ViewControllerLogo.swift in Sources */,
 				8324989224DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift in Sources */,
 				836A0C8024C58F01003B0538 /* ViewControllerBase.swift in Sources */,
 				8324989424DEE7BC00EA9BB8 /* ViewControllerTaskListActual.swift in Sources */,
