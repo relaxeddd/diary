@@ -35,6 +35,10 @@ actual fun loginFirebaseUser(email: String, password: String, listener: (uid: St
     //TODO
 }
 
+actual fun logout(listener: (isSuccess: Boolean) -> Unit) {
+    //TODO
+}
+
 actual fun isNetworkAvailable(): Boolean {
     val connectivityManager = InjectorCommon.contextArgs.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val activeNetworkInfo = connectivityManager.activeNetworkInfo
@@ -43,6 +47,15 @@ actual fun isNetworkAvailable(): Boolean {
 
 actual fun platformName(): String {
     return "Android"
+}
+
+actual fun getSavedEmail(): String {
+    //TODO
+    return "test@test.test"
+}
+
+actual fun setSavedEmail(email: String) {
+    //TODO
 }
 
 actual fun getSqlDriver(): SqlDriver {

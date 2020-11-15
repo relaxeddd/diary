@@ -63,6 +63,8 @@ enum class EventType {
     PRESS_BACK,
     EXIT,
     ERROR,
+    GO_SCREEN_LOGIN,
+    GO_SCREEN_LIST,
     INIT_BILLING,
     GOOGLE_AUTH,
     GOOGLE_LOGOUT,

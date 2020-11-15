@@ -4,6 +4,7 @@ import cocoapods.FirebaseAuth.FIRAuth
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import kotlinx.coroutines.*
+import platform.Foundation.NSUserDefaults
 import platform.UIKit.UIDevice
 import platform.darwin.*
 import platform.posix.time
@@ -43,6 +44,10 @@ actual fun loginFirebaseUser(email: String, password: String, listener: (uid: St
     }
 }
 
+actual fun logout(listener: (isSuccess: Boolean) -> Unit) {
+    listener(FIRAuth.auth().signOut(null))
+}
+
 actual fun isNetworkAvailable() : Boolean {
     //TODO
     return true
@@ -50,6 +55,19 @@ actual fun isNetworkAvailable() : Boolean {
 
 actual fun platformName() : String {
     return UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
+}
+
+actual fun getSavedEmail(): String {
+    val preferences = NSUserDefaults.standardUserDefaults
+    val key = "email"
+    return if (preferences.objectForKey(key) == null) "" else preferences.stringForKey(key) ?: ""
+}
+
+actual fun setSavedEmail(email: String) {
+    val preferences = NSUserDefaults.standardUserDefaults
+    val key = "email"
+    preferences.setObject(email, key)
+    preferences.synchronize()
 }
 
 actual fun getSqlDriver(): SqlDriver {

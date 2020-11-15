@@ -3,7 +3,9 @@ package relaxeddd.simplediary.source.repository
 import relaxeddd.simplediary.createFirebaseUser
 import relaxeddd.simplediary.isAuthorized
 import relaxeddd.simplediary.loginFirebaseUser
+import relaxeddd.simplediary.logout
 import relaxeddd.simplediary.registerFirebaseUserListener
+import relaxeddd.simplediary.setSavedEmail
 import relaxeddd.simplediary.utils.live_data.LiveData
 import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
@@ -34,19 +36,33 @@ class RepositoryUsers {
         return userAuthResult.first
     }
 
-    fun signIn(email: String, password: String) {
+    fun signIn(email: String, password: String, onFinish: () -> Unit) {
         loginFirebaseUser(email, password) { uid, email, errorCode, errorDescription ->
-            handleAuthResult(errorDescription == null, uid, email, errorDescription ?: "")
+            onFinish()
+            handleAuthResult(errorCode == null, uid, email, errorDescription ?: "")
         }
     }
 
-    fun register(email: String, password: String) {
+    fun register(email: String, password: String, onFinish: () -> Unit) {
         createFirebaseUser(email, password) { uid, email, errorCode, errorDescription ->
-            handleAuthResult(errorDescription == null, uid, email, errorDescription ?: "")
+            onFinish()
+            handleAuthResult(errorCode == null, uid, email, errorDescription ?: "")
+        }
+    }
+
+    fun signOut(listener: (isSuccess: Boolean) -> Unit) {
+        logout { isSuccess ->
+            if (isSuccess) {
+                isAuthorizedM.value = false
+            }
+            listener(isSuccess)
         }
     }
 
     private fun handleAuthResult(isAuthorized: Boolean, uid: String, email: String, errorDescription: String) {
+        if (email.isNotBlank()) {
+            setSavedEmail(email)
+        }
         uidM.value = uid
         emailM.value = email
         errorAuthM.value = errorDescription

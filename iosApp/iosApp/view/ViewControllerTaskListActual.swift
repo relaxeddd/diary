@@ -28,8 +28,16 @@ class ViewControllerTaskListActual: ViewControllerTaskList<ViewModelTaskListActu
         return menuItem
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        performSegue(withIdentifier: "loginScreen", sender: nil)
+    override func handleAction(action: Action, type: EventType) {
+        if (type == EventType.goScreenLogin) {
+            weak var presentingViewController = self.presentingViewController
+            self.dismiss(animated: true) {
+                presentingViewController?.performSegue(withIdentifier: "showAuth", sender: nil)
+            }
+        }
+    }
+    
+    @IBAction func onClickedLogout(_ sender: Any) {
+        viewModel.onClickedLogout()
     }
 }
