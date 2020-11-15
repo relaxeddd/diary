@@ -1,5 +1,6 @@
 package relaxeddd.simplediary
 
+import cocoapods.FirebaseAuth.FIRAuth
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import kotlinx.coroutines.*
@@ -13,6 +14,34 @@ import platform.posix.sleep
 import kotlin.native.concurrent.*
 
 actual class ContextArgs
+
+actual fun init() {
+
+}
+
+actual fun registerFirebaseUserListener(listener: (uid: String, email: String) -> Unit) {
+    FIRAuth.auth().addAuthStateDidChangeListener { auth, user ->
+        user?.let { listener(user.uid, user.email ?: "") }
+    }
+}
+
+
+actual fun isAuthorized() : Triple<Boolean, String, String> {
+    val user = FIRAuth.auth().currentUser
+    return Triple(user != null, user?.uid ?: "", user?.email ?: "")
+}
+
+actual fun createFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+    FIRAuth.auth().createUserWithEmail(email, password = password) { result, error ->
+        listener(result?.user?.uid ?: "", result?.user?.email ?: "", error?.code?.toInt(), error?.description)
+    }
+}
+
+actual fun loginFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+    FIRAuth.auth().signInWithEmail(email, password = password) { result, error ->
+        listener(result?.user?.uid ?: "", result?.user?.email ?: "", error?.code?.toInt(), error?.description)
+    }
+}
 
 actual fun isNetworkAvailable() : Boolean {
     //TODO

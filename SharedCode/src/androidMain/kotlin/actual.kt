@@ -15,6 +15,26 @@ import java.util.concurrent.Executors
 
 actual class ContextArgs(var context: Context)
 
+actual fun init() {
+
+}
+
+actual fun registerFirebaseUserListener(listener: (uid: String, email: String) -> Unit) {
+    //TODO
+}
+
+actual fun isAuthorized() : Triple<Boolean, String, String> {
+    return Triple(false, "", "")
+}
+
+actual fun createFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+    //TODO
+}
+
+actual fun loginFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+    //TODO
+}
+
 actual fun isNetworkAvailable(): Boolean {
     val connectivityManager = InjectorCommon.contextArgs.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val activeNetworkInfo = connectivityManager.activeNetworkInfo
