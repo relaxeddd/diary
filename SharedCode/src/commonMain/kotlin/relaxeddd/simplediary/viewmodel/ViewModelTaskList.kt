@@ -10,8 +10,6 @@ import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
 abstract class ViewModelTaskList : ViewModelTask() {
 
-    private val repositoryUsers = repoUsers
-
     private val tasksM: MutableLiveData<List<Task>> = MutableLiveData(ArrayList())
     val tasks: LiveData<List<Task>> = tasksM
 
@@ -72,18 +70,6 @@ abstract class ViewModelTaskList : ViewModelTask() {
         isVisibleProgressBarM.value = true
         repositoryTasks.deleteTask(id) {
             isVisibleProgressBarM.value = false
-        }
-    }
-
-    fun onClickedLogout() {
-        isVisibleProgressBarM.value = true
-        repositoryUsers.signOut { isSuccess ->
-            if (isSuccess) {
-                isVisibleProgressBarM.value = false
-                actionM.postValue(Action(EventType.GO_SCREEN_LOGIN))
-            } else {
-                actionM.postValue(Action(EventType.ERROR, mapOf(Pair(ERROR_TEXT, "Logout error")))) //TODO translation
-            }
         }
     }
 }

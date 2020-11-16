@@ -36,8 +36,4 @@ class ViewControllerTaskListActual: ViewControllerTaskList<ViewModelTaskListActu
             }
         }
     }
-    
-    @IBAction func onClickedLogout(_ sender: Any) {
-        viewModel.onClickedLogout()
-    }
 }

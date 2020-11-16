@@ -36,8 +36,4 @@ class ViewControllerTaskListArchive: ViewControllerTaskList<ViewModelTaskListArc
             }
         }
     }
-    
-    @IBAction func onClickedLogout(_ sender: Any) {
-        viewModel.onClickedLogout()
-    }
 }
