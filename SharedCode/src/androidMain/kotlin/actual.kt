@@ -10,6 +10,7 @@ import com.squareup.sqldelight.db.SqlDriver
 import kotlinx.coroutines.*
 import relaxeddd.simplediary.di.InjectorCommon
 import java.lang.reflect.InvocationTargetException
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -17,6 +18,10 @@ actual class ContextArgs(var context: Context)
 
 actual fun init() {
 
+}
+
+actual fun generateId() : String {
+    return UUID.randomUUID().toString()
 }
 
 actual fun registerFirebaseUserListener(listener: (uid: String, email: String) -> Unit) {

@@ -4,6 +4,7 @@ import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.domain.model.Task
+import relaxeddd.simplediary.generateId
 import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
@@ -17,7 +18,7 @@ class ViewModelTaskCard : ViewModelTask() {
         private const val DEFAULT_PRIORITY = 0
     }
 
-    private var editTaskId: Long? = null
+    private var editTaskId: String? = null
 
     private val isEnabledButtonSaveM = MutableLiveData(false)
     val isEnabledButtonSave: LiveData<Boolean> = isEnabledButtonSaveM
@@ -62,7 +63,7 @@ class ViewModelTaskCard : ViewModelTask() {
         taskTitle.removeObserver(observerTitle)
     }
 
-    fun load(editTaskId: Long?) {
+    fun load(editTaskId: String?) {
         this.editTaskId = editTaskId
         if (editTaskId != null) {
             val editTask = repositoryTasks.tasks.value.find { it.id == editTaskId }
@@ -98,7 +99,7 @@ class ViewModelTaskCard : ViewModelTask() {
         if (taskId != null) {
             updateTask(taskId, title, desc, priority, rrule, location, start, end, isCompleted, callback)
         } else {
-            createTask(title, desc, priority, rrule, location, start, end, isCompleted, callback)
+            createTask(generateId(), title, desc, priority, rrule, location, start, end, isCompleted, callback)
         }
     }
 

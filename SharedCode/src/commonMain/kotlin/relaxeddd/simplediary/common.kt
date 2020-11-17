@@ -1,10 +1,12 @@
 package relaxeddd.simplediary
 
+import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.db.SqlDriver
 
 expect class ContextArgs
 
 expect fun init()
+expect fun generateId() : String
 expect fun registerFirebaseUserListener(listener: (uid: String, email: String) -> Unit)
 expect fun isAuthorized() : Triple<Boolean, String, String>
 expect fun createFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit)
@@ -25,4 +27,9 @@ fun createApplicationScreenMessage() : String {
     return "Kotlin Rocks on ${platformName()}"
 }
 
-fun getDataBase() = Database(getSqlDriver())
+fun getDataBase() = Database(getSqlDriver(), taskModelAdapter = TaskModel.Adapter(exDatesAdapter = exDatesAdapter))
+
+val exDatesAdapter = object : ColumnAdapter<List<Long>, String> {
+    override fun decode(databaseValue: String) = databaseValue.split(",").map { it.toLong() }
+    override fun encode(value: List<Long>) = value.joinToString(separator = ",")
+}

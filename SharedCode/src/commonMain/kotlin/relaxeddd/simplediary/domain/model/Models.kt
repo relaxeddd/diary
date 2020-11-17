@@ -7,7 +7,7 @@ import relaxeddd.simplediary.utils.TIME_15_MINUTE
 
 @Serializable
 data class Task(
-    val id: Long,
+    val id: String,
     val title: String = "",
     val desc: String = "",
     val priority: Int = 0,
@@ -15,13 +15,19 @@ data class Task(
     val location: String = "",
     private val startDate: Long? = null,
     private val endDate: Long? = null,
-    val isCompleted: Boolean = false
+    val isCompleted: Boolean = false,
+    val exDates: List<Long> = ArrayList(),
+    val parentId: String = ""
 ) {
     constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc ?: "",
         taskModel.priority, taskModel.rrule ?: "", taskModel.location ?: "",
         if (taskModel.start == 0L) getCurrentTime() else taskModel.start,
         if (taskModel.end == 0L) getCurrentTime() else taskModel.end,
-        taskModel.isCompleted)
+        taskModel.isCompleted, taskModel.exDates, "")
+
+    constructor(parentTask: Task, id: String, startDate: Long, endDate: Long) : this(id, parentTask.title, parentTask.desc,
+        parentTask.priority, parentTask.rrule, parentTask.location, startDate, endDate,
+        parentTask.isCompleted, parentTask.exDates, parentTask.id)
 
     val start: Long
         get() {
@@ -40,6 +46,17 @@ data class Task(
                 getCurrentTime() + TIME_15_MINUTE
             }
         }
+
+    fun isChildTask() = parentId.isNotBlank()
+}
+
+enum class RepeatRule {
+
+    DAYLY, WEEKLY, MONTHLY, YEARLY;
+
+    override fun toString(): String {
+        return name.toLowerCase()
+    }
 }
 
 class Action(private val type: EventType, var args: Map<String, Any>? = null) {

@@ -8,7 +8,7 @@ abstract class ViewModelTask : ViewModelBase() {
 
     protected val repositoryTasks = repoTasks
 
-    protected fun updateTask(id: Long, title: String, desc: String?, priority: Int, rrule: String?, location: String?,
+    protected fun updateTask(id: String, title: String, desc: String?, priority: Int, rrule: String?, location: String?,
                              start: Long, end: Long, isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
         isVisibleProgressBarM.value = true
         repositoryTasks.updateTask(id, title, desc, priority, rrule, location, start, end, isCompleted) {
@@ -17,10 +17,10 @@ abstract class ViewModelTask : ViewModelBase() {
         }
     }
 
-    protected fun createTask(title: String, desc: String?, priority: Int, rrule: String?, location: String?,
+    protected fun createTask(id: String, title: String, desc: String?, priority: Int, rrule: String?, location: String?,
                              start: Long, end: Long, isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
         isVisibleProgressBarM.value = true
-        repositoryTasks.createTask(title, desc, priority, rrule, location, start, end, isCompleted) {
+        repositoryTasks.createTask(id, title, desc, priority, rrule, location, start, end, isCompleted) {
             isVisibleProgressBarM.value = false
             onCompleted?.invoke(it)
         }

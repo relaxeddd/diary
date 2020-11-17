@@ -1,6 +1,7 @@
+import kotlin.collections.List;
 
 CREATE TABLE taskModel (
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id TEXT NOT NULL PRIMARY KEY,
     title TEXT NOT NULL,
     desc TEXT,
     priority INTEGER as Int NOT NULL DEFAULT 0,
@@ -8,7 +9,8 @@ CREATE TABLE taskModel (
     location TEXT,
     start INTEGER NOT NULL DEFAULT 0,
     end INTEGER NOT NULL DEFAULT 0,
-    isCompleted INTEGER AS Boolean NOT NULL DEFAULT 0
+    isCompleted INTEGER AS Boolean NOT NULL DEFAULT 0,
+    exDates TEXT AS List<Long> NOT NULL DEFAULT ""
 );
 
 selectAll:
@@ -18,7 +20,7 @@ lastInsertRowId:
 SELECT last_insert_rowid();
 
 insertItem:
-INSERT OR FAIL INTO taskModel(title, desc, priority, rrule, location, start, end, isCompleted) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+INSERT OR FAIL INTO taskModel(id, title, desc, priority, rrule, location, start, end, isCompleted) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 deleteItem:
 DELETE FROM taskModel WHERE id = ?;
