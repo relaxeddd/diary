@@ -58,10 +58,10 @@ class RepositoryTasks {
         })
     }
 
-    fun createTask(title: String, desc: String?, priority: Int, rrule: String?, location: String?, start: Long, end: Long,
+    fun createTask(id: String, title: String, desc: String?, priority: Int, rrule: String?, location: String?, start: Long, end: Long,
                    isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
         async({
-            daoTask.create(title, desc ?: "", priority, rrule ?: "", location ?: "", start, end, isCompleted)
+            daoTask.create(id, title, desc ?: "", priority, rrule ?: "", location ?: "", start, end, isCompleted)
             ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
         }, { resultTasks: List<Task>?, e: Exception? ->
             e?.let { exceptionM.postValue(e) }
@@ -70,7 +70,7 @@ class RepositoryTasks {
         })
     }
 
-    fun deleteTask(id: Long, onCompleted: () -> Unit) {
+    fun deleteTask(id: String, onCompleted: () -> Unit) {
         async({
             daoTask.delete(id)
             ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
@@ -81,7 +81,7 @@ class RepositoryTasks {
         })
     }
 
-    fun updateTask(id: Long, title: String, desc: String?, priority: Int, rrule: String?, location: String?, start: Long,
+    fun updateTask(id: String, title: String, desc: String?, priority: Int, rrule: String?, location: String?, start: Long,
                    end: Long, isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
         async({
             daoTask.update(id, title, desc ?: "", priority, rrule ?: "", location ?: "", start, end, isCompleted)

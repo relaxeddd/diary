@@ -4,6 +4,7 @@ import cocoapods.FirebaseAuth.FIRAuth
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import kotlinx.coroutines.*
+import platform.Foundation.NSUUID
 import platform.Foundation.NSUserDefaults
 import platform.UIKit.UIDevice
 import platform.darwin.*
@@ -18,6 +19,10 @@ actual class ContextArgs
 
 actual fun init() {
 
+}
+
+actual fun generateId() : String {
+    return NSUUID().UUIDString()
 }
 
 actual fun registerFirebaseUserListener(listener: (uid: String, email: String) -> Unit) {

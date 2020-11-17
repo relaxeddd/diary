@@ -21,7 +21,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBOutlet weak var editTextEndTime: EditTextDate!
     @IBOutlet weak var switchIsCompleted: UISwitch!
     
-    private var editTaskId: Int64? = nil
+    private var editTaskId: String? = nil
     @IBOutlet weak var toolbar: UINavigationItem!
     @IBOutlet weak var segmentsPriority: UISegmentedControl!
     
@@ -31,14 +31,14 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     override var progressBar: UIActivityIndicatorView? { progressBarCard }
     
     // MARK: - Arguments
-    func setEditTaskData(id: Int64) {
+    func setEditTaskData(id: String) {
         editTaskId = id
     }
     
     // MARK: - Init
     override func initViewModel() {
         super.initViewModel()
-        viewModel.load(editTaskId: intToKotlinLong(value: editTaskId))
+        viewModel.load(editTaskId: editTaskId)
     }
     
     override func initView() {
