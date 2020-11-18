@@ -9,7 +9,7 @@ class ViewModelTaskListArchive : ViewModelTaskList() {
     fun restoreTask(id: String) {
         tasks.value.find { it.id == id }?.let {
             if (it.isCompleted) {
-                updateTask(it.id, it.title, it.desc, it.priority, it.rrule, it.location, it.start, it.end, false)
+                updateTask(it.id, it.title, it.desc, it.priority, it.repeat, it.location, it.start, it.end, false)
             }
         }
     }

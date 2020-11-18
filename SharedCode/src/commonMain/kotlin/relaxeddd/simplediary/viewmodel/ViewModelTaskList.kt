@@ -31,13 +31,13 @@ abstract class ViewModelTaskList : ViewModelTask() {
         val childTasks = ArrayList<Task>()
 
         for (parentTask in tasks) {
-            if (parentTask.rrule.isNotBlank()) {
+            if (parentTask.repeat != RepeatRule.NO.ordinal) {
                 val currentTimeMillis = getCurrentTime()
                 val startTimeMillis = parentTask.start
                 val duration = parentTask.end - startTimeMillis
 
-                when(parentTask.rrule) {
-                    RepeatRule.DAYLY.toString() -> {
+                when(parentTask.repeat) {
+                    RepeatRule.DAYLY.ordinal -> {
                         val interval = TIME_DAY
                         val daysToCurrentTime = (currentTimeMillis - startTimeMillis) / interval
                         val startTimeNearestTask = startTimeMillis + (daysToCurrentTime * interval)
@@ -49,7 +49,7 @@ abstract class ViewModelTaskList : ViewModelTask() {
                             }
                         }
                     }
-                    RepeatRule.WEEKLY.toString() -> {
+                    RepeatRule.WEEKLY.ordinal -> {
                         val interval = TIME_WEEK
                         val weeksToCurrentTime = (currentTimeMillis - startTimeMillis) / interval
                         val startTimeNearestTask = startTimeMillis + (weeksToCurrentTime * interval)
@@ -61,7 +61,7 @@ abstract class ViewModelTaskList : ViewModelTask() {
                             }
                         }
                     }
-                    RepeatRule.MONTHLY.toString() -> {
+                    RepeatRule.MONTHLY.ordinal -> {
                         val date = GMTDate(startTimeMillis)
                         val currentDate = GMTDate(currentTimeMillis)
                         val currentMonth = currentDate.month
@@ -88,7 +88,7 @@ abstract class ViewModelTaskList : ViewModelTask() {
                             }
                         }
                     }
-                    RepeatRule.YEARLY.toString() -> {
+                    RepeatRule.YEARLY.ordinal -> {
                         val date = GMTDate(startTimeMillis)
                         val currentDate = GMTDate(currentTimeMillis)
                         val currentYear = currentDate.year

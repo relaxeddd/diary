@@ -1,24 +1,120 @@
 
-/* Class = "UILabel"; text = "Title"; ObjectID = "5Gq-Mz-Fs7"; */
-"5Gq-Mz-Fs7.text" = "Название задачи";
+/* Class = "UITextField"; placeholder = "Repeat password"; ObjectID = "03E-ZN-VKy"; */
+"03E-ZN-VKy.placeholder" = "Повторите пароль";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "3OE-2W-vc9"; */
+"3OE-2W-vc9.text" = "Дата";
+
+/* Class = "UIButton"; normalTitle = "Haven't account yet"; ObjectID = "4T7-ko-icG"; */
+"4T7-ko-icG.normalTitle" = "Еще нет аккаунта?";
+
+/* Class = "UITextField"; placeholder = "Click to set date"; ObjectID = "6uv-9M-lLx"; */
+"6uv-9M-lLx.placeholder" = "Нажмите для установки даты";
+
+/* Class = "UIButton"; normalTitle = "Exit from account"; ObjectID = "7c7-pS-sal"; */
+"7c7-pS-sal.normalTitle" = "Выйти из аккаунта";
+
+/* Class = "UILabel"; text = "Task description Task description "; ObjectID = "8o1-pY-FA0"; */
+"8o1-pY-FA0.text" = "Описание задачи";
+
+/* Class = "UILabel"; text = "Repeat"; ObjectID = "9Ue-qe-bWA"; */
+"9Ue-qe-bWA.text" = "Повтор";
+
+/* Class = "UINavigationItem"; title = "Archive"; ObjectID = "Apw-MP-LIy"; */
+"Apw-MP-LIy.title" = "Архив";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "Huc-8B-gQG"; */
+"Huc-8B-gQG.text" = "Дата";
+
+/* Class = "UILabel"; text = "10:38 PM"; ObjectID = "IrC-yL-Ih9"; */
+"IrC-yL-Ih9.text" = "10:38 PM";
+
+/* Class = "UITextField"; placeholder = "Click to set date"; ObjectID = "JKn-n5-Pkb"; */
+"JKn-n5-Pkb.placeholder" = "Нажмите для установки даты";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "KlP-C7-59A"; */
+"KlP-C7-59A.normalTitle" = "Вход";
+
+/* Class = "UILabel"; text = "12:30 PM"; ObjectID = "KsX-kZ-W4Z"; */
+"KsX-kZ-W4Z.text" = "12:30 PM";
 
 /* Class = "UINavigationItem"; title = "New task"; ObjectID = "Lvx-rI-y3Q"; */
 "Lvx-rI-y3Q.title" = "Новая задача";
 
+/* Class = "UILabel"; text = "Task title Task title  Task title  Task title "; ObjectID = "Mdj-5F-4LK"; */
+"Mdj-5F-4LK.text" = "Название задачи";
+
+/* Class = "UILabel"; text = "End Time"; ObjectID = "Mki-Cl-v0W"; */
+"Mki-Cl-v0W.text" = "Время окончания";
+
 /* Class = "UILabel"; text = "Description"; ObjectID = "OMr-gH-STq"; */
 "OMr-gH-STq.text" = "Описание";
+
+/* Class = "UIButton"; normalTitle = "Create new account"; ObjectID = "OYm-kd-SgS"; */
+"OYm-kd-SgS.normalTitle" = "Создать аккаунт";
+
+/* Class = "UILabel"; text = "Error text"; ObjectID = "OgO-8a-9pe"; */
+"OgO-8a-9pe.text" = "Текст ошибки";
+
+/* Class = "UISegmentedControl"; S2f-cT-z4J.segmentTitles[0] = "No"; ObjectID = "S2f-cT-z4J"; */
+"S2f-cT-z4J.segmentTitles[0]" = "Нет";
+
+/* Class = "UISegmentedControl"; S2f-cT-z4J.segmentTitles[1] = "Day"; ObjectID = "S2f-cT-z4J"; */
+"S2f-cT-z4J.segmentTitles[1]" = "День";
+
+/* Class = "UISegmentedControl"; S2f-cT-z4J.segmentTitles[2] = "Week"; ObjectID = "S2f-cT-z4J"; */
+"S2f-cT-z4J.segmentTitles[2]" = "Неделя";
+
+/* Class = "UISegmentedControl"; S2f-cT-z4J.segmentTitles[3] = "Month"; ObjectID = "S2f-cT-z4J"; */
+"S2f-cT-z4J.segmentTitles[3]" = "Месяц";
+
+/* Class = "UISegmentedControl"; S2f-cT-z4J.segmentTitles[4] = "Year"; ObjectID = "S2f-cT-z4J"; */
+"S2f-cT-z4J.segmentTitles[4]" = "Год";
 
 /* Class = "UILabel"; text = "No tasks"; ObjectID = "SZM-pS-YXS"; */
 "SZM-pS-YXS.text" = "Нет задач";
 
+/* Class = "UILabel"; text = "Is completed"; ObjectID = "TYn-kG-CkN"; */
+"TYn-kG-CkN.text" = "Завершена";
+
+/* Class = "UITabBarItem"; title = "Tasks"; ObjectID = "UYK-mT-hjy"; */
+"UYK-mT-hjy.title" = "Задачи";
+
+/* Class = "UITextField"; placeholder = "Click to set date"; ObjectID = "VKr-8o-LeA"; */
+"VKr-8o-LeA.placeholder" = "Нажмите для установки даты";
+
+/* Class = "UILabel"; text = "No tasks"; ObjectID = "Vk5-oN-TMi"; */
+"Vk5-oN-TMi.text" = "Нет задач";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "W4Q-9Y-BCb"; */
+"W4Q-9Y-BCb.text" = "Дата";
+
+/* Class = "UITextField"; placeholder = "Enter password"; ObjectID = "XBA-co-EnA"; */
+"XBA-co-EnA.placeholder" = "Введите пароль";
+
+/* Class = "UILabel"; text = "12:30 PM"; ObjectID = "ZSU-c2-xgz"; */
+"ZSU-c2-xgz.text" = "12:30 PM";
+
 /* Class = "UILabel"; text = "Title"; ObjectID = "Zs4-Rf-QyQ"; */
-"Zs4-Rf-QyQ.text" = "Заголовок";
+"Zs4-Rf-QyQ.text" = "Название";
 
 /* Class = "UINavigationItem"; title = "Task list"; ObjectID = "bIg-Ot-lWh"; */
 "bIg-Ot-lWh.title" = "Список задач";
 
 /* Class = "UITextField"; placeholder = "Enter title"; ObjectID = "bff-qe-39P"; */
-"bff-qe-39P.placeholder" = "Введите заголовок";
+"bff-qe-39P.placeholder" = "Введите название";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "c1U-j9-WJU"; */
+"c1U-j9-WJU.title" = "Настройки";
+
+/* Class = "UITabBarItem"; title = "Archive"; ObjectID = "dCV-ta-FMp"; */
+"dCV-ta-FMp.title" = "Архив";
+
+/* Class = "UILabel"; text = "Start Time"; ObjectID = "eEE-qf-VsY"; */
+"eEE-qf-VsY.text" = "Время начала";
+
+/* Class = "UILabel"; text = "10:38 PM"; ObjectID = "iKz-hr-3vN"; */
+"iKz-hr-3vN.text" = "10:38 PM";
 
 /* Class = "UITextField"; placeholder = "Enter description"; ObjectID = "iOS-IN-mE1"; */
 "iOS-IN-mE1.placeholder" = "Введите описание";
@@ -26,8 +122,17 @@
 /* Class = "UILabel"; text = "Priority"; ObjectID = "icD-5o-mHo"; */
 "icD-5o-mHo.text" = "Приоритет";
 
-/* Class = "UILabel"; text = "Subtitle"; ObjectID = "oAY-qo-4Tj"; */
-"oAY-qo-4Tj.text" = "Описание задачи";
+/* Class = "UIButton"; normalTitle = "Load saved tasks"; ObjectID = "mW5-Bg-K8L"; */
+"mW5-Bg-K8L.normalTitle" = "Загрузить сохраненные задачи";
+
+/* Class = "UILabel"; text = "Task description Task description "; ObjectID = "oEz-eP-4Xu"; */
+"oEz-eP-4Xu.text" = "Task description Task description ";
+
+/* Class = "UITextField"; placeholder = "Enter e-mail"; ObjectID = "pe3-37-lBl"; */
+"pe3-37-lBl.placeholder" = "Введите e-mail";
+
+/* Class = "UILabel"; text = "Task title Task title  Task title  Task title "; ObjectID = "sCG-L7-9hz"; */
+"sCG-L7-9hz.text" = "Task title Task title  Task title  Task title ";
 
 /* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[0] = "Low"; ObjectID = "tUy-Dr-Otr"; */
 "tUy-Dr-Otr.segmentTitles[0]" = "Низкий";
@@ -37,3 +142,15 @@
 
 /* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[2] = "High"; ObjectID = "tUy-Dr-Otr"; */
 "tUy-Dr-Otr.segmentTitles[2]" = "Высокий";
+
+/* Class = "UIButton"; normalTitle = "Save your tasks"; ObjectID = "uE7-cb-Ra2"; */
+"uE7-cb-Ra2.normalTitle" = "Сохранить свои задачи";
+
+/* Class = "UINavigationItem"; title = "Login"; ObjectID = "vw5-Xe-WKB"; */
+"vw5-Xe-WKB.title" = "Вход";
+
+/* Class = "UIButton"; normalTitle = "Already have account"; ObjectID = "yBO-Qf-Kzb"; */
+"yBO-Qf-Kzb.normalTitle" = "Уже есть аккаунт";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "zvm-aD-3c2"; */
+"zvm-aD-3c2.title" = "Настройки";

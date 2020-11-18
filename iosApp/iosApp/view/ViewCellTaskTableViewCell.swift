@@ -27,7 +27,7 @@ class ViewCellTaskTableViewCell: UITableViewCell {
         viewPriority.backgroundColor = getPriorityColor(priority: Int(priority))
         textDate.isHidden = date == nil
         if let setDate = date {
-            let textDayStr: String
+            var textDayStr: String
             
             if (isToday(millis: setDate)) {
                 textDayStr = NSLocalizedString("today", comment: "")
@@ -37,6 +37,9 @@ class ViewCellTaskTableViewCell: UITableViewCell {
                 textDayStr = NSLocalizedString("tomorrow", comment: "")
             } else {
                 textDayStr = millisToDateString(millis: setDate)
+            }
+            if (!isCurrentYear(millis: setDate)) {
+                textDayStr += ", " + String(getYear(millis: setDate))
             }
             
             textDate.text = textDayStr

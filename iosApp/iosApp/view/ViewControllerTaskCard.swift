@@ -24,6 +24,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     private var editTaskId: String? = nil
     @IBOutlet weak var toolbar: UINavigationItem!
     @IBOutlet weak var segmentsPriority: UISegmentedControl!
+    @IBOutlet weak var segmentsRepeat: UISegmentedControl!
     
     private var isTaskEditing: Bool { self.editTaskId != nil }
     
@@ -86,6 +87,12 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             }
             self.segmentsPriority.selectedSegmentTintColor = getPriorityColor(priority: priority)
         }
+        viewModel.taskRepeat.addObserver { value in
+            let priority = Int(value as? Int ?? 0)
+            if (self.segmentsRepeat.selectedSegmentIndex != priority) {
+                self.segmentsRepeat.selectedSegmentIndex = priority
+            }
+        }
         viewModel.taskStart.addObserver { (value) in
             let startDate = value as? Int64 ?? 0
             self.editTextDate.setDate(millis: startDate)
@@ -112,6 +119,10 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     
     @IBAction func onPrioritySelected(_ sender: Any) {
         viewModel.onChangedPriority(value: Int32(self.segmentsPriority.selectedSegmentIndex))
+    }
+    
+    @IBAction func onRepeatSelected(_ sender: Any) {
+        viewModel.onChangedRepeat(value: Int32(self.segmentsRepeat.selectedSegmentIndex))
     }
     
     private func onStartDateChanged(dateInMillis: Int64) {

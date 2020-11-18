@@ -10,7 +10,12 @@ import Foundation
 import UIKit
 import SharedCode
 
+let SECOND_IN_MILLIS = 1000 * 60 * 60 * 24
+let MINUTE_IN_MILLIS = 1000 * 60 * 60 * 24
 let DAY_IN_MILLIS = 1000 * 60 * 60 * 24
+let WEEK_IN_MILLIS = 1000 * 60 * 60 * 24
+let MONTH_IN_MILLIS = 1000 * 60 * 60 * 24
+let YEAR_IN_MILLIS = 1000 * 60 * 60 * 24
 
 func showToast(controller: UIViewController, message : String) {
     let toast = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -24,7 +29,7 @@ func showToast(controller: UIViewController, message : String) {
 func getPriorityColor(priority: Int) -> UIColor {
     switch priority {
         case 1:
-            return UIColor.yellow
+            return UIColor.orange
         case 2:
             return UIColor.red
         default:
@@ -72,6 +77,21 @@ func isYesterday(millis: Int64) -> Bool {
 func isTomorrow(millis: Int64) -> Bool {
     let currentDayMillis = roundMillisToDayDate(millis: dateToMillis(date: Date()))
     return currentDayMillis == (roundMillisToDayDate(millis: millis) - Int64(DAY_IN_MILLIS))
+}
+
+func getYear(millis: Int64) -> Int {
+    let date = Date(timeIntervalSince1970: TimeInterval(millis / 1000))
+    let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+    let year = calendar.component(Calendar.Component.year, from: date)
+    
+    return year
+}
+
+func isCurrentYear(millis: Int64) -> Bool {
+    let currentYear = Calendar(identifier: Calendar.Identifier.gregorian).component(Calendar.Component.year, from: Date())
+    let year = getYear(millis: millis)
+    
+    return currentYear == year
 }
 
 func roundMillisToDayDate(millis: Int64) -> Int64 {

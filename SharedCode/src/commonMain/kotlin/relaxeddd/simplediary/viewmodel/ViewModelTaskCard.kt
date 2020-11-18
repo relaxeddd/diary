@@ -3,6 +3,7 @@ package relaxeddd.simplediary.viewmodel
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
+import relaxeddd.simplediary.domain.model.RepeatRule
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.generateId
 import relaxeddd.simplediary.getCurrentTime
@@ -38,6 +39,9 @@ class ViewModelTaskCard : ViewModelTask() {
     private val taskEndM = MutableLiveData(getCurrentTime() + TIME_15_MINUTE)
     val taskEnd: LiveData<Long> = taskEndM
 
+    private val taskRepeatM = MutableLiveData(RepeatRule.NO.ordinal)
+    val taskRepeat: LiveData<Int> = taskRepeatM
+
     private val taskIsCompletedM = MutableLiveData(false)
     val taskIsCompleted: LiveData<Boolean> = taskIsCompletedM
 
@@ -56,6 +60,7 @@ class ViewModelTaskCard : ViewModelTask() {
         taskTitleM.removeAllObservers()
         taskDescM.removeAllObservers()
         taskPriorityM.removeAllObservers()
+        taskRepeatM.removeAllObservers()
         taskStartM.removeAllObservers()
         taskEndM.removeAllObservers()
         taskIsCompletedM.removeAllObservers()
@@ -70,6 +75,7 @@ class ViewModelTaskCard : ViewModelTask() {
             taskTitleM.value = editTask?.title ?: ""
             taskDescM.value = editTask?.desc ?: ""
             taskPriorityM.value = editTask?.priority ?: DEFAULT_PRIORITY
+            taskRepeatM.value = editTask?.repeat ?: RepeatRule.NO.ordinal
             taskStartM.value = editTask?.start ?: 0L
             taskEndM.value = editTask?.end ?: 0L
             taskIsCompletedM.value = editTask?.isCompleted ?: false
@@ -83,7 +89,7 @@ class ViewModelTaskCard : ViewModelTask() {
         val title = taskTitle.value
         val desc = taskDesc.value
         val priority = taskPriority.value
-        val rrule: String? = null
+        val repeat: Int = taskRepeat.value
         val location: String? = null
         val start: Long = taskStart.value
         val end: Long = taskEnd.value
@@ -97,9 +103,9 @@ class ViewModelTaskCard : ViewModelTask() {
         }
 
         if (taskId != null) {
-            updateTask(taskId, title, desc, priority, rrule, location, start, end, isCompleted, callback)
+            updateTask(taskId, title, desc, priority, repeat, location, start, end, isCompleted, callback)
         } else {
-            createTask(generateId(), title, desc, priority, rrule, location, start, end, isCompleted, callback)
+            createTask(generateId(), title, desc, priority, repeat, location, start, end, isCompleted, callback)
         }
     }
 
@@ -122,6 +128,12 @@ class ViewModelTaskCard : ViewModelTask() {
     fun onChangedPriority(value: Int) {
         if (taskPriorityM.value != value) {
             taskPriorityM.postValue(value)
+        }
+    }
+
+    fun onChangedRepeat(value: Int) {
+        if (taskRepeatM.value != value) {
+            taskRepeatM.postValue(value)
         }
     }
 

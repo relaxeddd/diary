@@ -30,6 +30,6 @@ fun createApplicationScreenMessage() : String {
 fun getDataBase() = Database(getSqlDriver(), taskModelAdapter = TaskModel.Adapter(exDatesAdapter = exDatesAdapter))
 
 val exDatesAdapter = object : ColumnAdapter<List<Long>, String> {
-    override fun decode(databaseValue: String) = databaseValue.split(",").map { it.toLong() }
+    override fun decode(databaseValue: String) = if (databaseValue.isBlank()) emptyList() else databaseValue.split(",").map { it.toLong() }
     override fun encode(value: List<Long>) = value.joinToString(separator = ",")
 }
