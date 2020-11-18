@@ -9,7 +9,7 @@ class ViewModelTaskListActual : ViewModelTaskList() {
     fun completeTask(id: String) {
         tasks.value.find { it.id == id }?.let {
             if (!it.isCompleted) {
-                updateTask(it.id, it.title, it.desc, it.priority, it.rrule, it.location, it.start, it.end, true)
+                updateTask(it.id, it.title, it.desc, it.priority, it.repeat, it.location, it.start, it.end, true)
             }
         }
     }
