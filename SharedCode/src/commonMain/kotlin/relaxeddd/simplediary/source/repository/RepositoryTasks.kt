@@ -37,10 +37,8 @@ class RepositoryTasks {
 
                 if (answerTasks.isValid) {
                     ArrayList(answerTasks.data ?: ArrayList()).forEach {
-                        daoTask.update(
-                            it.id, it.title, it.desc, it.priority, it.repeat, it.location, it.start,
-                            it.end, it.isCompleted
-                        )
+                        daoTask.update(it.id, it.title, it.desc, it.comment, it.location, it.priority,
+                            it.repeat, it.repeatCount, it.start, it.end, it.untilDate, it.isPersistent, it.isCompleted)
                     }
                 }
                 answerTasks
@@ -57,10 +55,11 @@ class RepositoryTasks {
         })
     }
 
-    fun createTask(id: String, title: String, desc: String?, priority: Int, repeat: Int, location: String?, start: Long, end: Long,
-                   isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
+    fun createTask(id: String, title: String, desc: String, comment: String, location: String, priority: Int,
+                   repeat: Int, repeatCount: Int, start: Long, end: Long, until: Long, isPersistent: Boolean, isCompleted: Boolean,
+                   onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
         async({
-            daoTask.create(id, title, desc ?: "", priority, repeat, location ?: "", start, end, isCompleted)
+            daoTask.create(id, title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted)
             ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
         }, { resultTasks: List<Task>?, e: Exception? ->
             e?.let { exceptionM.postValue(e) }
@@ -80,10 +79,10 @@ class RepositoryTasks {
         })
     }
 
-    fun updateTask(id: String, title: String, desc: String?, priority: Int, repeat: Int, location: String?, start: Long,
-                   end: Long, isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
+    fun updateTask(id: String, title: String, desc: String, comment: String, location: String, priority: Int, repeat: Int, repeatCount: Int, start: Long,
+                   end: Long, until: Long, isPersistent: Boolean, isCompleted: Boolean, onCompleted: ((Response<List<Task>>) -> Unit)? = null) {
         async({
-            daoTask.update(id, title, desc ?: "", priority, repeat, location ?: "", start, end, isCompleted)
+            daoTask.update(id, title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted)
             ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
         }, { resultTasks: List<Task>?, e: Exception? ->
             e?.let { exceptionM.postValue(e) }
