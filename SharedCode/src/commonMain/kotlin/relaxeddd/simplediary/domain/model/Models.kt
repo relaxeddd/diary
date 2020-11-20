@@ -10,24 +10,28 @@ data class Task(
     val id: String,
     val title: String = "",
     val desc: String = "",
-    val priority: Int = 0,
-    var repeat: Int = 0,
+    val comment: String = "",
     val location: String = "",
+    val priority: Int = 0,
+    val repeat: Int = 0,
+    val repeatCount: Int = 0,
     private val startDate: Long? = null,
     private val endDate: Long? = null,
+    val untilDate: Long = 0,
+    val isPersistent: Boolean = false,
     val isCompleted: Boolean = false,
     val exDates: List<Long> = ArrayList(),
     val parentId: String = ""
 ) {
-    constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc ?: "",
-        taskModel.priority, taskModel.repeat, taskModel.location ?: "",
+    constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc, taskModel.comment,
+        taskModel.location, taskModel.priority, taskModel.repeat, taskModel.repeatCount,
         if (taskModel.start == 0L) getCurrentTime() else taskModel.start,
         if (taskModel.end == 0L) getCurrentTime() else taskModel.end,
-        taskModel.isCompleted, taskModel.exDates, "")
+        taskModel.until, taskModel.isPersistent, taskModel.isCompleted, taskModel.exDates, "")
 
     constructor(parentTask: Task, id: String, startDate: Long, endDate: Long) : this(id, parentTask.title, parentTask.desc,
-        parentTask.priority, parentTask.repeat, parentTask.location, startDate, endDate,
-        parentTask.isCompleted, parentTask.exDates, parentTask.id)
+        parentTask.comment, parentTask.location, parentTask.priority, parentTask.repeat, parentTask.repeatCount, startDate, endDate,
+        parentTask.untilDate, parentTask.isPersistent, parentTask.isCompleted, parentTask.exDates, parentTask.id)
 
     val start: Long
         get() {

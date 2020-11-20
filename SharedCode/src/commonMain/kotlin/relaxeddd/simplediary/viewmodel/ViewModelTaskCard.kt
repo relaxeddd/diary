@@ -30,8 +30,20 @@ class ViewModelTaskCard : ViewModelTask() {
     private val taskDescM = MutableLiveData("")
     val taskDesc: LiveData<String> = taskDescM
 
+    private val taskCommentM = MutableLiveData("")
+    val taskComment: LiveData<String> = taskCommentM
+
+    private val taskLocationM = MutableLiveData("")
+    val taskLocation: LiveData<String> = taskLocationM
+
     private val taskPriorityM = MutableLiveData(DEFAULT_PRIORITY)
     val taskPriority: LiveData<Int> = taskPriorityM
+
+    private val taskRepeatM = MutableLiveData(RepeatRule.NO.ordinal)
+    val taskRepeat: LiveData<Int> = taskRepeatM
+
+    private val taskRepeatCountM = MutableLiveData(0)
+    val taskRepeatCount: LiveData<Int> = taskRepeatCountM
 
     private val taskStartM = MutableLiveData(getCurrentTime())
     val taskStart: LiveData<Long> = taskStartM
@@ -39,8 +51,11 @@ class ViewModelTaskCard : ViewModelTask() {
     private val taskEndM = MutableLiveData(getCurrentTime() + TIME_15_MINUTE)
     val taskEnd: LiveData<Long> = taskEndM
 
-    private val taskRepeatM = MutableLiveData(RepeatRule.NO.ordinal)
-    val taskRepeat: LiveData<Int> = taskRepeatM
+    private val taskUntilM = MutableLiveData(0L)
+    val taskUntil: LiveData<Long> = taskUntilM
+
+    private val taskIsPersistentM = MutableLiveData(false)
+    val taskIsPersistent: LiveData<Boolean> = taskIsPersistentM
 
     private val taskIsCompletedM = MutableLiveData(false)
     val taskIsCompleted: LiveData<Boolean> = taskIsCompletedM
@@ -59,10 +74,15 @@ class ViewModelTaskCard : ViewModelTask() {
         isEnabledButtonSaveM.removeAllObservers()
         taskTitleM.removeAllObservers()
         taskDescM.removeAllObservers()
+        taskCommentM.removeAllObservers()
+        taskLocationM.removeAllObservers()
         taskPriorityM.removeAllObservers()
         taskRepeatM.removeAllObservers()
+        taskRepeatCountM.removeAllObservers()
         taskStartM.removeAllObservers()
         taskEndM.removeAllObservers()
+        taskUntilM.removeAllObservers()
+        taskIsPersistentM.removeAllObservers()
         taskIsCompletedM.removeAllObservers()
 
         taskTitle.removeObserver(observerTitle)
@@ -74,10 +94,15 @@ class ViewModelTaskCard : ViewModelTask() {
             val editTask = repositoryTasks.tasks.value.find { it.id == editTaskId }
             taskTitleM.value = editTask?.title ?: ""
             taskDescM.value = editTask?.desc ?: ""
+            taskCommentM.value = editTask?.comment ?: ""
+            taskLocationM.value = editTask?.location ?: ""
             taskPriorityM.value = editTask?.priority ?: DEFAULT_PRIORITY
             taskRepeatM.value = editTask?.repeat ?: RepeatRule.NO.ordinal
+            taskRepeatCountM.value = editTask?.repeatCount ?: 0
             taskStartM.value = editTask?.start ?: 0L
             taskEndM.value = editTask?.end ?: 0L
+            taskUntilM.value = editTask?.untilDate ?: 0L
+            taskIsPersistentM.value = editTask?.isPersistent ?: false
             taskIsCompletedM.value = editTask?.isCompleted ?: false
             isEnabledButtonSaveM.value = true
         }
@@ -88,11 +113,15 @@ class ViewModelTaskCard : ViewModelTask() {
         val taskId = this.editTaskId
         val title = taskTitle.value
         val desc = taskDesc.value
+        val comment = taskComment.value
+        val location: String = taskLocation.value
         val priority = taskPriority.value
         val repeat: Int = taskRepeat.value
-        val location: String? = null
+        val repeatCount: Int = taskRepeatCount.value
         val start: Long = taskStart.value
         val end: Long = taskEnd.value
+        val until: Long = taskUntil.value
+        val isPersistent: Boolean = taskIsPersistent.value
         val isCompleted: Boolean = taskIsCompleted.value
         val callback = { response: Response<List<Task>> ->
             if (response.isValid) {
@@ -103,9 +132,9 @@ class ViewModelTaskCard : ViewModelTask() {
         }
 
         if (taskId != null) {
-            updateTask(taskId, title, desc, priority, repeat, location, start, end, isCompleted, callback)
+            updateTask(taskId, title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted, callback)
         } else {
-            createTask(generateId(), title, desc, priority, repeat, location, start, end, isCompleted, callback)
+            createTask(generateId(), title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted, callback)
         }
     }
 
@@ -125,6 +154,18 @@ class ViewModelTaskCard : ViewModelTask() {
         }
     }
 
+    fun onChangedComment(value: String) {
+        if (taskCommentM.value != value) {
+            taskCommentM.postValue(value)
+        }
+    }
+
+    fun onChangedLocation(value: String) {
+        if (taskLocationM.value != value) {
+            taskLocationM.postValue(value)
+        }
+    }
+
     fun onChangedPriority(value: Int) {
         if (taskPriorityM.value != value) {
             taskPriorityM.postValue(value)
@@ -134,6 +175,15 @@ class ViewModelTaskCard : ViewModelTask() {
     fun onChangedRepeat(value: Int) {
         if (taskRepeatM.value != value) {
             taskRepeatM.postValue(value)
+        }
+    }
+
+    fun onChangedRepeatCount(value: Int) {
+        if (taskRepeatCountM.value != value) {
+            taskRepeatCountM.postValue(value)
+        }
+        if (value != 0) {
+            onChangedUntil(0)
         }
     }
 
@@ -172,6 +222,21 @@ class ViewModelTaskCard : ViewModelTask() {
         }
         if (taskEndM.value != value) {
             taskEndM.postValue(value)
+        }
+    }
+
+    fun onChangedUntil(value: Long) {
+        if (taskUntilM.value != value) {
+            taskUntilM.postValue(value)
+        }
+        if (value != 0L) {
+            onChangedRepeat(0)
+        }
+    }
+
+    fun onChangedIsPersistent(value: Boolean) {
+        if (taskIsPersistentM.value != value) {
+            taskIsPersistentM.postValue(value)
         }
     }
 
