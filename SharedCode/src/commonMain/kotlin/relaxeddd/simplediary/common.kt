@@ -27,9 +27,14 @@ fun createApplicationScreenMessage() : String {
     return "Kotlin Rocks on ${platformName()}"
 }
 
-fun getDataBase() = Database(getSqlDriver(), taskModelAdapter = TaskModel.Adapter(exDatesAdapter = exDatesAdapter))
+fun getDataBase() = Database(getSqlDriver(), taskModelAdapter = TaskModel.Adapter(exDatesAdapter = exDatesAdapter, remindHoursAdapter = remindHoursAdapter))
 
 val exDatesAdapter = object : ColumnAdapter<List<Long>, String> {
     override fun decode(databaseValue: String) = if (databaseValue.isBlank()) emptyList() else databaseValue.split(",").map { it.toLong() }
     override fun encode(value: List<Long>) = value.joinToString(separator = ",")
+}
+
+val remindHoursAdapter = object : ColumnAdapter<List<Int>, String> {
+    override fun decode(databaseValue: String) = if (databaseValue.isBlank()) emptyList() else databaseValue.split(",").map { it.toInt() }
+    override fun encode(value: List<Int>) = value.joinToString(separator = ",")
 }
