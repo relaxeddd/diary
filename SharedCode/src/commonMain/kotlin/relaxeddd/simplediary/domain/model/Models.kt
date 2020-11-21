@@ -21,17 +21,20 @@ data class Task(
     val isPersistent: Boolean = false,
     val isCompleted: Boolean = false,
     val exDates: List<Long> = ArrayList(),
+    val remindHours: List<Int> = ArrayList(),
     val parentId: String = ""
 ) {
     constructor(taskModel: TaskModel) : this(taskModel.id, taskModel.title, taskModel.desc, taskModel.comment,
         taskModel.location, taskModel.priority, taskModel.repeat, taskModel.repeatCount,
         if (taskModel.start == 0L) getCurrentTime() else taskModel.start,
         if (taskModel.end == 0L) getCurrentTime() else taskModel.end,
-        taskModel.until, taskModel.isPersistent, taskModel.isCompleted, taskModel.exDates, "")
+        taskModel.until, taskModel.isPersistent, taskModel.isCompleted, taskModel.exDates, taskModel.remindHours, "")
 
-    constructor(parentTask: Task, id: String, startDate: Long, endDate: Long) : this(id, parentTask.title, parentTask.desc,
-        parentTask.comment, parentTask.location, parentTask.priority, parentTask.repeat, parentTask.repeatCount, startDate, endDate,
-        parentTask.untilDate, parentTask.isPersistent, parentTask.isCompleted, parentTask.exDates, parentTask.id)
+    constructor(parentTask: Task, id: String, startDate: Long, endDate: Long)
+            : this(id, parentTask.title, parentTask.desc, parentTask.comment, parentTask.location, parentTask.priority,
+                   parentTask.repeat, parentTask.repeatCount, startDate, endDate, parentTask.untilDate,
+                   parentTask.isPersistent, parentTask.isCompleted, parentTask.exDates, parentTask.remindHours,
+                   parentTask.id)
 
     val start: Long
         get() {

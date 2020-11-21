@@ -14,7 +14,8 @@ CREATE TABLE taskModel (
     until INTEGER NOT NULL DEFAULT 0,
     isPersistent INTEGER AS Boolean NOT NULL DEFAULT 0,
     isCompleted INTEGER AS Boolean NOT NULL DEFAULT 0,
-    exDates TEXT AS List<Long> NOT NULL DEFAULT ""
+    exDates TEXT AS List<Long> NOT NULL DEFAULT "",
+    remindHours TEXT AS List<Int> NOT NULL DEFAULT ""
 );
 
 selectAll:
@@ -24,10 +25,10 @@ lastInsertRowId:
 SELECT last_insert_rowid();
 
 insertItem:
-INSERT OR FAIL INTO taskModel(id, title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT OR FAIL INTO taskModel(id, title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted, exDates, remindHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 deleteItem:
 DELETE FROM taskModel WHERE id = ?;
 
 updateItem:
-REPLACE INTO taskModel(id, title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+REPLACE INTO taskModel(id, title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted, exDates, remindHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);

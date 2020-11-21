@@ -60,6 +60,12 @@ class ViewModelTaskCard : ViewModelTask() {
     private val taskIsCompletedM = MutableLiveData(false)
     val taskIsCompleted: LiveData<Boolean> = taskIsCompletedM
 
+    private val taskExDatesM = MutableLiveData<List<Long>>(ArrayList())
+    val taskExDates: LiveData<List<Long>> = taskExDatesM
+
+    private val taskRemindHoursM = MutableLiveData<List<Int>>(ArrayList())
+    val taskRemindHours: LiveData<List<Int>> = taskRemindHoursM
+
     private val observerTitle: (String) -> Unit = {
         isEnabledButtonSaveM.value = it.isNotEmpty()
     }
@@ -84,6 +90,8 @@ class ViewModelTaskCard : ViewModelTask() {
         taskUntilM.removeAllObservers()
         taskIsPersistentM.removeAllObservers()
         taskIsCompletedM.removeAllObservers()
+        taskRemindHoursM.removeAllObservers()
+        taskExDatesM.removeAllObservers()
 
         taskTitle.removeObserver(observerTitle)
     }
@@ -104,6 +112,8 @@ class ViewModelTaskCard : ViewModelTask() {
             taskUntilM.value = editTask?.untilDate ?: 0L
             taskIsPersistentM.value = editTask?.isPersistent ?: false
             taskIsCompletedM.value = editTask?.isCompleted ?: false
+            taskRemindHoursM.value = editTask?.remindHours ?: ArrayList()
+            taskExDatesM.value = editTask?.exDates ?: ArrayList()
             isEnabledButtonSaveM.value = true
         }
     }
@@ -114,15 +124,17 @@ class ViewModelTaskCard : ViewModelTask() {
         val title = taskTitle.value
         val desc = taskDesc.value
         val comment = taskComment.value
-        val location: String = taskLocation.value
+        val location = taskLocation.value
         val priority = taskPriority.value
-        val repeat: Int = taskRepeat.value
-        val repeatCount: Int = taskRepeatCount.value
-        val start: Long = taskStart.value
-        val end: Long = taskEnd.value
-        val until: Long = taskUntil.value
-        val isPersistent: Boolean = taskIsPersistent.value
-        val isCompleted: Boolean = taskIsCompleted.value
+        val repeat = taskRepeat.value
+        val repeatCount = taskRepeatCount.value
+        val start = taskStart.value
+        val end = taskEnd.value
+        val until = taskUntil.value
+        val isPersistent = taskIsPersistent.value
+        val isCompleted = taskIsCompleted.value
+        val exDates = taskExDates.value
+        val remindHours = taskRemindHours.value
         val callback = { response: Response<List<Task>> ->
             if (response.isValid) {
                 actionM.postValue(Action(EventType.EXIT))
@@ -132,9 +144,11 @@ class ViewModelTaskCard : ViewModelTask() {
         }
 
         if (taskId != null) {
-            updateTask(taskId, title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted, callback)
+            updateTask(taskId, title, desc, comment, location, priority, repeat, repeatCount, start, end, until,
+                       isPersistent, isCompleted, exDates, remindHours, callback)
         } else {
-            createTask(generateId(), title, desc, comment, location, priority, repeat, repeatCount, start, end, until, isPersistent, isCompleted, callback)
+            createTask(generateId(), title, desc, comment, location, priority, repeat, repeatCount, start, end, until,
+                       isPersistent, isCompleted, remindHours, callback)
         }
     }
 
@@ -243,6 +257,18 @@ class ViewModelTaskCard : ViewModelTask() {
     fun onChangedIsCompleted(value: Boolean) {
         if (taskIsCompletedM.value != value) {
             taskIsCompletedM.postValue(value)
+        }
+    }
+
+    fun onAddRemindHour(value: Int) {
+        if (!taskRemindHoursM.value.contains(value)) {
+            taskRemindHoursM.value = ArrayList(taskRemindHoursM.value).apply { add(value) }
+        }
+    }
+
+    fun onRemoveRemindHour(value: Int) {
+        if (taskRemindHoursM.value.contains(value)) {
+            taskRemindHoursM.value = ArrayList(taskRemindHoursM.value).apply { remove(value) }
         }
     }
 }
