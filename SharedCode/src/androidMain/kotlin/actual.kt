@@ -24,19 +24,23 @@ actual fun generateId() : String {
     return UUID.randomUUID().toString()
 }
 
-actual fun registerFirebaseUserListener(listener: (uid: String, email: String) -> Unit) {
+actual fun registerFirebaseUserListener(listener: (tokenId: String, uid: String, email: String) -> Unit) {
     //TODO
 }
 
-actual fun isAuthorized() : Triple<Boolean, String, String> {
-    return Triple(false, "", "")
-}
-
-actual fun createFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+actual fun checkAuthorization(listener: (tokenId: String, uid: String, email: String) -> Unit) {
     //TODO
 }
 
-actual fun loginFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+actual fun createFirebaseUser(email: String, password: String,
+                              listener: (tokenId: String, uid: String, email: String, errorCode: Int?,
+                                         errorDescription: String?) -> Unit) {
+    //TODO
+}
+
+actual fun loginFirebaseUser(email: String, password: String,
+                             listener: (tokenId: String, uid: String, email: String, errorCode: Int?,
+                                        errorDescription: String?) -> Unit) {
     //TODO
 }
 

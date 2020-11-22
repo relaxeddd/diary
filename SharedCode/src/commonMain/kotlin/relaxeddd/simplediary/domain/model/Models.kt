@@ -3,6 +3,8 @@ package relaxeddd.simplediary.domain.model
 import kotlinx.serialization.Serializable
 import relaxeddd.simplediary.TaskModel
 import relaxeddd.simplediary.getCurrentTime
+import relaxeddd.simplediary.utils.RESULT_OK
+import relaxeddd.simplediary.utils.RESULT_UNDEFINED
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
 
 @Serializable
@@ -74,6 +76,28 @@ class Action(private val type: EventType, var args: Map<String, Any>? = null) {
             type
         }
     }
+}
+
+@Serializable
+data class User(
+    val userId: String = "",
+    val email: String = "",
+    val subscriptionTime: Long = 0,
+    val savedTasksCount: Int = 0
+) {
+    constructor(user: User) : this(user.userId, user.email, user.subscriptionTime, user.savedTasksCount)
+
+    fun isSubscribed() : Boolean {
+        return subscriptionTime > getCurrentTime()
+    }
+}
+
+@Serializable
+data class ResultInit(@Serializable val result: Result?, @Serializable val user: User?)
+
+@Serializable
+data class Result(val code: Int = RESULT_UNDEFINED, val message: String = "") {
+    fun isSuccess() = code == RESULT_OK
 }
 
 enum class EventType {

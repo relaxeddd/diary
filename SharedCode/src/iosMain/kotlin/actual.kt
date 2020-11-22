@@ -25,27 +25,54 @@ actual fun generateId() : String {
     return NSUUID().UUIDString()
 }
 
-actual fun registerFirebaseUserListener(listener: (uid: String, email: String) -> Unit) {
+actual fun registerFirebaseUserListener(listener: (tokenId: String, uid: String, email: String) -> Unit) {
     FIRAuth.auth().addAuthStateDidChangeListener { auth, user ->
-        user?.let { listener(user.uid, user.email ?: "") }
+        user?.getIDTokenResultWithCompletion { firAuthTokenResult, tokenError ->
+            listener(firAuthTokenResult?.token ?: "", user.uid, user.email ?: "")
+        }
     }
 }
 
 
-actual fun isAuthorized() : Triple<Boolean, String, String> {
+actual fun checkAuthorization(listener: (tokenId: String, uid: String, email: String) -> Unit) {
     val user = FIRAuth.auth().currentUser
-    return Triple(user != null, user?.uid ?: "", user?.email ?: "")
-}
 
-actual fun createFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
-    FIRAuth.auth().createUserWithEmail(email, password = password) { result, error ->
-        listener(result?.user?.uid ?: "", result?.user?.email ?: "", error?.code?.toInt(), error?.description)
+    if (user != null) {
+        user.getIDTokenResultWithCompletion { firAuthTokenResult, tokenError ->
+            listener(firAuthTokenResult?.token ?: "", user.uid, user.email ?: "")
+        }
+    } else {
+        listener("", "", "")
     }
 }
 
-actual fun loginFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
-    FIRAuth.auth().signInWithEmail(email, password = password) { result, error ->
-        listener(result?.user?.uid ?: "", result?.user?.email ?: "", error?.code?.toInt(), error?.description)
+actual fun createFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+    FIRAuth.auth().createUserWithEmail(email, password = password) { result, registerError ->
+        val user = result?.user
+
+        if (user != null) {
+            user.getIDTokenResultWithCompletion { firAuthTokenResult, tokenError ->
+                val error = registerError ?: tokenError
+                listener(firAuthTokenResult?.token ?: "", user.uid, user.email ?: "", error?.code?.toInt(), error?.description)
+            }
+        } else {
+            listener("", "", "", registerError?.code?.toInt(), registerError?.description)
+        }
+    }
+}
+
+actual fun loginFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+    FIRAuth.auth().signInWithEmail(email, password = password) { result, signInError ->
+        val user = result?.user
+
+        if (user != null) {
+            user.getIDTokenResultWithCompletion { firAuthTokenResult, tokenError ->
+                val error = signInError ?: tokenError
+                listener(firAuthTokenResult?.token ?: "", user.uid, user.email ?: "", error?.code?.toInt(), error?.description)
+            }
+        } else {
+            listener("", "", "", signInError?.code?.toInt(), signInError?.description)
+        }
     }
 }
 
