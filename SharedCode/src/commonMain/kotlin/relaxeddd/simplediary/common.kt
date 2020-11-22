@@ -7,10 +7,10 @@ expect class ContextArgs
 
 expect fun init()
 expect fun generateId() : String
-expect fun registerFirebaseUserListener(listener: (uid: String, email: String) -> Unit)
-expect fun isAuthorized() : Triple<Boolean, String, String>
-expect fun createFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit)
-expect fun loginFirebaseUser(email: String, password: String, listener: (uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit)
+expect fun registerFirebaseUserListener(listener: (tokenId: String, uid: String, email: String) -> Unit)
+expect fun checkAuthorization(listener: (tokenId: String, uid: String, email: String) -> Unit)
+expect fun createFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit)
+expect fun loginFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit)
 expect fun logout(listener: (isSuccess: Boolean) -> Unit)
 expect fun platformName(): String
 expect fun getSavedEmail(): String

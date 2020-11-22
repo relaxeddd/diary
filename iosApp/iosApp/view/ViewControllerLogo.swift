@@ -22,13 +22,15 @@ class ViewControllerLogo: ViewControllerBase<ViewModelLogo> {
         imageLogo.image = UIImage(named: "ic_diary")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let isAuthorized = self.viewModel.checkAuthorized()
-            
-            if (isAuthorized) {
-                self.performSegue(withIdentifier: "showList", sender: nil)
-            } else {
-                self.performSegue(withIdentifier: "showAuth", sender: nil)
-            }
+            self.viewModel.checkAuthorized()
+        }
+    }
+    
+    override func handleAction(action: Action, type: EventType) {
+        if (type == EventType.goScreenList) {
+            self.performSegue(withIdentifier: "showList", sender: nil)
+        } else if (type == EventType.goScreenLogin) {
+            self.performSegue(withIdentifier: "showAuth", sender: nil)
         }
     }
 }

@@ -49,6 +49,11 @@ class ViewModelAuth : ViewModelBase() {
     override fun onCleared() {
         super.onCleared()
         isRegistrationViewM.removeAllObservers()
+        isAuthorizedM.removeAllObservers()
+        errorAuthM.removeAllObservers()
+        textEmailM.removeAllObservers()
+        textPasswordM.removeAllObservers()
+        textRepeatPasswordM.removeAllObservers()
         repositoryUsers.isAuthorized.removeObserver(observerIsAuthorized)
         repositoryUsers.errorAuth.removeObserver(observerErrorAuth)
     }

@@ -1,7 +1,7 @@
 package relaxeddd.simplediary.source.repository
 
 import relaxeddd.simplediary.async
-import relaxeddd.simplediary.di.apiTask
+import relaxeddd.simplediary.di.apiHelper
 import relaxeddd.simplediary.di.daoTask
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Task
@@ -33,7 +33,7 @@ class RepositoryTasks {
             val tasks = ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
 
             if (tasks.isEmpty()) {
-                val answerTasks = apiTask.requestTasks()
+                val answerTasks = apiHelper.requestTasks()
 
                 if (answerTasks.isValid) {
                     ArrayList(answerTasks.data ?: ArrayList()).forEach {
