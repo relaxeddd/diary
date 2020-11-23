@@ -1,6 +1,7 @@
 package relaxeddd.simplediary.utils
 
 const val ERROR_TEXT = "errorText"
+const val TEXT = "text"
 
 const val TIME_SECOND = 1000L
 const val TIME_MINUTE = 60 * TIME_SECOND
@@ -31,6 +32,13 @@ const val RESULT_PURCHASE_VERIFIED_ERROR = 1403
 const val RESULT_ERROR_ADD_PUSH_TOKEN = 1501
 
 const val RESULT_ERROR_UNSUBSCRIBED = 1888
+
+const val RESULT_ERROR_SAVE_TASKS = 2011
+const val RESULT_ERROR_SAVE_TASKS_EMPTY = 2012
+const val RESULT_ERROR_LOAD_TASKS = 2013
+const val RESULT_ERROR_LOAD_TASKS_EMPTY = 2014
+const val RESULT_ERROR_SAVE_TASKS_TOO_MANY = 2015
+
 const val RESULT_LOCAL_ERROR = 5101
 const val RESULT_ERROR_NETWORK = 5102
 

@@ -137,7 +137,7 @@ actual fun <T> async(run: suspend () -> T?, onCompleted: (T?, Exception?) -> Uni
         var result: T? = null
         var exception: Exception? = null
         try {
-            delay(1000)
+            delay(200)
             run().let {
                 result = it
             }

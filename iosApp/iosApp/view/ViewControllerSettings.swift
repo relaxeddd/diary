@@ -17,11 +17,11 @@ class ViewControllerSettings: ViewControllerBase<ViewModelSettings> {
     override var progressBar: UIActivityIndicatorView? { progressBarSettings }
     
     @IBAction func onClickedSaveTasks(_ sender: Any) {
-        //TODO
+        viewModel.onClickedSaveTasks()
     }
     
     @IBAction func onClickedLoadTasks(_ sender: Any) {
-        //TODO
+        viewModel.onClickedLoadTasks()
     }
     
     @IBAction func onClickedLogout(_ sender: Any) {
@@ -34,6 +34,26 @@ class ViewControllerSettings: ViewControllerBase<ViewModelSettings> {
             self.dismiss(animated: true) {
                 presentingViewController?.performSegue(withIdentifier: "showAuth", sender: nil)
             }
+        } else if (type == EventType.navigationDialogConfirmTasksSave) {
+            let alert = UIAlertController(title: NSLocalizedString("tasks_save_desc", comment: ""), message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction.init(title: NSLocalizedString("yes", comment: ""), style: .default, handler: { (UIAlertAction) in
+                alert.dismiss(animated: true)
+                self.viewModel.onConfirmedSave()
+            }))
+            alert.addAction(UIAlertAction.init(title: NSLocalizedString("no", comment: ""), style: .cancel, handler: { (UIAlertAction) in
+                alert.dismiss(animated: true)
+            }))
+            self.present(alert, animated: true)
+        } else if (type == EventType.navigationDialogConfirmTasksLoad) {
+            let alert = UIAlertController(title: NSLocalizedString("tasks_load_desc", comment: ""), message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction.init(title: NSLocalizedString("yes", comment: ""), style: .default, handler: { (UIAlertAction) in
+                alert.dismiss(animated: true)
+                self.viewModel.onConfirmedLoad()
+            }))
+            alert.addAction(UIAlertAction.init(title: NSLocalizedString("no", comment: ""), style: .cancel, handler: { (UIAlertAction) in
+                alert.dismiss(animated: true)
+            }))
+            self.present(alert, animated: true)
         }
     }
 }

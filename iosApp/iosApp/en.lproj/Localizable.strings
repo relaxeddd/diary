@@ -9,8 +9,13 @@
 "dismiss" = "Dismiss";
 "delete" = "Delete";
 "error" = "Error";
+"no" = "No";
 "no_tasks" = "No Tasks";
+"ok" = "OK";
 "restore" = "Restore";
+"tasks_load_desc" = "Load saved tasks?";
+"tasks_save_desc" = "Save your tasks?";
 "today" = "Today";
 "tomorrow" = "Tomorrow";
+"yes" = "Yes";
 "yesterday" = "Yesterday";

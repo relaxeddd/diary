@@ -57,6 +57,9 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
                 let errorText = (value)?.args?["errorText"] as? String ?? ""
                 self.showError(text: errorText)
                 print(errorText)
+            } else if (type == EventType.alert) {
+                let text = (value)?.args?["text"] as? String ?? ""
+                self.showAlert(text: text)
             } else if (type != nil) {
                 self.handleAction(action: action, type: type!)
             }
@@ -66,6 +69,14 @@ class ViewControllerBase<VM : ViewModelBase>: UIViewController {
     internal func showError(text: String) {
         let alert = UIAlertController(title: NSLocalizedString("error", comment: ""), message: text, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: NSLocalizedString("dismiss", comment: ""), style: .cancel, handler: { (UIAlertAction) in
+            alert.dismiss(animated: true)
+        }))
+        self.present(alert, animated: true)
+    }
+    
+    internal func showAlert(text: String) {
+        let alert = UIAlertController(title: text, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: NSLocalizedString("ok", comment: ""), style: .cancel, handler: { (UIAlertAction) in
             alert.dismiss(animated: true)
         }))
         self.present(alert, animated: true)
