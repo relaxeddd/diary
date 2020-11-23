@@ -93,7 +93,10 @@ data class User(
 }
 
 @Serializable
-data class ResultInit(@Serializable val result: Result?, @Serializable val user: User?)
+data class ResultInit(val result: Result?, val user: User?)
+
+@Serializable
+data class ResultTasks(val result: Result?, val tasks: List<Task> = ArrayList())
 
 @Serializable
 data class Result(val code: Int = RESULT_UNDEFINED, val message: String = "") {
@@ -107,6 +110,7 @@ enum class EventType {
     PRESS_BACK,
     EXIT,
     ERROR,
+    ALERT,
     GO_SCREEN_LOGIN,
     GO_SCREEN_LIST,
     INIT_BILLING,
@@ -119,6 +123,9 @@ enum class EventType {
 
     NAVIGATION_FRAGMENT_TODO_LIST,
     NAVIGATION_FRAGMENT_SETTINGS,
+
+    NAVIGATION_DIALOG_CONFIRM_TASKS_SAVE,
+    NAVIGATION_DIALOG_CONFIRM_TASKS_LOAD,
 
     NAVIGATION_DIALOG_RATE_APP,
     NAVIGATION_DIALOG_SEND_FEEDBACK,

@@ -14,7 +14,6 @@ import relaxeddd.simplediary.utils.live_data.MutableLiveData
 
 class RepositoryUsers {
 
-    private var isInitialized = false
     private var isInitializing = false
 
     private val userM = MutableLiveData<User?>(null)

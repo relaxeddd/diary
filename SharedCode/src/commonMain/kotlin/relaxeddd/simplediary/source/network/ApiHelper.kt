@@ -3,9 +3,10 @@ package relaxeddd.simplediary.source.network
 import io.ktor.client.*
 import io.ktor.client.request.*
 import kotlinx.serialization.builtins.ListSerializer
-import relaxeddd.simplediary.domain.Response
 import kotlinx.serialization.json.*
+import relaxeddd.simplediary.domain.model.Result
 import relaxeddd.simplediary.domain.model.ResultInit
+import relaxeddd.simplediary.domain.model.ResultTasks
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.utils.TOKEN_PREFIX
 
@@ -24,15 +25,26 @@ class ApiHelper {
         return Json { ignoreUnknownKeys = true }.decodeFromString(ResultInit.serializer(), answerString)
     }
 
-    suspend fun requestTasks() = try {
-        val responseTasks: String = HttpClient().get("https://us-central1-my-todo-list-36185.cloudfunctions.net/test")
-        val tasks = Json.decodeFromString(ListSerializer(Task.serializer()), responseTasks)
+    suspend fun requestSaveTasks(tokenId: String, uid: String, tasks: List<Task>) : Result {
+        val answerString = HttpClient().post<String>("https://us-central1-my-todo-list-36185.cloudfunctions.net/saveTasks") {
+            headers {
+                append("Authorization", TOKEN_PREFIX + tokenId)
+            }
+            parameter("userId", uid)
+            body = Json.encodeToString(ListSerializer(Task.serializer()), tasks)
+        }
 
-        //throw Exception("Test exception")
+        return Json { ignoreUnknownKeys = true }.decodeFromString(Result.serializer(), answerString)
+    }
 
-        Response(tasks)
-    } catch (e: Exception) {
-        print("" + e + "\n")
-        Response(exception = e)
+    suspend fun requestLoadTasks(tokenId: String, uid: String) : ResultTasks {
+        val answerString = HttpClient().get<String>("https://us-central1-my-todo-list-36185.cloudfunctions.net/loadTasks") {
+            headers {
+                append("Authorization", TOKEN_PREFIX + tokenId)
+            }
+            parameter("userId", uid)
+        }
+
+        return Json { ignoreUnknownKeys = true }.decodeFromString(ResultTasks.serializer(), answerString)
     }
 }
