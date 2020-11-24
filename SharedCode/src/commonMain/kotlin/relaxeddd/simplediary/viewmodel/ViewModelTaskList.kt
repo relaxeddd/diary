@@ -42,7 +42,7 @@ abstract class ViewModelTaskList : ViewModelTask() {
                         val daysToCurrentTime = (currentTimeMillis - startTimeMillis) / interval
                         val startTimeNearestTask = startTimeMillis + (daysToCurrentTime * interval)
 
-                        for (childIndex in -100..100) {
+                        for (childIndex in -20..20) {
                             val childTaskStart = startTimeNearestTask + (childIndex * interval)
                             if (childTaskStart > startTimeMillis && !parentTask.exDates.contains(childTaskStart)) {
                                 childTasks.add(Task(parentTask, generateId(), childTaskStart, childTaskStart + duration))
@@ -54,7 +54,7 @@ abstract class ViewModelTaskList : ViewModelTask() {
                         val weeksToCurrentTime = (currentTimeMillis - startTimeMillis) / interval
                         val startTimeNearestTask = startTimeMillis + (weeksToCurrentTime * interval)
 
-                        for (childIndex in -12..12) {
+                        for (childIndex in -4..4) {
                             val childTaskStart = startTimeNearestTask + (childIndex * interval)
                             if (childTaskStart > startTimeMillis && !parentTask.exDates.contains(childTaskStart)) {
                                 childTasks.add(Task(parentTask, generateId(), childTaskStart, childTaskStart + duration))
@@ -67,7 +67,7 @@ abstract class ViewModelTaskList : ViewModelTask() {
                         val currentMonth = currentDate.month
                         val currentYear = currentDate.year
 
-                        for (childIndex in -12..12) {
+                        for (childIndex in -4..4) {
                             var month = currentMonth.ordinal + childIndex
                             var yearIncrement = 0
 
@@ -108,6 +108,22 @@ abstract class ViewModelTaskList : ViewModelTask() {
 
         childTasks.addAll(tasks)
         tasks = childTasks.sortedBy { task -> task.start }
+
+        val tasksWithDays = ArrayList<Task>()
+        for ((ix, task) in tasks.withIndex()) {
+            if (tasksWithDays.isEmpty()) {
+                tasksWithDays.add(task)
+            } else {
+                val previousTask = tasks[ix - 1]
+                val startDay = previousTask.start / TIME_DAY * TIME_DAY
+                val dayDifference = ((task.start / TIME_DAY * TIME_DAY) - startDay) / TIME_DAY
+                for (dayIx in 1 until dayDifference) {
+                    tasksWithDays.add(Task(generateId(), startDate = startDay + dayIx * TIME_DAY, isDateTask = true))
+                }
+                tasksWithDays.add(task)
+            }
+        }
+        tasks = tasksWithDays.sortedBy { task -> task.start }
 
         tasksM.value = tasks
         isVisibleTaskListM.value = tasks.isNotEmpty()

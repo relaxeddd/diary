@@ -81,7 +81,7 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
         }
         
         cell.update(title: task.title, desc: task.desc, priority: Int(task.priority), startTime: task.start, endTime: task.end,
-                    date: isShowDate ? task.start : nil, isShowSeparator: isShowSeparator)
+                    date: isShowDate ? task.start : nil, isDateTask: task.isDateTask, isShowSeparator: isShowSeparator)
         return cell
     }
     

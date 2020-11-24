@@ -5,6 +5,7 @@
   Created by Chechin Vadim on 12.07.2020.
   Copyright © 2020 Chechin Vadim. All rights reserved.
 */
+"after_tomorrow" = "Послезавтра";
 "complete" = "Завершить";
 "dismiss" = "Закрыть";
 "delete" = "Удалить";

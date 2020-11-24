@@ -19,15 +19,21 @@ class ViewCellTaskTableViewCell: UITableViewCell {
     @IBOutlet weak var textStartTime: UILabel!
     @IBOutlet weak var textEndTime: UILabel!
     
-    internal func update(title: String, desc: String, priority: Int, startTime: Int64, endTime: Int64, date: Int64? = nil, isShowSeparator: Bool) {
+    internal func update(title: String, desc: String, priority: Int, startTime: Int64, endTime: Int64, date: Int64? = nil, isDateTask: Bool, isShowSeparator: Bool) {
         textTitle?.text = title
         textDesc?.text = desc
         textStartTime?.text = millisToTimeString(millis: startTime)
         textEndTime?.text = millisToTimeString(millis: endTime)
         viewPriority.backgroundColor = getPriorityColor(priority: Int(priority))
         textDate.isHidden = date == nil
+        
+        textTitle.isHidden = isDateTask
+        textDesc.isHidden = isDateTask
+        textStartTime.isHidden = isDateTask
+        textEndTime.isHidden = isDateTask
+        viewPriority.isHidden = isDateTask
         if let setDate = date {
-            var textDayStr: String
+            var textDayStr: String = ""
             
             if (isToday(millis: setDate)) {
                 textDayStr = NSLocalizedString("today", comment: "")
@@ -35,16 +41,26 @@ class ViewCellTaskTableViewCell: UITableViewCell {
                 textDayStr = NSLocalizedString("yesterday", comment: "")
             } else if (isTomorrow(millis: setDate)) {
                 textDayStr = NSLocalizedString("tomorrow", comment: "")
+            } else if (isAfterTomorrow(millis: setDate)) {
+                textDayStr = NSLocalizedString("after_tomorrow", comment: "")
             } else {
-                textDayStr = millisToDateString(millis: setDate)
+                
             }
+            if (!textDayStr.isEmpty) {
+                textDayStr += ", "
+            }
+            textDayStr += getWeekDay(millis: setDate) + ", " + millisToDateString(millis: setDate)
             if (!isCurrentYear(millis: setDate)) {
                 textDayStr += ", " + String(getYear(millis: setDate))
             }
             
             textDate.text = textDayStr
-            constraintHeightDate.constant = 32
-            constraintTopContainerText.constant = 12
+            constraintHeightDate.constant = 20
+            if (isDateTask) {
+                constraintTopContainerText.constant = 14
+            } else {
+                constraintTopContainerText.constant = 8
+            }
         } else {
             constraintHeightDate.constant = 0
             constraintTopContainerText.constant = 0
