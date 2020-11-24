@@ -79,6 +79,20 @@ func isTomorrow(millis: Int64) -> Bool {
     return currentDayMillis == (roundMillisToDayDate(millis: millis) - Int64(DAY_IN_MILLIS))
 }
 
+func isAfterTomorrow(millis: Int64) -> Bool {
+    let currentDayMillis = roundMillisToDayDate(millis: dateToMillis(date: Date()))
+    return currentDayMillis == (roundMillisToDayDate(millis: millis) - Int64(2 * DAY_IN_MILLIS))
+}
+
+func getWeekDay(millis: Int64) -> String {
+    let date = Date(timeIntervalSince1970: TimeInterval(millis / 1000))
+    var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+    let weekDayIx = calendar.component(Calendar.Component.weekday, from: date)
+    calendar.locale = NSLocale(localeIdentifier: "ru") as Locale
+    
+    return calendar.shortWeekdaySymbols[weekDayIx - 1]
+}
+
 func getYear(millis: Int64) -> Int {
     let date = Date(timeIntervalSince1970: TimeInterval(millis / 1000))
     let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
