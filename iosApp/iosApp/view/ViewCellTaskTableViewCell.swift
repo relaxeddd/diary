@@ -19,19 +19,37 @@ class ViewCellTaskTableViewCell: UITableViewCell {
     @IBOutlet weak var textStartTime: UILabel!
     @IBOutlet weak var textEndTime: UILabel!
     
-    internal func update(title: String, desc: String, priority: Int, startTime: Int64, endTime: Int64, date: Int64? = nil, isDateTask: Bool, isShowSeparator: Bool) {
-        textTitle?.text = title
-        textDesc?.text = desc
-        textStartTime?.text = millisToTimeString(millis: startTime)
-        textEndTime?.text = millisToTimeString(millis: endTime)
+    internal func update(title: String, desc: String, priority: Int, startTime: Int64, endTime: Int64, date: Int64? = nil, isCompleted: Bool, isHidden: Bool, isShowSeparator: Bool) {
+        if (isCompleted) {
+            let strikethroughTitle: NSMutableAttributedString =  NSMutableAttributedString(string: title)
+            strikethroughTitle.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, strikethroughTitle.length))
+            textTitle?.attributedText = strikethroughTitle
+            
+            let strikethroughDesc: NSMutableAttributedString =  NSMutableAttributedString(string: desc)
+            strikethroughDesc.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, strikethroughDesc.length))
+            textDesc?.attributedText = strikethroughDesc
+            
+            let strikethroughStartTime: NSMutableAttributedString =  NSMutableAttributedString(string: millisToTimeString(millis: startTime))
+            strikethroughTitle.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, strikethroughStartTime.length))
+            textStartTime?.attributedText = strikethroughStartTime
+            
+            let strikethroughEndTime: NSMutableAttributedString =  NSMutableAttributedString(string: millisToTimeString(millis: endTime))
+            strikethroughTitle.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, strikethroughEndTime.length))
+            textEndTime?.attributedText = strikethroughEndTime
+        } else {
+            textTitle?.text = title
+            textDesc?.text = desc
+            textStartTime?.text = millisToTimeString(millis: startTime)
+            textEndTime?.text = millisToTimeString(millis: endTime)
+        }
         viewPriority.backgroundColor = getPriorityColor(priority: Int(priority))
         textDate.isHidden = date == nil
         
-        textTitle.isHidden = isDateTask
-        textDesc.isHidden = isDateTask
-        textStartTime.isHidden = isDateTask
-        textEndTime.isHidden = isDateTask
-        viewPriority.isHidden = isDateTask
+        textTitle.isHidden = isHidden
+        textDesc.isHidden = isHidden
+        textStartTime.isHidden = isHidden
+        textEndTime.isHidden = isHidden
+        viewPriority.isHidden = isHidden
         if let setDate = date {
             var textDayStr: String = ""
             
@@ -56,7 +74,7 @@ class ViewCellTaskTableViewCell: UITableViewCell {
             
             textDate.text = textDayStr
             constraintHeightDate.constant = 20
-            if (isDateTask) {
+            if (isHidden) {
                 constraintTopContainerText.constant = 14
             } else {
                 constraintTopContainerText.constant = 8

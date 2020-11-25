@@ -115,12 +115,15 @@ abstract class ViewModelTaskList : ViewModelTask() {
                 tasksWithDays.add(task)
             } else {
                 val previousTask = tasks[ix - 1]
-                val startDay = previousTask.start / TIME_DAY * TIME_DAY
-                val dayDifference = ((task.start / TIME_DAY * TIME_DAY) - startDay) / TIME_DAY
-                for (dayIx in 1 until dayDifference) {
-                    tasksWithDays.add(Task(generateId(), startDate = startDay + dayIx * TIME_DAY, isDateTask = true))
+
+                if (!previousTask.isHidden()) {
+                    val startDay = previousTask.start / TIME_DAY * TIME_DAY
+                    val dayDifference = ((task.start / TIME_DAY * TIME_DAY) - startDay) / TIME_DAY
+                    for (dayIx in 1 until dayDifference) {
+                        tasksWithDays.add(Task(generateId(), startDate = startDay + dayIx * TIME_DAY, isDateTask = true))
+                    }
+                    tasksWithDays.add(task)
                 }
-                tasksWithDays.add(task)
             }
         }
         tasks = tasksWithDays.sortedBy { task -> task.start }

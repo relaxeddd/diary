@@ -6,13 +6,17 @@
   Copyright © 2020 Chechin Vadim. All rights reserved.
 */
 "after_tomorrow" = "Послезавтра";
+"all_repetitive_tasks" = "Все повторяющиеся задачи";
+"cancel" = "Отмена";
 "complete" = "Завершить";
+"complete_repetitive_task_desc" = "Завершить только эту задачу или все связанные повторяющиеся задачи?";
 "dismiss" = "Закрыть";
 "delete" = "Удалить";
 "error" = "Ошибка";
 "no" = "Нет";
 "no_tasks" = "Нет задач";
 "ok" = "ОК";
+"only_this" = "Только эту";
 "restore" = "Восстановить";
 "tasks_load_desc" = "Загрузить сохраненные задачи?";
 "tasks_save_desc" = "Сохранить свои задачи?";
