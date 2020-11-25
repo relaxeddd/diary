@@ -1,6 +1,7 @@
 package relaxeddd.simplediary.utils
 
 const val ERROR_TEXT = "errorText"
+const val ID = "id"
 const val TEXT = "text"
 
 const val TIME_SECOND = 1000L

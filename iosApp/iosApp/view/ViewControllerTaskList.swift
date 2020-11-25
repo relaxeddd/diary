@@ -45,8 +45,9 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
                 let task = tasks[taskIx]
                 let navigationController = segue.destination as? UINavigationController
                 let viewControllerTaskCard = navigationController?.topViewController as? ViewControllerTaskCard
+                let id = task.parentId.isEmpty ? task.id : task.parentId
                 
-                viewControllerTaskCard?.setEditTaskData(id: task.id)
+                viewControllerTaskCard?.setEditTaskData(id: id, startDate: task.start)
             }
         }
     }
@@ -81,14 +82,15 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
         }
         
         cell.update(title: task.title, desc: task.desc, priority: Int(task.priority), startTime: task.start, endTime: task.end,
-                    date: isShowDate ? task.start : nil, isDateTask: task.isDateTask, isShowSeparator: isShowSeparator)
+                    date: isShowDate ? task.start : nil, isCompleted: task.isCompleted, isHidden: (task.isDateTask || task.isHidden()), isShowSeparator: isShowSeparator)
         return cell
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let task = self.tasks[indexPath.row]
         let deleteItem = UIContextualAction(style: .destructive, title: NSLocalizedString("delete", comment: "")) { (contextualAction, view, boolValue) in
-            self.viewModel.deleteTask(id: task.id)
+            let id = task.parentId.isEmpty ? task.id : task.parentId
+            self.viewModel.deleteTask(id: id)
         }
         let completeItem = getCompleteMenuItem(id: task.id)
         let swipeActions = UISwipeActionsConfiguration(actions: [completeItem, deleteItem])

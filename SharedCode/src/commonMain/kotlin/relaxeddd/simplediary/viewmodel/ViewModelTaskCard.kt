@@ -20,6 +20,7 @@ class ViewModelTaskCard : ViewModelTask() {
     }
 
     private var editTaskId: String? = null
+    private var startDate: Long = 0
 
     private val isEnabledButtonSaveM = MutableLiveData(false)
     val isEnabledButtonSave: LiveData<Boolean> = isEnabledButtonSaveM
@@ -96,60 +97,92 @@ class ViewModelTaskCard : ViewModelTask() {
         taskTitle.removeObserver(observerTitle)
     }
 
-    fun load(editTaskId: String?) {
-        this.editTaskId = editTaskId
-        if (editTaskId != null) {
-            val editTask = repositoryTasks.tasks.value.find { it.id == editTaskId }
-            taskTitleM.value = editTask?.title ?: ""
-            taskDescM.value = editTask?.desc ?: ""
-            taskCommentM.value = editTask?.comment ?: ""
-            taskLocationM.value = editTask?.location ?: ""
-            taskPriorityM.value = editTask?.priority ?: DEFAULT_PRIORITY
-            taskRepeatM.value = editTask?.repeat ?: RepeatRule.NO.ordinal
-            taskRepeatCountM.value = editTask?.repeatCount ?: 0
-            taskStartM.value = editTask?.start ?: 0L
-            taskEndM.value = editTask?.end ?: 0L
-            taskUntilM.value = editTask?.untilDate ?: 0L
-            taskIsPersistentM.value = editTask?.isPersistent ?: false
-            taskIsCompletedM.value = editTask?.isCompleted ?: false
-            taskRemindHoursM.value = editTask?.remindHours ?: ArrayList()
-            taskExDatesM.value = editTask?.exDates ?: ArrayList()
+    fun load(editTaskParentId: String?, startDate: Long) {
+        this.editTaskId = editTaskParentId
+        this.startDate = startDate
+        val editTask = editTaskParentId?.let { parentId -> repositoryTasks.tasks.value.find { it.id == parentId } }
+
+        if (editTask != null) {
+            val duration = editTask.end - editTask.start
+            val endDate = startDate + duration
+
+            taskTitleM.value = editTask.title
+            taskDescM.value = editTask.desc
+            taskCommentM.value = editTask.comment
+            taskLocationM.value = editTask.location
+            taskPriorityM.value = editTask.priority
+            taskRepeatM.value = editTask.repeat
+            taskRepeatCountM.value = editTask.repeatCount
+            taskStartM.value = startDate
+            taskEndM.value = endDate
+            taskUntilM.value = editTask.untilDate
+            taskIsPersistentM.value = editTask.isPersistent
+            taskIsCompletedM.value = editTask.isCompleted
+            taskRemindHoursM.value = editTask.remindHours
+            taskExDatesM.value = editTask.exDates
             isEnabledButtonSaveM.value = true
         }
     }
 
     //------------------------------------------------------------------------------------------------------------------
     fun onClickedSave() {
-        val taskId = this.editTaskId
-        val title = taskTitle.value
-        val desc = taskDesc.value
-        val comment = taskComment.value
-        val location = taskLocation.value
-        val priority = taskPriority.value
-        val repeat = taskRepeat.value
-        val repeatCount = taskRepeatCount.value
-        val start = taskStart.value
-        val end = taskEnd.value
-        val until = taskUntil.value
-        val isPersistent = taskIsPersistent.value
-        val isCompleted = taskIsCompleted.value
-        val exDates = taskExDates.value
-        val remindHours = taskRemindHours.value
-        val callback = { response: Response<List<Task>> ->
-            if (response.isValid) {
-                actionM.postValue(Action(EventType.EXIT))
-            } else {
-                actionM.postValue(Action(EventType.ERROR, mapOf(Pair(ERROR_TEXT, response.exception.toString()))))
+        if (editTaskId != null) {
+            val isCompleted = taskIsCompleted.value
+
+            if (isCompleted) {
+                val editTask = repositoryTasks.tasks.value.find { it.id == editTaskId }
+                if (editTask?.isCompleted != isCompleted && editTask?.isRepetitive() == true) {
+                    actionM.postValue(Action(EventType.NAVIGATION_DIALOG_REPETITIVE_TASK_COMPLETE))
+                    return
+                }
             }
         }
 
-        if (taskId != null) {
-            updateTask(taskId, title, desc, comment, location, priority, repeat, repeatCount, start, end, until,
-                       isPersistent, isCompleted, exDates, remindHours, callback)
+        saveOrCreateTask()
+    }
+
+    fun onClickedCompleteChildTask() {
+        val parentTask = repositoryTasks.tasks.value.find { it.id == editTaskId }
+
+        if (parentTask != null && startDate != 0L) {
+            val duration = parentTask.end - parentTask.start
+            val childEndDate = startDate + duration
+
+            val title = taskTitle.value
+            val desc = taskDesc.value
+            val comment = taskComment.value
+            val location = taskLocation.value
+            val priority = taskPriority.value
+            val repeat = taskRepeat.value
+            val repeatCount = taskRepeatCount.value
+            val start = taskStart.value
+            val end = taskEnd.value
+            val until = taskUntil.value
+            val isPersistent = taskIsPersistent.value
+            val remindHours = taskRemindHours.value
+
+            createTask(generateId(), title, desc, comment, location, priority, repeat, repeatCount, start, end,
+                       until, isPersistent, true, remindHours) {
+                val exDates = ArrayList(parentTask.exDates).apply { add(startDate) }
+
+                updateTask(parentTask.id, parentTask.title, parentTask.desc, parentTask.comment,
+                           parentTask.location, parentTask.priority, parentTask.repeat, parentTask.repeatCount,
+                           parentTask.start, parentTask.end, parentTask.untilDate, parentTask.isPersistent,
+                           false, exDates, parentTask.remindHours) { response: Response<List<Task>> ->
+                    if (response.isValid) {
+                        actionM.postValue(Action(EventType.EXIT))
+                    } else {
+                        actionM.postValue(Action(EventType.ERROR, mapOf(Pair(ERROR_TEXT, response.exception.toString()))))
+                    }
+                }
+            }
         } else {
-            createTask(generateId(), title, desc, comment, location, priority, repeat, repeatCount, start, end, until,
-                       isPersistent, isCompleted, remindHours, callback)
+            saveOrCreateTask()
         }
+    }
+
+    fun onClickedCompleteParentTask() {
+        saveOrCreateTask()
     }
 
     fun onClickedCancel() {
@@ -269,6 +302,39 @@ class ViewModelTaskCard : ViewModelTask() {
     fun onRemoveRemindHour(value: Int) {
         if (taskRemindHoursM.value.contains(value)) {
             taskRemindHoursM.value = ArrayList(taskRemindHoursM.value).apply { remove(value) }
+        }
+    }
+
+    private fun saveOrCreateTask() {
+        val taskId = this.editTaskId
+        val title = taskTitle.value
+        val desc = taskDesc.value
+        val comment = taskComment.value
+        val location = taskLocation.value
+        val priority = taskPriority.value
+        val repeat = taskRepeat.value
+        val repeatCount = taskRepeatCount.value
+        val start = taskStart.value
+        val end = taskEnd.value
+        val until = taskUntil.value
+        val isPersistent = taskIsPersistent.value
+        val isCompleted = taskIsCompleted.value
+        val exDates = taskExDates.value
+        val remindHours = taskRemindHours.value
+        val callback = { response: Response<List<Task>> ->
+            if (response.isValid) {
+                actionM.postValue(Action(EventType.EXIT))
+            } else {
+                actionM.postValue(Action(EventType.ERROR, mapOf(Pair(ERROR_TEXT, response.exception.toString()))))
+            }
+        }
+
+        if (taskId != null) {
+            updateTask(taskId, title, desc, comment, location, priority, repeat, repeatCount, start, end, until,
+                       isPersistent, isCompleted, exDates, remindHours, callback)
+        } else {
+            createTask(generateId(), title, desc, comment, location, priority, repeat, repeatCount, start, end, until,
+                       isPersistent, isCompleted, remindHours, callback)
         }
     }
 }

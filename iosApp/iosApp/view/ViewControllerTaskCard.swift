@@ -22,6 +22,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBOutlet weak var switchIsCompleted: UISwitch!
     
     private var editTaskId: String? = nil
+    private var startDate: Int64 = 0
     @IBOutlet weak var toolbar: UINavigationItem!
     @IBOutlet weak var segmentsPriority: UISegmentedControl!
     @IBOutlet weak var segmentsRepeat: UISegmentedControl!
@@ -32,14 +33,15 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     override var progressBar: UIActivityIndicatorView? { progressBarCard }
     
     // MARK: - Arguments
-    func setEditTaskData(id: String) {
+    func setEditTaskData(id: String, startDate: Int64) {
         editTaskId = id
+        self.startDate = startDate
     }
     
     // MARK: - Init
     override func initViewModel() {
         super.initViewModel()
-        viewModel.load(editTaskId: editTaskId)
+        viewModel.load(editTaskParentId: editTaskId, startDate: startDate)
     }
     
     override func initView() {
@@ -105,6 +107,24 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         viewModel.taskIsCompleted.addObserver { (value) in
             let isCompleted = value as? Bool ?? false
             self.switchIsCompleted.isOn = isCompleted
+        }
+    }
+    
+    override func handleAction(action: Action, type: EventType) {
+        if (type == EventType.navigationDialogRepetitiveTaskComplete) {
+            let alert = UIAlertController(title: NSLocalizedString("complete_repetitive_task_desc", comment: ""), message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction.init(title: NSLocalizedString("only_this", comment: ""), style: .default, handler: { (UIAlertAction) in
+                alert.dismiss(animated: true)
+                self.viewModel.onClickedCompleteChildTask()
+            }))
+            alert.addAction(UIAlertAction.init(title: NSLocalizedString("all_repetitive_tasks", comment: ""), style: .default, handler: { (UIAlertAction) in
+                alert.dismiss(animated: true)
+                self.viewModel.onClickedCompleteParentTask()
+            }))
+            alert.addAction(UIAlertAction.init(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: { (UIAlertAction) in
+                alert.dismiss(animated: true)
+            }))
+            self.present(alert, animated: true)
         }
     }
     

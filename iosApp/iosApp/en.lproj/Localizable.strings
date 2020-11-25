@@ -6,13 +6,17 @@
   Copyright © 2020 Chechin Vadim. All rights reserved.
 */
 "after_tomorrow" = "After Tomorrow";
+"all_repetitive_tasks" = "All repetitive tasks";
+"cancel" = "Cancel";
 "complete" = "Complete";
+"complete_repetitive_task_desc" = "Complete only this task or all related repetitive tasks?";
 "dismiss" = "Dismiss";
 "delete" = "Delete";
 "error" = "Error";
 "no" = "No";
 "no_tasks" = "No Tasks";
 "ok" = "OK";
+"only_this" = "Only this";
 "restore" = "Restore";
 "tasks_load_desc" = "Load saved tasks?";
 "tasks_save_desc" = "Save your tasks?";

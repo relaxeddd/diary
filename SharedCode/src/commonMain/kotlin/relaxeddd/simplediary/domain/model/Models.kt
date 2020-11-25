@@ -58,6 +58,10 @@ data class Task(
         }
 
     fun isChildTask() = parentId.isNotBlank()
+
+    fun isRepetitive() = repeat != RepeatRule.NO.ordinal
+
+    fun isHidden() = exDates.contains(start)
 }
 
 enum class RepeatRule {
@@ -127,6 +131,7 @@ enum class EventType {
 
     NAVIGATION_DIALOG_CONFIRM_TASKS_SAVE,
     NAVIGATION_DIALOG_CONFIRM_TASKS_LOAD,
+    NAVIGATION_DIALOG_REPETITIVE_TASK_COMPLETE,
 
     NAVIGATION_DIALOG_RATE_APP,
     NAVIGATION_DIALOG_SEND_FEEDBACK,
