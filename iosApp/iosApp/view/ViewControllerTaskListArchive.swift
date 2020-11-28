@@ -20,7 +20,7 @@ class ViewControllerTaskListArchive: ViewControllerTaskList<ViewModelTaskListArc
     override var tableViewTasks: UITableView? { tableViewTasksArchive }
     override var textNoItems: UILabel? { textNoTasksArchive }
     
-    override func getCompleteMenuItem(id: String) -> UIContextualAction {
+    override func getCompleteMenuItem(id: String, isCompleted: Bool) -> UIContextualAction {
         let menuItem = UIContextualAction(style: .normal, title: NSLocalizedString("restore", comment: "")) { (contextualAction, view, boolValue) in
             self.viewModel.restoreTask(id: id)
         }

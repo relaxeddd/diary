@@ -13,6 +13,7 @@
 		83635D5F24715A84008222C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83635D5E24715A84008222C3 /* SceneDelegate.swift */; };
 		83635D6324715A85008222C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83635D6224715A85008222C3 /* Assets.xcassets */; };
 		83635D6624715A85008222C3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83635D6524715A85008222C3 /* Preview Assets.xcassets */; };
+		8364DDEB2571601D00257B8C /* ViewControllerTaskListPersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364DDEA2571601D00257B8C /* ViewControllerTaskListPersistent.swift */; };
 		8366B7F624C5E2BF006668A9 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		836A0C7E24C442D8003B0538 /* ViewControllerTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A0C7D24C442D8003B0538 /* ViewControllerTaskCard.swift */; };
 		836A0C8024C58F01003B0538 /* ViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A0C7F24C58F01003B0538 /* ViewControllerBase.swift */; };
@@ -57,6 +58,8 @@
 		83635D6224715A85008222C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83635D6524715A85008222C3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		83635D6A24715A85008222C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8364DDEA2571601D00257B8C /* ViewControllerTaskListPersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskListPersistent.swift; sourceTree = "<group>"; };
+		8364DDED2571834700257B8C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		836A0C7D24C442D8003B0538 /* ViewControllerTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskCard.swift; sourceTree = "<group>"; };
 		836A0C7F24C58F01003B0538 /* ViewControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBase.swift; sourceTree = "<group>"; };
 		836B0C5724B9DFC4009A39F2 /* ViewControllerTaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskList.swift; sourceTree = "<group>"; };
@@ -75,7 +78,6 @@
 		83D4AD042510F3370063A248 /* ViewControllerLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLogin.swift; sourceTree = "<group>"; };
 		83EB22D4256146E000E5C1A3 /* ViewControllerLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLogo.swift; sourceTree = "<group>"; };
 		83F1A0A424C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCellTaskTableViewCell.swift; sourceTree = "<group>"; };
-		83F88396256571AD00CAAAAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		8E2D1167DDE71CA461716061 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,6 +179,7 @@
 				83D4AD042510F3370063A248 /* ViewControllerLogin.swift */,
 				83EB22D4256146E000E5C1A3 /* ViewControllerLogo.swift */,
 				839BD0752562779E00176627 /* ViewControllerSettings.swift */,
+				8364DDEA2571601D00257B8C /* ViewControllerTaskListPersistent.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				836A0C7E24C442D8003B0538 /* ViewControllerTaskCard.swift in Sources */,
 				83F1A0A524C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift in Sources */,
 				839394B524D6B3E400897B27 /* EditTextDate.swift in Sources */,
+				8364DDEB2571601D00257B8C /* ViewControllerTaskListPersistent.swift in Sources */,
 				839BD0762562779E00176627 /* ViewControllerSettings.swift in Sources */,
 				836B0C6B24BB2796009A39F2 /* Func.swift in Sources */,
 				83D4AD052510F3370063A248 /* ViewControllerLogin.swift in Sources */,
@@ -359,7 +363,7 @@
 			children = (
 				836B0C6424BB22EA009A39F2 /* Base */,
 				83CD686824D44CFF009146C1 /* ru */,
-				83F88396256571AD00CAAAAA /* en */,
+				8364DDED2571834700257B8C /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

@@ -20,9 +20,17 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     @IBOutlet weak var editTextStartTime: EditTextDate!
     @IBOutlet weak var editTextEndTime: EditTextDate!
     @IBOutlet weak var switchIsCompleted: UISwitch!
+    @IBOutlet weak var switchIsPersistent: UISwitch!
+    @IBOutlet weak var textIsPersistent: UILabel!
+    @IBOutlet weak var textDate: UILabel!
+    @IBOutlet weak var textStartTime: UILabel!
+    @IBOutlet weak var textEndTime: UILabel!
+    @IBOutlet weak var textRepeat: UILabel!
+    @IBOutlet weak var constraintTopIsCompleted: NSLayoutConstraint!
     
     private var editTaskId: String? = nil
     private var startDate: Int64 = 0
+    private var isPersistent: Bool = false
     @IBOutlet weak var toolbar: UINavigationItem!
     @IBOutlet weak var segmentsPriority: UISegmentedControl!
     @IBOutlet weak var segmentsRepeat: UISegmentedControl!
@@ -36,6 +44,10 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     func setEditTaskData(id: String, startDate: Int64) {
         editTaskId = id
         self.startDate = startDate
+    }
+    
+    func setCreateTaskData(isPersistent: Bool) {
+        self.isPersistent = isPersistent
     }
     
     // MARK: - Init
@@ -58,6 +70,10 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
         }
         editTextEndTime.onDateChanged = { millis in
             self.onEndDateChanged(dateInMillis: millis)
+        }
+        
+        if (isPersistent) {
+            viewModel.onChangedIsPersistent(value: true)
         }
     }
     
@@ -108,6 +124,19 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
             let isCompleted = value as? Bool ?? false
             self.switchIsCompleted.isOn = isCompleted
         }
+        viewModel.taskIsPersistent.addObserver { (value) in
+            let isPersistent = value as? Bool ?? false
+            self.switchIsPersistent.isOn = isPersistent
+            self.textDate.isHidden = isPersistent
+            self.editTextDate.isHidden = isPersistent
+            self.textStartTime.isHidden = isPersistent
+            self.editTextStartTime.isHidden = isPersistent
+            self.textEndTime.isHidden = isPersistent
+            self.editTextEndTime.isHidden = isPersistent
+            self.textRepeat.isHidden = isPersistent
+            self.segmentsRepeat.isHidden = isPersistent
+            self.constraintTopIsCompleted.constant = isPersistent ? -158 : 16
+        }
     }
     
     override func handleAction(action: Action, type: EventType) {
@@ -139,6 +168,10 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     
     @IBAction func onPrioritySelected(_ sender: Any) {
         viewModel.onChangedPriority(value: Int32(self.segmentsPriority.selectedSegmentIndex))
+    }
+    
+    @IBAction func onIsPersistentChanged(_ sender: Any) {
+        viewModel.onChangedIsPersistent(value: switchIsPersistent.isOn)
     }
     
     @IBAction func onRepeatSelected(_ sender: Any) {

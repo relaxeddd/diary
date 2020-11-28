@@ -4,7 +4,7 @@ import relaxeddd.simplediary.domain.model.Task
 
 class ViewModelTaskListArchive : ViewModelTaskList() {
 
-    override fun filterRule(task: Task) = task.isCompleted
+    override fun filterRule(task: Task) = task.isCompleted && !task.isPersistent
 
     fun restoreTask(id: String) {
         tasks.value.find { it.id == id }?.let {

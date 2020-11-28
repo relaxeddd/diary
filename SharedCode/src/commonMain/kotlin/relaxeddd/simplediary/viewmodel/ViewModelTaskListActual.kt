@@ -9,7 +9,7 @@ import relaxeddd.simplediary.utils.ID
 
 class ViewModelTaskListActual : ViewModelTaskList() {
 
-    override fun filterRule(task: Task) = !task.isCompleted
+    override fun filterRule(task: Task) = !task.isCompleted && !task.isPersistent
 
     fun onClickedCompleteTask(id: String) {
         tasks.value.find { it.id == id }?.let {

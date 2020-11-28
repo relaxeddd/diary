@@ -23,14 +23,23 @@
 /* Class = "UINavigationItem"; title = "Archive"; ObjectID = "Apw-MP-LIy"; */
 "Apw-MP-LIy.title" = "Archive";
 
+/* Class = "UILabel"; text = "Date"; ObjectID = "Dtt-e1-PQN"; */
+"Dtt-e1-PQN.text" = "Date";
+
 /* Class = "UILabel"; text = "Date"; ObjectID = "Huc-8B-gQG"; */
 "Huc-8B-gQG.text" = "Date";
 
 /* Class = "UILabel"; text = "10:38 PM"; ObjectID = "IrC-yL-Ih9"; */
 "IrC-yL-Ih9.text" = "10:38 PM";
 
+/* Class = "UILabel"; text = "Task title Task title  Task title  Task title "; ObjectID = "Izy-0s-sqj"; */
+"Izy-0s-sqj.text" = "Task title Task title  Task title  Task title ";
+
 /* Class = "UITextField"; placeholder = "Click to set date"; ObjectID = "JKn-n5-Pkb"; */
 "JKn-n5-Pkb.placeholder" = "Click to set date";
+
+/* Class = "UILabel"; text = "Is persistent"; ObjectID = "Kca-iB-1W2"; */
+"Kca-iB-1W2.text" = "Is persistent";
 
 /* Class = "UIButton"; normalTitle = "Login"; ObjectID = "KlP-C7-59A"; */
 "KlP-C7-59A.normalTitle" = "Login";
@@ -77,6 +86,9 @@
 /* Class = "UILabel"; text = "Is completed"; ObjectID = "TYn-kG-CkN"; */
 "TYn-kG-CkN.text" = "Is completed";
 
+/* Class = "UINavigationItem"; title = "Persistent tasks"; ObjectID = "ULO-IB-MsK"; */
+"ULO-IB-MsK.title" = "Persistent tasks";
+
 /* Class = "UITabBarItem"; title = "Tasks"; ObjectID = "UYK-mT-hjy"; */
 "UYK-mT-hjy.title" = "Tasks";
 
@@ -88,6 +100,9 @@
 
 /* Class = "UILabel"; text = "Date"; ObjectID = "W4Q-9Y-BCb"; */
 "W4Q-9Y-BCb.text" = "Date";
+
+/* Class = "UILabel"; text = "12:30 PM"; ObjectID = "WRQ-FB-l14"; */
+"WRQ-FB-l14.text" = "12:30 PM";
 
 /* Class = "UITextField"; placeholder = "Enter password"; ObjectID = "XBA-co-EnA"; */
 "XBA-co-EnA.placeholder" = "Enter password";
@@ -122,6 +137,15 @@
 /* Class = "UILabel"; text = "Priority"; ObjectID = "icD-5o-mHo"; */
 "icD-5o-mHo.text" = "Priority";
 
+/* Class = "UILabel"; text = "Task description Task description "; ObjectID = "jNl-wC-cjr"; */
+"jNl-wC-cjr.text" = "Task description Task description ";
+
+/* Class = "UILabel"; text = "10:38 PM"; ObjectID = "kUY-1P-6zM"; */
+"kUY-1P-6zM.text" = "10:38 PM";
+
+/* Class = "UILabel"; text = "No tasks"; ObjectID = "mG7-Js-eg8"; */
+"mG7-Js-eg8.text" = "No tasks";
+
 /* Class = "UIButton"; normalTitle = "Load saved tasks"; ObjectID = "mW5-Bg-K8L"; */
 "mW5-Bg-K8L.normalTitle" = "Load saved tasks";
 
@@ -133,6 +157,9 @@
 
 /* Class = "UILabel"; text = "Task title Task title  Task title  Task title "; ObjectID = "sCG-L7-9hz"; */
 "sCG-L7-9hz.text" = "Task title Task title  Task title  Task title ";
+
+/* Class = "UITabBarItem"; title = "Persistent"; ObjectID = "tFI-mg-WMP"; */
+"tFI-mg-WMP.title" = "Persistent";
 
 /* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[0] = "Low"; ObjectID = "tUy-Dr-Otr"; */
 "tUy-Dr-Otr.segmentTitles[0]" = "Low";

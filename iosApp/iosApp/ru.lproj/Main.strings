@@ -23,14 +23,23 @@
 /* Class = "UINavigationItem"; title = "Archive"; ObjectID = "Apw-MP-LIy"; */
 "Apw-MP-LIy.title" = "Архив";
 
+/* Class = "UILabel"; text = "Date"; ObjectID = "Dtt-e1-PQN"; */
+"Dtt-e1-PQN.text" = "Дата";
+
 /* Class = "UILabel"; text = "Date"; ObjectID = "Huc-8B-gQG"; */
 "Huc-8B-gQG.text" = "Дата";
 
 /* Class = "UILabel"; text = "10:38 PM"; ObjectID = "IrC-yL-Ih9"; */
 "IrC-yL-Ih9.text" = "10:38 PM";
 
+/* Class = "UILabel"; text = "Task title Task title  Task title  Task title "; ObjectID = "Izy-0s-sqj"; */
+"Izy-0s-sqj.text" = "Название задачи ";
+
 /* Class = "UITextField"; placeholder = "Click to set date"; ObjectID = "JKn-n5-Pkb"; */
 "JKn-n5-Pkb.placeholder" = "Нажмите для установки даты";
+
+/* Class = "UILabel"; text = "Is persistent"; ObjectID = "Kca-iB-1W2"; */
+"Kca-iB-1W2.text" = "Постоянная";
 
 /* Class = "UIButton"; normalTitle = "Login"; ObjectID = "KlP-C7-59A"; */
 "KlP-C7-59A.normalTitle" = "Вход";
@@ -77,6 +86,9 @@
 /* Class = "UILabel"; text = "Is completed"; ObjectID = "TYn-kG-CkN"; */
 "TYn-kG-CkN.text" = "Завершена";
 
+/* Class = "UINavigationItem"; title = "Persistent tasks"; ObjectID = "ULO-IB-MsK"; */
+"ULO-IB-MsK.title" = "Постоянные задачи";
+
 /* Class = "UITabBarItem"; title = "Tasks"; ObjectID = "UYK-mT-hjy"; */
 "UYK-mT-hjy.title" = "Задачи";
 
@@ -88,6 +100,9 @@
 
 /* Class = "UILabel"; text = "Date"; ObjectID = "W4Q-9Y-BCb"; */
 "W4Q-9Y-BCb.text" = "Дата";
+
+/* Class = "UILabel"; text = "12:30 PM"; ObjectID = "WRQ-FB-l14"; */
+"WRQ-FB-l14.text" = "12:30 PM";
 
 /* Class = "UITextField"; placeholder = "Enter password"; ObjectID = "XBA-co-EnA"; */
 "XBA-co-EnA.placeholder" = "Введите пароль";
@@ -122,17 +137,29 @@
 /* Class = "UILabel"; text = "Priority"; ObjectID = "icD-5o-mHo"; */
 "icD-5o-mHo.text" = "Приоритет";
 
+/* Class = "UILabel"; text = "Task description Task description "; ObjectID = "jNl-wC-cjr"; */
+"jNl-wC-cjr.text" = "Описание задачи";
+
+/* Class = "UILabel"; text = "10:38 PM"; ObjectID = "kUY-1P-6zM"; */
+"kUY-1P-6zM.text" = "10:38 PM";
+
+/* Class = "UILabel"; text = "No tasks"; ObjectID = "mG7-Js-eg8"; */
+"mG7-Js-eg8.text" = "Нет задач";
+
 /* Class = "UIButton"; normalTitle = "Load saved tasks"; ObjectID = "mW5-Bg-K8L"; */
 "mW5-Bg-K8L.normalTitle" = "Загрузить сохраненные задачи";
 
 /* Class = "UILabel"; text = "Task description Task description "; ObjectID = "oEz-eP-4Xu"; */
-"oEz-eP-4Xu.text" = "Task description Task description ";
+"oEz-eP-4Xu.text" = "Описание задачи";
 
 /* Class = "UITextField"; placeholder = "Enter e-mail"; ObjectID = "pe3-37-lBl"; */
 "pe3-37-lBl.placeholder" = "Введите e-mail";
 
 /* Class = "UILabel"; text = "Task title Task title  Task title  Task title "; ObjectID = "sCG-L7-9hz"; */
-"sCG-L7-9hz.text" = "Task title Task title  Task title  Task title ";
+"sCG-L7-9hz.text" = "Название задачи";
+
+/* Class = "UITabBarItem"; title = "Persistent"; ObjectID = "tFI-mg-WMP"; */
+"tFI-mg-WMP.title" = "Постоянные";
 
 /* Class = "UISegmentedControl"; tUy-Dr-Otr.segmentTitles[0] = "Low"; ObjectID = "tUy-Dr-Otr"; */
 "tUy-Dr-Otr.segmentTitles[0]" = "Низкий";

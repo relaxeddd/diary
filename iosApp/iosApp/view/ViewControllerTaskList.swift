@@ -13,10 +13,11 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
     
     // MARK: - Fields
     internal var tasks: [Task] = []
+    var isScrolledToCurrentDayTask = false
     
     internal var tableViewTasks: UITableView? { get { return nil } }
     internal var textNoItems: UILabel? { get { return nil } }
-    internal func getCompleteMenuItem(id: String) -> UIContextualAction { return UIContextualAction() }
+    internal func getCompleteMenuItem(id: String, isCompleted: Bool) -> UIContextualAction { return UIContextualAction() }
     
     // MARK: - View
     override func initViewModel() {
@@ -39,6 +40,20 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        scrollToCurrentDayTask()
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if (identifier == "taskEdit") {
+            if let taskIx = tableViewTasks?.indexPathForSelectedRow?.row {
+                let task = tasks[taskIx]
+                return !task.isHidden() && !task.isDateTask
+            }
+        }
+        return true
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "taskEdit") {
             if let taskIx = tableViewTasks?.indexPathForSelectedRow?.row {
@@ -59,30 +74,33 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell") as! ViewCellTaskTableViewCell
-        let task = tasks[indexPath.row]
+        let cellIndex = indexPath.row
+        let task = tasks[cellIndex]
         var isShowDate = false
         var isShowSeparator = false
         
-        if (indexPath.row < (tasks.count - 1)) {
-            let nextTask = tasks[indexPath.row + 1]
-            
-            if (roundMillisToDayDate(millis: nextTask.start) != roundMillisToDayDate(millis: task.start)) {
-                isShowSeparator = true
-            }
-        } else {
-            isShowSeparator = true
+        var previousTaskIndex = cellIndex - 1
+        var nextTaskIndex = cellIndex + 1
+        var previousTask: Task? = nil
+        var nextTask: Task? = nil
+        
+        while previousTaskIndex >= 0 && (previousTask == nil || previousTask?.isHidden() == true) {
+            previousTask = tasks[previousTaskIndex]
+            previousTaskIndex -= 1
         }
-        if (indexPath.row > 0) {
-            let previousTask = tasks[indexPath.row - 1]
-            if (roundMillisToDayDate(millis: previousTask.start) != roundMillisToDayDate(millis: task.start)) {
-                isShowDate = true
-            }
-        } else {
+        if (previousTask == nil || roundMillisToDayDate(millis: previousTask!.start) != roundMillisToDayDate(millis: task.start)) {
             isShowDate = true
         }
         
-        cell.update(title: task.title, desc: task.desc, priority: Int(task.priority), startTime: task.start, endTime: task.end,
-                    date: isShowDate ? task.start : nil, isCompleted: task.isCompleted, isHidden: (task.isDateTask || task.isHidden()), isShowSeparator: isShowSeparator)
+        while nextTaskIndex < tasks.count && (nextTask == nil || nextTask?.isHidden() == true) {
+            nextTask = tasks[nextTaskIndex]
+            nextTaskIndex += 1
+        }
+        if (nextTask == nil || roundMillisToDayDate(millis: nextTask!.start) != roundMillisToDayDate(millis: task.start)) {
+            isShowSeparator = true
+        }
+        
+        cell.update(title: task.title, desc: task.desc, priority: Int(task.priority), startTime: task.start, endTime: task.end, date: isShowDate ? task.start : nil, isCompleted: task.isCompleted, isDateTask: task.isDateTask, isHidden: task.isHidden(), isPersistent: task.isPersistent, isShowSeparator: (isShowSeparator && !task.isHidden()) || task.isPersistent)
         return cell
     }
     
@@ -92,7 +110,7 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
             let id = task.parentId.isEmpty ? task.id : task.parentId
             self.viewModel.deleteTask(id: id)
         }
-        let completeItem = getCompleteMenuItem(id: task.id)
+        let completeItem = getCompleteMenuItem(id: task.id, isCompleted: task.isCompleted)
         let swipeActions = UISwipeActionsConfiguration(actions: [completeItem, deleteItem])
 
         return swipeActions
@@ -100,6 +118,18 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var cellHeight = UITableView.automaticDimension
+        if (indexPath.row < tasks.count) {
+            let task = self.tasks[indexPath.row]
+            if (task.isHidden()) {
+                cellHeight = 0
+            }
+        }
+        
+        return cellHeight
     }
     
     // MARK: - Common
@@ -120,6 +150,28 @@ class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UI
         if (isNeedUpdate) {
             self.tasks = tasks
             self.tableViewTasks?.reloadData()
+        }
+        scrollToCurrentDayTask()
+    }
+    
+    func scrollToCurrentDayTask() {
+        if (isScrolledToCurrentDayTask) {
+            return
+        }
+        
+        var taskIndex = 0
+        for task in tasks {
+            if (isToday(millis: task.start)) {
+                DispatchQueue.main.async() {
+                    self.tableViewTasks?.scrollToRow(at: IndexPath(row: taskIndex, section: 0), at: .top, animated: true)
+                }
+                isScrolledToCurrentDayTask = true
+                break
+            }
+            taskIndex += 1
+            if (taskIndex >= tasks.count) {
+                break
+            }
         }
     }
 }
