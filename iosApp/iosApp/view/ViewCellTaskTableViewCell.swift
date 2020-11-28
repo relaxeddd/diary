@@ -18,8 +18,10 @@ class ViewCellTaskTableViewCell: UITableViewCell {
     @IBOutlet weak var constraintTopContainerText: NSLayoutConstraint!
     @IBOutlet weak var textStartTime: UILabel!
     @IBOutlet weak var textEndTime: UILabel!
+    @IBOutlet weak var constraintMarginEndTime: NSLayoutConstraint!
+    @IBOutlet weak var constraintMarginStartTime: NSLayoutConstraint!
     
-    internal func update(title: String, desc: String, priority: Int, startTime: Int64, endTime: Int64, date: Int64? = nil, isCompleted: Bool, isHidden: Bool, isShowSeparator: Bool) {
+    internal func update(title: String, desc: String, priority: Int, startTime: Int64, endTime: Int64, date: Int64? = nil, isCompleted: Bool, isDateTask: Bool, isHidden: Bool, isPersistent: Bool, isShowSeparator: Bool) {
         if (isCompleted) {
             let strikethroughTitle: NSMutableAttributedString =  NSMutableAttributedString(string: title)
             strikethroughTitle.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, strikethroughTitle.length))
@@ -43,18 +45,25 @@ class ViewCellTaskTableViewCell: UITableViewCell {
             textEndTime?.text = millisToTimeString(millis: endTime)
         }
         viewPriority.backgroundColor = getPriorityColor(priority: Int(priority))
-        textDate.isHidden = date == nil
+        textDate.isHidden = date == nil || isHidden || isPersistent
         
-        textTitle.isHidden = isHidden
-        textDesc.isHidden = isHidden
-        textStartTime.isHidden = isHidden
-        textEndTime.isHidden = isHidden
-        viewPriority.isHidden = isHidden
+        textTitle.isHidden = isHidden || isDateTask
+        textDesc.isHidden = isHidden || isDateTask
+        textStartTime.isHidden = isHidden || isDateTask || isPersistent
+        textEndTime.isHidden = isHidden || isDateTask || isPersistent
+        viewPriority.isHidden = isHidden || isDateTask
+        self.isHidden = isHidden
+        
+        constraintMarginStartTime.constant = !isPersistent ? 4 : -30
+        constraintMarginEndTime.constant = !isPersistent ? 8 : -30
+        
         if let setDate = date {
             var textDayStr: String = ""
+            var isTodayDate = false
             
             if (isToday(millis: setDate)) {
                 textDayStr = NSLocalizedString("today", comment: "")
+                isTodayDate = true
             } else if (isYesterday(millis: setDate)) {
                 textDayStr = NSLocalizedString("yesterday", comment: "")
             } else if (isTomorrow(millis: setDate)) {
@@ -72,13 +81,10 @@ class ViewCellTaskTableViewCell: UITableViewCell {
                 textDayStr += ", " + String(getYear(millis: setDate))
             }
             
+            textDate.textColor = isTodayDate ? UIColor.cyan : UIColor.gray
             textDate.text = textDayStr
-            constraintHeightDate.constant = 20
-            if (isHidden) {
-                constraintTopContainerText.constant = 14
-            } else {
-                constraintTopContainerText.constant = 8
-            }
+            constraintHeightDate.constant = isHidden || isPersistent ? 0 : 20
+            constraintTopContainerText.constant = isDateTask ? 14 : (isHidden || isPersistent ? 0 : 8)
         } else {
             constraintHeightDate.constant = 0
             constraintTopContainerText.constant = 0

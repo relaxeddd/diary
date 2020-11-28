@@ -20,7 +20,7 @@ class ViewControllerTaskListActual: ViewControllerTaskList<ViewModelTaskListActu
     override var tableViewTasks: UITableView? { tableViewTasksActual }
     override var textNoItems: UILabel? { textNoTasksActual }
     
-    override func getCompleteMenuItem(id: String) -> UIContextualAction {
+    override func getCompleteMenuItem(id: String, isCompleted: Bool) -> UIContextualAction {
         let menuItem = UIContextualAction(style: .normal, title: NSLocalizedString("complete", comment: "")) { (contextualAction, view, boolValue) in
             self.viewModel.onClickedCompleteTask(id: id)
         }
