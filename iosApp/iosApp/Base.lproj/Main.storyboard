@@ -263,7 +263,7 @@
                                     <constraint firstAttribute="height" constant="34" id="7do-b8-hCk"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" textContentType="name"/>
                                 <connections>
                                     <outlet property="delegate" destination="0sp-M7-YtA" id="7eh-c5-DSO"/>
                                 </connections>
@@ -769,7 +769,7 @@
                                     <action selector="onClickedCreateAccount:" destination="DRg-qq-1hx" eventType="touchUpInside" id="NE1-yV-gy9"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="2UO-NI-qWl">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="2UO-NI-qWl">
                                 <rect key="frame" x="197" y="438" width="20" height="20"/>
                                 <color key="color" systemColor="systemBlueColor"/>
                             </activityIndicatorView>
