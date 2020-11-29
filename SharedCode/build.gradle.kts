@@ -48,9 +48,10 @@ kotlin {
         homepage = "https://mytodolist.relaxeddd.com"
         frameworkName = "SharedCode"
 
-        ios.deploymentTarget = "8.0"
+        ios.deploymentTarget = "14.1"
 
         pod("FirebaseAuth")
+        pod("FirebaseMessaging")
     }
 
     sourceSets {
