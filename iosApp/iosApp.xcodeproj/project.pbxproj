@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FA9FD62257545AA007C94A0 /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836B0C6D24BCCDE6009A39F2 /* SharedCode.framework */; };
+		0FA9FD64257545C7007C94A0 /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA9FD63257545C7007C94A0 /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0FC763BB2575427C00ADD484 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178B8F177FE6E954C3A0D821 /* Pods_iosApp.framework */; };
+		0FC763BC2575427C00ADD484 /* Pods_iosApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 178B8F177FE6E954C3A0D821 /* Pods_iosApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8324989224DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8324989124DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift */; };
 		8324989424DEE7BC00EA9BB8 /* ViewControllerTaskListActual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8324989324DEE7BC00EA9BB8 /* ViewControllerTaskListActual.swift */; };
 		83635D5D24715A84008222C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83635D5C24715A84008222C3 /* AppDelegate.swift */; };
@@ -21,15 +25,12 @@
 		836B0C5F24BB2089009A39F2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 836B0C6124BB2089009A39F2 /* Localizable.strings */; };
 		836B0C6324BB22EA009A39F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 836B0C6524BB22EA009A39F2 /* Main.storyboard */; };
 		836B0C6B24BB2796009A39F2 /* Func.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B0C6A24BB2796009A39F2 /* Func.swift */; };
-		836B0C7524BCD72E009A39F2 /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 836B0C6D24BCCDE6009A39F2 /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		836B0C7724BCD7A4009A39F2 /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836B0C6D24BCCDE6009A39F2 /* SharedCode.framework */; };
 		839361D3255ADDFE00053B6D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 839361D2255ADDFD00053B6D /* GoogleService-Info.plist */; };
 		839394B524D6B3E400897B27 /* EditTextDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839394B424D6B3E400897B27 /* EditTextDate.swift */; };
 		839BD0762562779E00176627 /* ViewControllerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839BD0752562779E00176627 /* ViewControllerSettings.swift */; };
 		83D4AD052510F3370063A248 /* ViewControllerLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D4AD042510F3370063A248 /* ViewControllerLogin.swift */; };
 		83EB22D5256146E000E5C1A3 /* ViewControllerLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB22D4256146E000E5C1A3 /* ViewControllerLogo.swift */; };
 		83F1A0A524C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1A0A424C35F8300EB1F6B /* ViewCellTaskTableViewCell.swift */; };
-		F36FA9D42FC3613E96D0AE0F /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 178B8F177FE6E954C3A0D821 /* Pods_iosApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,8 +40,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0FC763BC2575427C00ADD484 /* Pods_iosApp.framework in Embed Frameworks */,
+				0FA9FD64257545C7007C94A0 /* SharedCode.framework in Embed Frameworks */,
 				8366B7F624C5E2BF006668A9 /* (null) in Embed Frameworks */,
-				836B0C7524BCD72E009A39F2 /* SharedCode.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,6 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0FA9FD63257545C7007C94A0 /* SharedCode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedCode.framework; path = "../SharedCode/build/xcode-frameworks/SharedCode.framework"; sourceTree = "<group>"; };
 		178B8F177FE6E954C3A0D821 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FABCF027A62A9C13403A7B3 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 		8324989124DEE78900EA9BB8 /* ViewControllerTaskListArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTaskListArchive.swift; sourceTree = "<group>"; };
@@ -86,8 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				836B0C7724BCD7A4009A39F2 /* SharedCode.framework in Frameworks */,
-				F36FA9D42FC3613E96D0AE0F /* Pods_iosApp.framework in Frameworks */,
+				0FA9FD62257545AA007C94A0 /* SharedCode.framework in Frameworks */,
+				0FC763BB2575427C00ADD484 /* Pods_iosApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +109,7 @@
 		83635D5024715A84008222C3 = {
 			isa = PBXGroup;
 			children = (
+				0FA9FD63257545C7007C94A0 /* SharedCode.framework */,
 				839361D2255ADDFD00053B6D /* GoogleService-Info.plist */,
 				83635D5B24715A84008222C3 /* iosApp */,
 				83635D5A24715A84008222C3 /* Products */,
@@ -496,10 +500,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = P2Z4PLS2UV;
+				DEVELOPMENT_TEAM = K8NW6M9K7A;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"/Users/checha/AndroidStudioProjects/diary/SharedCode/build/xcode-frameworks",
+					"/Users/vchechin/Projects/diary/SharedCode/build/xcode-frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -513,7 +517,7 @@
 					"-lsqlite3",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = relaxeddd.simplediary.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = relaxeddd.mytodolist.iosApp;
 				PRODUCT_NAME = "My ToDo List";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -529,10 +533,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = P2Z4PLS2UV;
+				DEVELOPMENT_TEAM = K8NW6M9K7A;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"/Users/checha/AndroidStudioProjects/diary/SharedCode/build/xcode-frameworks",
+					"/Users/vchechin/Projects/diary/SharedCode/build/xcode-frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -546,7 +550,7 @@
 					"-lsqlite3",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = relaxeddd.simplediary.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = relaxeddd.mytodolist.iosApp;
 				PRODUCT_NAME = "My ToDo List";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
