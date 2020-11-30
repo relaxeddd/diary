@@ -7,6 +7,6 @@ target 'iosApp' do
 
   pod 'Firebase/Auth'
   pod 'Firebase/Messaging'
-  pod 'SharedCode', :path => '/Users/checha/AndroidStudioProjects/diary/SharedCode'
+  pod 'SharedCode', :path => '/Users/vchechin/Projects/diary/SharedCode'
 
 end
