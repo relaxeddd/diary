@@ -10,10 +10,8 @@ plugins {
 
 //----------------------------------------------------------------------------------------------------------------------
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    //sourceSets["main"].java.srcDirs("src/androidMain/kotlin")
-    //sourceSets["main"].res.srcDirs("src/androidMain/res")
     defaultConfig {
         minSdkVersion(21)
     }
@@ -51,7 +49,6 @@ kotlin {
         ios.deploymentTarget = "14.1"
 
         pod("FirebaseAuth")
-        pod("FirebaseMessaging")
     }
 
     sourceSets {

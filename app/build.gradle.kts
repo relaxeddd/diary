@@ -1,23 +1,15 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    //id("kotlin-android-extensions")
+    id("kotlin-android-extensions")
 }
 
 android {
-    /*signingConfigs {
-        config {
-            keyAlias 'diaryKey'
-            keyPassword 'D5hzw3lo7'
-            storeFile file('E:/project/diaryKeystore.jks')
-            storePassword 'bd8Tkp01w'
-        }
-    }*/
     compileSdkVersion(29)
     defaultConfig {
         applicationId = "relaxeddd.simplediary"
         minSdkVersion(21)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
         versionCode = 1
         versionName = "0.1"
     }
@@ -26,7 +18,6 @@ android {
     }
     buildTypes {
         getByName("release") {
-            //debuggable(true)
             isMinifyEnabled = false
             isShrinkResources = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
@@ -37,10 +28,10 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
-    /*compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }*/
+    compileOptions {
+        sourceCompatibility(1.8)
+        targetCompatibility(1.8)
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
