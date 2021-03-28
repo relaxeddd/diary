@@ -14,8 +14,7 @@
             android:layout_height="@dimen/size_36"
             android:layout_marginBottom="@dimen/size_16"
             android:layout_marginStart="@dimen/size_24"
-            android:layout_marginTop="@dimen/size_16"
-            app:srcCompat="@drawable/ic_logo"/>
+            android:layout_marginTop="@dimen/size_16"/>
 
         <View
             android:id="@+id/divider"

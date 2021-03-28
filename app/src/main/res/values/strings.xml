@@ -58,24 +58,12 @@
     <string name="error_update">Error update</string>
 
     <!-- =========================================================================================================== -->
-    <string name="patch_notes">
-        - New app
-        \n- New app
-    </string>
-
-    <string name="privacy_policy_text">Clicked authorize, you agree to our Privacy Policy</string>
-
-    <string name="text_dialog_receive_help">You have turned on background starting option. It may fix receive notifications bug. You can disable it in Android Settings -> Applications or reinstall app</string>
-
-    <string name="text_rate_app">Write comments and suggestions. What you want to see in the app</string>
-
     <string name="text_app_about">
         App description.
         \n\nApp description.
         \n\nApp version: %s
     </string>
 
-    <!-- =========================================================================================================== -->
     <string name="default_notification_channel_id" translatable="false">fcm_channel_relaxeddd_diary</string>
 
     <string name="label_fragment_todo_list" translatable="false">LabelFragmentTodoList</string>
