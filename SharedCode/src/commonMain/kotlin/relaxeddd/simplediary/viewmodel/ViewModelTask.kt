@@ -6,7 +6,7 @@ import relaxeddd.simplediary.domain.model.Task
 
 abstract class ViewModelTask : ViewModelBase() {
 
-    protected val repositoryTasks = repoTasks
+    private val repositoryTasks = repoTasks
 
     protected fun updateTask(id: String, title: String, desc: String, comment: String, location: String, priority: Int,
                              repeat: Int, repeatCount: Int, start: Long, end: Long, until: Long, isPersistent: Boolean,

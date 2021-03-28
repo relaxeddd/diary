@@ -1,6 +1,7 @@
 package relaxeddd.simplediary.viewmodel
 
 import io.ktor.util.date.*
+import relaxeddd.simplediary.di.repoTasks
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.domain.model.RepeatRule
@@ -10,22 +11,24 @@ import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_DAY
 import relaxeddd.simplediary.utils.TIME_WEEK
-import relaxeddd.simplediary.utils.live_data.LiveData
-import relaxeddd.simplediary.utils.live_data.MutableLiveData
+import relaxeddd.simplediary.utils.observable.Observable
+import relaxeddd.simplediary.utils.observable.MutableObservable
 
 abstract class ViewModelTaskList : ViewModelTask() {
+
+    private val repositoryTasks = repoTasks
 
     open val isAddCurrentDayTask = true
     open val isAddIntermediateDayTasks = true
 
-    private val tasksM: MutableLiveData<List<Task>> = MutableLiveData(ArrayList())
-    val tasks: LiveData<List<Task>> = tasksM
+    private val tasksM: MutableObservable<List<Task>> = MutableObservable(ArrayList())
+    val tasks: Observable<List<Task>> = tasksM
 
-    private val isVisibleTextNoItemsM = MutableLiveData(true)
-    val isVisibleTextNoItems: LiveData<Boolean> = isVisibleTextNoItemsM
+    private val isVisibleTextNoItemsM = MutableObservable(true)
+    val isVisibleTextNoItems: Observable<Boolean> = isVisibleTextNoItemsM
 
-    private val isVisibleTaskListM = MutableLiveData(false)
-    val isVisibleTaskList: LiveData<Boolean> = isVisibleTaskListM
+    private val isVisibleTaskListM = MutableObservable(false)
+    val isVisibleTaskList: Observable<Boolean> = isVisibleTaskListM
 
     abstract fun filterRule(task: Task) : Boolean
 

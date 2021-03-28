@@ -1,23 +1,37 @@
 package relaxeddd.simplediary.di
 
+import io.ktor.client.*
+import io.ktor.client.features.*
+import io.ktor.http.*
 import relaxeddd.simplediary.ContextArgs
-import relaxeddd.simplediary.getDataBase
+import relaxeddd.simplediary.createDatabase
 import relaxeddd.simplediary.source.db.dao.DaoTask
-import relaxeddd.simplediary.source.network.ApiHelper
+import relaxeddd.simplediary.source.network.Api
 import relaxeddd.simplediary.source.repository.RepositoryTasks
 import relaxeddd.simplediary.source.repository.RepositoryUsers
+import relaxeddd.simplediary.utils.BASE_ROUTE
 import kotlin.native.concurrent.SharedImmutable
 import kotlin.native.concurrent.ThreadLocal
 
+internal val database by lazy { createDatabase() }
+
 @SharedImmutable
-val apiHelper by lazy { ApiHelper() }
+internal val api by lazy { Api(httpClient) }
 
 @ThreadLocal
-val daoTask by lazy { DaoTask(getDataBase()) }
+internal val daoTask by lazy { DaoTask(database.taskModelQueries) }
 
-val repoTasks by lazy { RepositoryTasks() }
+internal val repoTasks by lazy { RepositoryTasks(api, daoTask, repoUsers) }
 
-val repoUsers by lazy { RepositoryUsers() }
+internal val repoUsers by lazy { RepositoryUsers(api) }
+
+internal val httpClient by lazy { HttpClient {
+    expectSuccess = false
+
+    defaultRequest {
+        url.takeFrom(URLBuilder().takeFrom(BASE_ROUTE).apply { encodedPath += url.encodedPath })
+    }
+} }
 
 @ThreadLocal
 object InjectorCommon {

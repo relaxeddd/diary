@@ -10,10 +10,10 @@ import relaxeddd.simplediary.domain.model.ResultTasks
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.utils.TOKEN_PREFIX
 
-class ApiHelper {
+internal class Api(private val httpClient: HttpClient) {
 
     suspend fun requestInit(tokenId: String, uid: String, email: String, pushToken: String) : ResultInit {
-        val answerString = HttpClient().get<String>("https://us-central1-my-todo-list-36185.cloudfunctions.net/init") {
+        val answerString = httpClient.get<String>("init") {
             headers {
                 append("Authorization", TOKEN_PREFIX + tokenId)
             }
@@ -26,7 +26,7 @@ class ApiHelper {
     }
 
     suspend fun requestSaveTasks(tokenId: String, uid: String, tasks: List<Task>) : Result {
-        val answerString = HttpClient().post<String>("https://us-central1-my-todo-list-36185.cloudfunctions.net/saveTasks") {
+        val answerString = httpClient.post<String>("saveTasks") {
             headers {
                 append("Authorization", TOKEN_PREFIX + tokenId)
             }
@@ -38,7 +38,7 @@ class ApiHelper {
     }
 
     suspend fun requestLoadTasks(tokenId: String, uid: String) : ResultTasks {
-        val answerString = HttpClient().get<String>("https://us-central1-my-todo-list-36185.cloudfunctions.net/loadTasks") {
+        val answerString = httpClient.get<String>("loadTasks") {
             headers {
                 append("Authorization", TOKEN_PREFIX + tokenId)
             }

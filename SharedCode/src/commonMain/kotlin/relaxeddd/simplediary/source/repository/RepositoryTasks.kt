@@ -1,26 +1,25 @@
 package relaxeddd.simplediary.source.repository
 
 import relaxeddd.simplediary.async
-import relaxeddd.simplediary.di.apiHelper
-import relaxeddd.simplediary.di.daoTask
-import relaxeddd.simplediary.di.repoUsers
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Result
 import relaxeddd.simplediary.domain.model.ResultTasks
 import relaxeddd.simplediary.domain.model.Task
-import relaxeddd.simplediary.utils.live_data.LiveData
-import relaxeddd.simplediary.utils.live_data.MutableLiveData
+import relaxeddd.simplediary.source.db.dao.DaoTask
+import relaxeddd.simplediary.source.network.Api
+import relaxeddd.simplediary.utils.observable.Observable
+import relaxeddd.simplediary.utils.observable.MutableObservable
 
-class RepositoryTasks {
+internal class RepositoryTasks(private val api: Api, private val daoTask: DaoTask, private val repoUsers: RepositoryUsers) {
 
     private var isInitialized = false
     private var isInitializing = false
 
-    private val tasksM = MutableLiveData<List<Task>>(ArrayList())
-    val tasks: LiveData<List<Task>> = tasksM
+    private val tasksM = MutableObservable<List<Task>>(ArrayList())
+    val tasks: Observable<List<Task>> = tasksM
 
-    private val exceptionM = MutableLiveData<Throwable?>(null)
-    val exception: LiveData<Throwable?> = exceptionM
+    private val exceptionM = MutableObservable<Throwable?>(null)
+    val exception: Observable<Throwable?> = exceptionM
 
     fun init(onCompleted: () -> Unit) {
         if (isInitializing) {
@@ -89,7 +88,7 @@ class RepositoryTasks {
     fun requestSaveTasks(onCompleted: (Result?) -> Unit) {
         async(run = {
             val tasks = ArrayList(daoTask.select()).map { cachedTask -> Task(cachedTask) }
-            apiHelper.requestSaveTasks(repoUsers.tokenId.value, repoUsers.uid.value, tasks)
+            api.requestSaveTasks(repoUsers.tokenId.value, repoUsers.uid.value, tasks)
         }, { result: Result?, e: Exception? ->
             e?.let { exceptionM.postValue(e) }
             onCompleted(result)
@@ -98,7 +97,7 @@ class RepositoryTasks {
 
     fun requestLoadTasks(onCompleted: (Result?) -> Unit) {
         async(run = {
-            val resultTasks = apiHelper.requestLoadTasks(repoUsers.tokenId.value, repoUsers.uid.value)
+            val resultTasks = api.requestLoadTasks(repoUsers.tokenId.value, repoUsers.uid.value)
             if (resultTasks.result?.isSuccess() == true) {
                 ArrayList(resultTasks.tasks).forEach {
                     daoTask.update(it.id, it.title, it.desc, it.comment, it.location, it.priority,

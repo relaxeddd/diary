@@ -3,36 +3,36 @@ package relaxeddd.simplediary.source.repository
 import relaxeddd.simplediary.async
 import relaxeddd.simplediary.checkAuthorization
 import relaxeddd.simplediary.createFirebaseUser
-import relaxeddd.simplediary.di.apiHelper
 import relaxeddd.simplediary.domain.model.ResultInit
 import relaxeddd.simplediary.domain.model.User
 import relaxeddd.simplediary.loginFirebaseUser
 import relaxeddd.simplediary.logout
 import relaxeddd.simplediary.setSavedEmail
-import relaxeddd.simplediary.utils.live_data.LiveData
-import relaxeddd.simplediary.utils.live_data.MutableLiveData
+import relaxeddd.simplediary.source.network.Api
+import relaxeddd.simplediary.utils.observable.Observable
+import relaxeddd.simplediary.utils.observable.MutableObservable
 
-class RepositoryUsers {
+internal class RepositoryUsers(private val api: Api) {
 
     private var isInitializing = false
 
-    private val userM = MutableLiveData<User?>(null)
-    val user: LiveData<User?> = userM
+    private val userM = MutableObservable<User?>(null)
+    val user: Observable<User?> = userM
 
-    private val tokenIdM = MutableLiveData("")
-    val tokenId: LiveData<String> = tokenIdM
+    private val tokenIdM = MutableObservable("")
+    val tokenId: Observable<String> = tokenIdM
 
-    private val uidM = MutableLiveData("")
-    val uid: LiveData<String> = uidM
+    private val uidM = MutableObservable("")
+    val uid: Observable<String> = uidM
 
-    private val emailM = MutableLiveData("")
-    val email: LiveData<String> = emailM
+    private val emailM = MutableObservable("")
+    val email: Observable<String> = emailM
 
-    private val errorAuthM = MutableLiveData("")
-    val errorAuth: LiveData<String> = errorAuthM
+    private val errorAuthM = MutableObservable("")
+    val errorAuth: Observable<String> = errorAuthM
 
-    private val isAuthorizedM = MutableLiveData(false)
-    val isAuthorized: LiveData<Boolean> = isAuthorizedM
+    private val isAuthorizedM = MutableObservable(false)
+    val isAuthorized: Observable<Boolean> = isAuthorizedM
 
     fun checkAuthorized(onFinish: () -> Unit) {
         checkAuthorization { tokenId, uid, email ->
@@ -87,7 +87,7 @@ class RepositoryUsers {
 
         isInitializing = true
         async({
-            apiHelper.requestInit(tokenId, uid, email, pushToken)
+            api.requestInit(tokenId, uid, email, pushToken)
               }, { resultInit: ResultInit?, e: Exception? ->
             isInitializing = false
 

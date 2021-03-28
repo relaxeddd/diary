@@ -1,8 +1,8 @@
-package relaxeddd.simplediary.utils.live_data
+package relaxeddd.simplediary.utils.observable
 
 import relaxeddd.simplediary.postOnMainThread
 
-abstract class LiveData<T> {
+abstract class Observable<T> {
 
     protected val lock = Any() //TODO synchronization
 

@@ -1,26 +1,18 @@
 package relaxeddd.simplediary.ui.settings
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.PowerManager
-import android.provider.Settings
-import androidx.core.content.ContextCompat
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.databinding.FragmentSettingsBinding
 import relaxeddd.simplediary.dialogs.*
 import relaxeddd.simplediary.ui.FragmentBase
-import relaxeddd.simplediary.ui.main.ActivityMain
-import relaxeddd.simplediary.viewmodel.ViewModelBase
-import java.lang.Exception
+import relaxeddd.simplediary.viewmodel.ViewModelSettings
 
-class FragmentSettings : FragmentBase<ViewModelBase, FragmentSettingsBinding>() {
+class FragmentSettings : FragmentBase<ViewModelSettings, FragmentSettingsBinding>() {
 
     override fun getLayoutResId() = R.layout.fragment_settings
-    override val viewModel = ViewModelBase()
+    override val viewModel = ViewModelSettings()
 
     override fun configureBinding() {
         super.configureBinding()

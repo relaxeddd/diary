@@ -9,7 +9,7 @@
 import UIKit
 import SharedCode
 
-class ViewControllerLogin: ViewControllerBase<ViewModelAuth> {
+class ViewControllerLogin: ViewControllerBase<IViewModelAuth> {
 
     @IBOutlet weak var editTextEmail: UITextField!
     @IBOutlet weak var editTextPassword: UITextField!
@@ -21,7 +21,7 @@ class ViewControllerLogin: ViewControllerBase<ViewModelAuth> {
     @IBOutlet weak var buttonAlreadyHaveAccount: UIButton!
     @IBOutlet weak var progressBarAuth: UIActivityIndicatorView!
     
-    override func createViewModel() -> ViewModelAuth { ViewModelAuth() }
+    override func createViewModel() -> IViewModelAuth { ViewModelCreator().createAuthViewModel() }
     override var progressBar: UIActivityIndicatorView? { progressBarAuth }
     
     override func initView() {

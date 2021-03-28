@@ -1,8 +1,8 @@
-package relaxeddd.simplediary.utils.live_data
+package relaxeddd.simplediary.utils.observable
 
 import relaxeddd.simplediary.postOnMainThread
 
-class MutableLiveData<T>(value: T) : LiveData<T>() {
+class MutableObservable<T>(value: T) : Observable<T>() {
 
     override var value: T = value
         set(value) {

@@ -1,33 +1,31 @@
 package relaxeddd.simplediary.viewmodel
 
-import relaxeddd.simplediary.di.repoUsers
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.getSavedEmail
-import relaxeddd.simplediary.utils.live_data.LiveData
-import relaxeddd.simplediary.utils.live_data.MutableLiveData
+import relaxeddd.simplediary.source.repository.RepositoryUsers
+import relaxeddd.simplediary.utils.observable.Observable
+import relaxeddd.simplediary.utils.observable.MutableObservable
 
-class ViewModelAuth : ViewModelBase() {
+internal class ViewModelAuth(private val repositoryUsers : RepositoryUsers) : ViewModelBase(), IViewModelAuth {
 
-    private val repositoryUsers = repoUsers
+    private val isRegistrationViewM = MutableObservable(true)
+    override val isRegistrationView: Observable<Boolean> = isRegistrationViewM
 
-    private val isRegistrationViewM = MutableLiveData(true)
-    val isRegistrationView: LiveData<Boolean> = isRegistrationViewM
+    private val isAuthorizedM = MutableObservable(false)
+    override val isAuthorized: Observable<Boolean> get() = isAuthorizedM
 
-    private val isAuthorizedM = MutableLiveData(false)
-    val isAuthorized = isAuthorizedM
+    private val errorAuthM = MutableObservable("")
+    override val errorAuth: Observable<String> get() = errorAuthM
 
-    private val errorAuthM = MutableLiveData("")
-    val errorAuth = errorAuthM
+    private val textEmailM = MutableObservable(getSavedEmail())
+    override val textEmail: Observable<String> = textEmailM
 
-    private val textEmailM = MutableLiveData(getSavedEmail())
-    val textEmail: LiveData<String> = textEmailM
+    private val textPasswordM = MutableObservable("")
+    override val textPassword: Observable<String> = textPasswordM
 
-    private val textPasswordM = MutableLiveData("")
-    val textPassword: LiveData<String> = textPasswordM
-
-    private val textRepeatPasswordM = MutableLiveData("")
-    val textRepeatPassword: LiveData<String> = textRepeatPasswordM
+    private val textRepeatPasswordM = MutableObservable("")
+    override val textRepeatPassword: Observable<String> = textRepeatPasswordM
 
     private val observerIsAuthorized: (Boolean) -> Unit = { isAuthorized ->
         isAuthorizedM.value = isAuthorized
@@ -58,36 +56,36 @@ class ViewModelAuth : ViewModelBase() {
         repositoryUsers.errorAuth.removeObserver(observerErrorAuth)
     }
 
-    fun onChangedEmail(value: String) {
+    override fun onChangedEmail(value: String) {
         if (textEmailM.value != value) {
             textEmailM.postValue(value)
             errorAuthM.value = ""
         }
     }
 
-    fun onChangedPassword(value: String) {
+    override fun onChangedPassword(value: String) {
         if (textPasswordM.value != value) {
             textPasswordM.postValue(value)
             errorAuthM.value = ""
         }
     }
 
-    fun onChangedRepeatPassword(value: String) {
+    override fun onChangedRepeatPassword(value: String) {
         if (textRepeatPasswordM.value != value) {
             textRepeatPasswordM.postValue(value)
             errorAuthM.value = ""
         }
     }
 
-    fun onClickedHaveNotAccount() {
+    override fun onClickedHaveNotAccount() {
         isRegistrationViewM.value = true
     }
 
-    fun onClickedAlreadyHaveAccount() {
+    override fun onClickedAlreadyHaveAccount() {
         isRegistrationViewM.value = false
     }
 
-    fun onClickedLogin() {
+    override fun onClickedLogin() {
         val email = textEmail.value
         val password = textPassword.value
 
@@ -107,7 +105,7 @@ class ViewModelAuth : ViewModelBase() {
         }
     }
 
-    fun onClickedCreate() {
+    override fun onClickedCreate() {
         val email = textEmail.value
         val password = textPassword.value
         val repeatPassword = textRepeatPassword.value

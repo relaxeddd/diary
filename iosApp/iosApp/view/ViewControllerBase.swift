@@ -9,7 +9,7 @@
 import UIKit
 import SharedCode
 
-class ViewControllerBase<VM : ViewModelBase>: UIViewController {
+class ViewControllerBase<VM : IViewModelBase>: UIViewController {
     
     internal var viewModel: VM!
     internal var progressBar: UIActivityIndicatorView? { get { return nil } }

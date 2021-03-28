@@ -1,20 +1,20 @@
 package relaxeddd.simplediary.viewmodel
 
 import relaxeddd.simplediary.domain.model.Action
-import relaxeddd.simplediary.utils.live_data.LiveData
-import relaxeddd.simplediary.utils.live_data.MutableLiveData
+import relaxeddd.simplediary.utils.observable.Observable
+import relaxeddd.simplediary.utils.observable.MutableObservable
 
-open class ViewModelBase {
+abstract class ViewModelBase : IViewModelBase {
 
-    protected val actionM = MutableLiveData<Action?>(null)
-    val action: LiveData<Action?> = actionM
+    protected val actionM = MutableObservable<Action?>(null)
+    override val action: Observable<Action?> get() = actionM
 
-    protected val isVisibleProgressBarM = MutableLiveData(false)
-    val isVisibleProgressBar: LiveData<Boolean> = isVisibleProgressBarM
+    protected val isVisibleProgressBarM = MutableObservable(false)
+    override val isVisibleProgressBar: Observable<Boolean> get() = isVisibleProgressBarM
 
-    open fun onFill() {}
+    override fun onFill() {}
 
-    open fun onCleared() {
+    override fun onCleared() {
         actionM.removeAllObservers()
         isVisibleProgressBarM.removeAllObservers()
     }

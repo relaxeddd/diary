@@ -17,15 +17,15 @@ import kotlin.native.concurrent.*
 
 actual class ContextArgs
 
-actual fun init() {
+internal actual fun init() {
 
 }
 
-actual fun generateId() : String {
+internal actual fun generateId() : String {
     return NSUUID().UUIDString()
 }
 
-actual fun registerFirebaseUserListener(listener: (tokenId: String, uid: String, email: String) -> Unit) {
+internal actual fun registerFirebaseUserListener(listener: (tokenId: String, uid: String, email: String) -> Unit) {
     FIRAuth.auth().addAuthStateDidChangeListener { auth, user ->
         user?.getIDTokenResultWithCompletion { firAuthTokenResult, tokenError ->
             listener(firAuthTokenResult?.token ?: "", user.uid, user.email ?: "")
@@ -34,7 +34,7 @@ actual fun registerFirebaseUserListener(listener: (tokenId: String, uid: String,
 }
 
 
-actual fun checkAuthorization(listener: (tokenId: String, uid: String, email: String) -> Unit) {
+internal actual fun checkAuthorization(listener: (tokenId: String, uid: String, email: String) -> Unit) {
     val user = FIRAuth.auth().currentUser
 
     if (user != null) {
@@ -46,7 +46,7 @@ actual fun checkAuthorization(listener: (tokenId: String, uid: String, email: St
     }
 }
 
-actual fun createFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+internal actual fun createFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
     FIRAuth.auth().createUserWithEmail(email, password = password) { result, registerError ->
         val user = result?.user
 
@@ -61,7 +61,7 @@ actual fun createFirebaseUser(email: String, password: String, listener: (tokenI
     }
 }
 
-actual fun loginFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
+internal actual fun loginFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit) {
     FIRAuth.auth().signInWithEmail(email, password = password) { result, signInError ->
         val user = result?.user
 
@@ -76,47 +76,47 @@ actual fun loginFirebaseUser(email: String, password: String, listener: (tokenId
     }
 }
 
-actual fun logout(listener: (isSuccess: Boolean) -> Unit) {
+internal actual fun logout(listener: (isSuccess: Boolean) -> Unit) {
     listener(FIRAuth.auth().signOut(null))
 }
 
-actual fun isNetworkAvailable() : Boolean {
+internal actual fun isNetworkAvailable() : Boolean {
     //TODO
     return true
 }
 
-actual fun platformName() : String {
+internal actual fun platformName() : String {
     return UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
 }
 
-actual fun getSavedEmail(): String {
+internal actual fun getSavedEmail(): String {
     val preferences = NSUserDefaults.standardUserDefaults
     val key = "email"
     return if (preferences.objectForKey(key) == null) "" else preferences.stringForKey(key) ?: ""
 }
 
-actual fun setSavedEmail(email: String) {
+internal actual fun setSavedEmail(email: String) {
     val preferences = NSUserDefaults.standardUserDefaults
     val key = "email"
     preferences.setObject(email, key)
     preferences.synchronize()
 }
 
-actual fun getSqlDriver(): SqlDriver {
+internal actual fun getSqlDriver(): SqlDriver {
     return NativeSqliteDriver(Database.Schema, "relaxeddd.simplediary.diaryDB")
 }
 
-actual fun getCurrentTime() : Long {
+internal actual fun getCurrentTime() : Long {
     return time(null) * 1000
 }
 
 @ExperimentalUnsignedTypes
-actual fun freezeThread(seconds: Int) {
+internal actual fun freezeThread(seconds: Int) {
     sleep(seconds.toUInt())
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-actual fun postOnMainThread(run: () -> Unit) {
+internal actual fun postOnMainThread(run: () -> Unit) {
     val mainQueue = dispatch_get_main_queue()
     if (dispatch_get_current_queue() == mainQueue) {
         run()
@@ -132,7 +132,7 @@ private val fullCoroutineContext = coroutineContext + job + coroutineExceptionHa
 private const val MAX_ATTEMPTS = 200
 private val mapFutureAttempts = HashMap<Future<*>, Int>()
 
-actual fun <T> async(run: suspend () -> T?, onCompleted: (T?, Exception?) -> Unit) {
+internal actual fun <T> async(run: suspend () -> T?, onCompleted: (T?, Exception?) -> Unit) {
     CoroutineScope(fullCoroutineContext).launch(fullCoroutineContext, CoroutineStart.DEFAULT) {
         var result: T? = null
         var exception: Exception? = null
