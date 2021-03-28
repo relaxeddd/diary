@@ -8,7 +8,7 @@ import relaxeddd.simplediary.R
 
 class DialogAppAbout : DialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(context!!)
+    override fun onCreateDialog(savedInstanceState: Bundle?) = MaterialAlertDialogBuilder(requireContext())
         .setTitle(R.string.about_app)
         .setMessage(getString(R.string.text_app_about, BuildConfig.VERSION_NAME))
         .setPositiveButton(android.R.string.ok) { _, _ -> }

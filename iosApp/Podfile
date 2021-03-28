@@ -6,7 +6,5 @@ target 'iosApp' do
   use_frameworks!
 
   pod 'Firebase/Auth'
-  pod 'Firebase/Messaging'
-  pod 'SharedCode', :path => '/Users/vchechin/Projects/diary/SharedCode'
 
 end

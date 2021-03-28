@@ -8,38 +8,17 @@
     <string name="app_info">App info</string>
     <string name="app_theme">App theme</string>
     <string name="apply">Apply</string>
-    <string name="background_start">Background starting</string>
     <string name="do_you_really_want_to_logout">Do you really want to exit?</string>
-    <string name="feedback_is_empty">Feedback is empty</string>
-    <string name="feedback_send_error">Feedback send error</string>
-    <string name="feedback_too_short">Feedback too short</string>
     <string name="filter">Filter</string>
-    <string name="if_notifications_not_receive">If not receive notifications</string>
-    <string name="input_your_message">Input your message</string>
     <string name="list">List</string>
     <string name="loading">Loading</string>
     <string name="logout">Logout</string>
     <string name="logout_error">Logout error</string>
     <string name="logout_success">Logout success</string>
     <string name="network_not_available">Network error</string>
-    <string name="new_version">New version</string>
     <string name="no">No</string>
-    <string name="no_tasks_desc">You have not plans. Click plus to create</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="privacy_policy_in_sentence">Privacy Policy</string>
-    <string name="purchase_consumed">Success purchase, thank you!</string>
-    <string name="rate">Rate</string>
-    <string name="rate_app">Rate app</string>
-    <string name="rate_app_question">Do you want rate app?</string>
-    <string name="renew_subscription">Renew subscription</string>
-    <string name="send_feedback">Send feedback</string>
+    <string name="no_tasks_desc">You do not have plans. Click plus to create</string>
     <string name="settings">Settings</string>
-    <string name="sub_advantages">Subscription advantages</string>
-    <string name="sub_advantages_info">- Receive notifications more than once per 4 hours</string>
-    <string name="subscription_days">Subscription days: %s</string>
-    <string name="subscription_time_error">Subscription time is up, you can renew it to get advantages</string>
-    <string name="subscription_need">You need renew subscription</string>
-    <string name="thank_you">Thank you!</string>
     <string name="undefined_error">Undefined error</string>
     <string name="unauthorized_error">Unauthorized error</string>
     <string name="update">Update</string>
@@ -48,34 +27,18 @@
     <string name="unknown_action">Unknown action</string>
     <string name="user_not_found">User not found</string>
     <string name="yes">Yes</string>
-    <string name="you_like_app">Do you like this app?</string>
-    <string name="you_receive_notifications">You receive notifications?</string>
     <string name="you_sign_in_as">You signed in as: %s</string>
 
     <string name="error_initialization">Initialization error</string>
-    <string name="error_purchase">Purchase error, write to for.gamer.develop@gmail.com</string>
-    <string name="error_push_token">Push token error, please, try to restart app</string>
     <string name="error_update">Error update</string>
 
     <!-- =========================================================================================================== -->
-    <string name="patch_notes">
-        - New app
-        \n- New app
-    </string>
-
-    <string name="privacy_policy_text">Clicked authorize, you agree to our Privacy Policy</string>
-
-    <string name="text_dialog_receive_help">You have turned on background starting option. It may fix receive notifications bug. You can disable it in Android Settings -> Applications or reinstall app</string>
-
-    <string name="text_rate_app">Write comments and suggestions. What you want to see in the app</string>
-
     <string name="text_app_about">
         App description.
         \n\nApp description.
         \n\nApp version: %s
     </string>
 
-    <!-- =========================================================================================================== -->
     <string name="default_notification_channel_id" translatable="false">fcm_channel_relaxeddd_diary</string>
 
     <string name="label_fragment_todo_list" translatable="false">LabelFragmentTodoList</string>

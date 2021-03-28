@@ -1,5 +1,6 @@
 package relaxeddd.simplediary.viewmodel
 
+import relaxeddd.simplediary.di.repoTasks
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
@@ -10,10 +11,12 @@ import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
 import relaxeddd.simplediary.utils.TIME_DAY
-import relaxeddd.simplediary.utils.live_data.LiveData
-import relaxeddd.simplediary.utils.live_data.MutableLiveData
+import relaxeddd.simplediary.utils.observable.Observable
+import relaxeddd.simplediary.utils.observable.MutableObservable
 
 class ViewModelTaskCard : ViewModelTask() {
+
+    private val repositoryTasks = repoTasks
 
     companion object {
         private const val DEFAULT_PRIORITY = 0
@@ -22,50 +25,50 @@ class ViewModelTaskCard : ViewModelTask() {
     private var editTaskId: String? = null
     private var startDate: Long = 0
 
-    private val isEnabledButtonSaveM = MutableLiveData(false)
-    val isEnabledButtonSave: LiveData<Boolean> = isEnabledButtonSaveM
+    private val isEnabledButtonSaveM = MutableObservable(false)
+    val isEnabledButtonSave: Observable<Boolean> = isEnabledButtonSaveM
 
-    private val taskTitleM = MutableLiveData("")
-    val taskTitle: LiveData<String> = taskTitleM
+    private val taskTitleM = MutableObservable("")
+    val taskTitle: Observable<String> = taskTitleM
 
-    private val taskDescM = MutableLiveData("")
-    val taskDesc: LiveData<String> = taskDescM
+    private val taskDescM = MutableObservable("")
+    val taskDesc: Observable<String> = taskDescM
 
-    private val taskCommentM = MutableLiveData("")
-    val taskComment: LiveData<String> = taskCommentM
+    private val taskCommentM = MutableObservable("")
+    val taskComment: Observable<String> = taskCommentM
 
-    private val taskLocationM = MutableLiveData("")
-    val taskLocation: LiveData<String> = taskLocationM
+    private val taskLocationM = MutableObservable("")
+    val taskLocation: Observable<String> = taskLocationM
 
-    private val taskPriorityM = MutableLiveData(DEFAULT_PRIORITY)
-    val taskPriority: LiveData<Int> = taskPriorityM
+    private val taskPriorityM = MutableObservable(DEFAULT_PRIORITY)
+    val taskPriority: Observable<Int> = taskPriorityM
 
-    private val taskRepeatM = MutableLiveData(RepeatRule.NO.ordinal)
-    val taskRepeat: LiveData<Int> = taskRepeatM
+    private val taskRepeatM = MutableObservable(RepeatRule.NO.ordinal)
+    val taskRepeat: Observable<Int> = taskRepeatM
 
-    private val taskRepeatCountM = MutableLiveData(0)
-    val taskRepeatCount: LiveData<Int> = taskRepeatCountM
+    private val taskRepeatCountM = MutableObservable(0)
+    val taskRepeatCount: Observable<Int> = taskRepeatCountM
 
-    private val taskStartM = MutableLiveData(getCurrentTime())
-    val taskStart: LiveData<Long> = taskStartM
+    private val taskStartM = MutableObservable(getCurrentTime())
+    val taskStart: Observable<Long> = taskStartM
 
-    private val taskEndM = MutableLiveData(getCurrentTime() + TIME_15_MINUTE)
-    val taskEnd: LiveData<Long> = taskEndM
+    private val taskEndM = MutableObservable(getCurrentTime() + TIME_15_MINUTE)
+    val taskEnd: Observable<Long> = taskEndM
 
-    private val taskUntilM = MutableLiveData(0L)
-    val taskUntil: LiveData<Long> = taskUntilM
+    private val taskUntilM = MutableObservable(0L)
+    val taskUntil: Observable<Long> = taskUntilM
 
-    private val taskIsPersistentM = MutableLiveData(false)
-    val taskIsPersistent: LiveData<Boolean> = taskIsPersistentM
+    private val taskIsPersistentM = MutableObservable(false)
+    val taskIsPersistent: Observable<Boolean> = taskIsPersistentM
 
-    private val taskIsCompletedM = MutableLiveData(false)
-    val taskIsCompleted: LiveData<Boolean> = taskIsCompletedM
+    private val taskIsCompletedM = MutableObservable(false)
+    val taskIsCompleted: Observable<Boolean> = taskIsCompletedM
 
-    private val taskExDatesM = MutableLiveData<List<Long>>(ArrayList())
-    val taskExDates: LiveData<List<Long>> = taskExDatesM
+    private val taskExDatesM = MutableObservable<List<Long>>(ArrayList())
+    val taskExDates: Observable<List<Long>> = taskExDatesM
 
-    private val taskRemindHoursM = MutableLiveData<List<Int>>(ArrayList())
-    val taskRemindHours: LiveData<List<Int>> = taskRemindHoursM
+    private val taskRemindHoursM = MutableObservable<List<Int>>(ArrayList())
+    val taskRemindHours: Observable<List<Int>> = taskRemindHoursM
 
     private val observerTitle: (String) -> Unit = {
         isEnabledButtonSaveM.value = it.isNotEmpty()

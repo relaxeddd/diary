@@ -1,5 +1,7 @@
 package relaxeddd.simplediary.utils
 
+internal const val BASE_ROUTE = "https://us-central1-my-todo-list-36185.cloudfunctions.net/"
+
 const val ERROR_TEXT = "errorText"
 const val ID = "id"
 const val TEXT = "text"

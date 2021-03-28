@@ -15,8 +15,6 @@ import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.databinding.ActivityMainBinding
 import relaxeddd.simplediary.databinding.NavigationHeaderBinding
-import relaxeddd.simplediary.dialogs.DialogPatchNotes
-import relaxeddd.simplediary.dialogs.DialogRateApp
 import relaxeddd.simplediary.push.MyFirebaseMessagingService
 import relaxeddd.simplediary.ui.NavigationHost
 import relaxeddd.simplediary.ui.ActivityBase
@@ -49,7 +47,6 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
         super.onCreate(savedInstanceState)
 
         MyFirebaseMessagingService.initChannelNotifications(this)
-        initGooglePlayServices()
 
         navigationHeaderBinding = NavigationHeaderBinding.inflate(layoutInflater).apply {
             lifecycleOwner = this@ActivityMain
@@ -104,11 +101,9 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
 
             return@setOnNavigationItemSelectedListener true
         }*/
-
-        initPrivacyPolicyText()
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         currentNavId = binding.navigationViewMain.checkedItem?.itemId ?: NAV_ID_NONE
     }
@@ -120,21 +115,9 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
 
     override fun onNavigationEvent(type: EventType, args: Bundle?) {
         when (type) {
-            EventType.NAVIGATION_DIALOG_RATE_APP -> {
-                showDialog(DialogRateApp(object: ListenerResult<Boolean> {
-                    override fun onResult(result: Boolean) {
-                        if (result) {
-                            openWebApplication()
-                        }
-                    }
-                }))
-            }
             EventType.EXIT -> {
                 finishAffinity()
                 exitProcess(0)
-            }
-            EventType.NAVIGATION_DIALOG_PATCH_NOTES -> {
-                showDialog(DialogPatchNotes())
             }
             else -> super.onNavigationEvent(type, args)
         }
@@ -144,36 +127,6 @@ class ActivityMain : ActivityBase<ActivityMainBinding>(), NavigationHost {
         super.setupThemeColors()
         /*navigation_view_main.setBackgroundResource(viewModel.primaryColorResId)
         navigation_view_main.itemBackgroundResource = viewModel.primaryColorResId*/
-    }
-
-    private fun initGooglePlayServices() {
-        /*val googleApiAvailability = GoogleApiAvailability.getInstance()
-        val status = googleApiAvailability.isGooglePlayServicesAvailable(this)
-
-        if (status != ConnectionResult.SUCCESS) {
-            if (googleApiAvailability.isUserResolvableError(status)) {
-                val dialog = googleApiAvailability.getErrorDialog(this, status, REQUEST_PLAY_SERVICES_RESULT)
-                dialog.setOnCancelListener { finish() }
-                dialog.show()
-            }
-        } else {
-            GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this)
-        }*/
-    }
-
-    private fun initPrivacyPolicyText() {
-        /*val privacyPolicy = text_main_privacy_policy.text.toString()
-        val spannablePrivacyPolicy = SpannableString(privacyPolicy)
-        val clickablePrivacyPolicy = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-                openWebPrivacyPolicy()
-            }
-        }
-
-        setClickableSubstring(privacyPolicy, spannablePrivacyPolicy, getString(R.string.privacy_policy_in_sentence), clickablePrivacyPolicy)
-
-        text_main_privacy_policy.text = spannablePrivacyPolicy
-        text_main_privacy_policy.movementMethod = LinkMovementMethod.getInstance()*/
     }
 
     private fun setClickableSubstring(string: String, spannableString: SpannableString, substring: String, clickableSpan: ClickableSpan) {

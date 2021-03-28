@@ -1,6 +1,7 @@
 package relaxeddd.simplediary.viewmodel
 
 import io.ktor.util.date.*
+import relaxeddd.simplediary.di.repoTasks
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.domain.model.RepeatRule
@@ -10,21 +11,24 @@ import relaxeddd.simplediary.getCurrentTime
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_DAY
 import relaxeddd.simplediary.utils.TIME_WEEK
-import relaxeddd.simplediary.utils.live_data.LiveData
-import relaxeddd.simplediary.utils.live_data.MutableLiveData
+import relaxeddd.simplediary.utils.observable.Observable
+import relaxeddd.simplediary.utils.observable.MutableObservable
 
 abstract class ViewModelTaskList : ViewModelTask() {
 
+    private val repositoryTasks = repoTasks
+
     open val isAddCurrentDayTask = true
+    open val isAddIntermediateDayTasks = true
 
-    private val tasksM: MutableLiveData<List<Task>> = MutableLiveData(ArrayList())
-    val tasks: LiveData<List<Task>> = tasksM
+    private val tasksM: MutableObservable<List<Task>> = MutableObservable(ArrayList())
+    val tasks: Observable<List<Task>> = tasksM
 
-    private val isVisibleTextNoItemsM = MutableLiveData(true)
-    val isVisibleTextNoItems: LiveData<Boolean> = isVisibleTextNoItemsM
+    private val isVisibleTextNoItemsM = MutableObservable(true)
+    val isVisibleTextNoItems: Observable<Boolean> = isVisibleTextNoItemsM
 
-    private val isVisibleTaskListM = MutableLiveData(false)
-    val isVisibleTaskList: LiveData<Boolean> = isVisibleTaskListM
+    private val isVisibleTaskListM = MutableObservable(false)
+    val isVisibleTaskList: Observable<Boolean> = isVisibleTaskListM
 
     abstract fun filterRule(task: Task) : Boolean
 
@@ -111,34 +115,39 @@ abstract class ViewModelTaskList : ViewModelTask() {
         childTasks.addAll(tasks)
         tasks = childTasks.sortedBy { task -> task.start }
 
-        val tasksWithDays = ArrayList<Task>()
-        for ((ix, task) in tasks.withIndex()) {
-            var previousTaskIndex = ix - 1
-            var previousTask: Task? = null
+        if (isAddIntermediateDayTasks) {
+            val tasksWithDays = ArrayList<Task>()
+            for ((ix, task) in tasks.withIndex()) {
+                var previousTaskIndex = ix - 1
+                var previousTask: Task? = null
 
-            while ((previousTask == null || previousTask.isHidden()) && previousTaskIndex >= 0) {
-                previousTask = tasks[previousTaskIndex]
-                previousTaskIndex -= 1
-            }
-
-            if (previousTask != null && !previousTask.isHidden()) {
-                val startDay = previousTask.start / TIME_DAY * TIME_DAY
-                val dayDifference = ((task.start / TIME_DAY * TIME_DAY) - startDay) / TIME_DAY
-                for (dayIx in 1 until dayDifference) {
-                    tasksWithDays.add(Task(generateId(), startDate = startDay + dayIx * TIME_DAY, isDateTask = true))
+                while ((previousTask == null || previousTask.isHidden()) && previousTaskIndex >= 0) {
+                    previousTask = tasks[previousTaskIndex]
+                    previousTaskIndex -= 1
                 }
+
+                if (previousTask != null && !previousTask.isHidden()) {
+                    val startDay = previousTask.start / TIME_DAY * TIME_DAY
+                    val dayDifference = ((task.start / TIME_DAY * TIME_DAY) - startDay) / TIME_DAY
+                    for (dayIx in 1 until dayDifference) {
+                        tasksWithDays.add(Task(generateId(), startDate = startDay + dayIx * TIME_DAY, isDateTask = true))
+                    }
+                }
+                tasksWithDays.add(task)
             }
-            tasksWithDays.add(task)
+            tasks = ArrayList(tasksWithDays)
         }
 
         if (isAddCurrentDayTask) {
-            val currentDayTask = tasksWithDays.find { it.start / TIME_DAY * TIME_DAY == getCurrentTime() / TIME_DAY * TIME_DAY }
+            val currentDayTask = tasks.find { it.start / TIME_DAY * TIME_DAY == getCurrentTime() / TIME_DAY * TIME_DAY }
             if (currentDayTask == null || currentDayTask.isHidden()) {
-                tasksWithDays.add(Task(generateId(), startDate = getCurrentTime(), isDateTask = true))
+                val tasksWithCurrentDay = ArrayList(tasks)
+                tasksWithCurrentDay.add(Task(generateId(), startDate = getCurrentTime(), isDateTask = true))
+                tasks = ArrayList(tasksWithCurrentDay)
             }
         }
 
-        tasks = sortTasks(tasksWithDays)
+        tasks = sortTasks(tasks)
 
         tasksM.value = tasks
         isVisibleTaskListM.value = tasks.isNotEmpty()

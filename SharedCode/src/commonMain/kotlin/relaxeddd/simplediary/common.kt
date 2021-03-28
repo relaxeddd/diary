@@ -5,36 +5,36 @@ import com.squareup.sqldelight.db.SqlDriver
 
 expect class ContextArgs
 
-expect fun init()
-expect fun generateId() : String
-expect fun registerFirebaseUserListener(listener: (tokenId: String, uid: String, email: String) -> Unit)
-expect fun checkAuthorization(listener: (tokenId: String, uid: String, email: String) -> Unit)
-expect fun createFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit)
-expect fun loginFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit)
-expect fun logout(listener: (isSuccess: Boolean) -> Unit)
-expect fun platformName(): String
-expect fun getSavedEmail(): String
-expect fun setSavedEmail(email: String)
-expect fun isNetworkAvailable(): Boolean
-expect fun getSqlDriver(): SqlDriver
-expect fun getCurrentTime() : Long
-expect fun freezeThread(seconds: Int)
+internal expect fun init()
+internal expect fun generateId() : String
+internal expect fun registerFirebaseUserListener(listener: (tokenId: String, uid: String, email: String) -> Unit)
+internal expect fun checkAuthorization(listener: (tokenId: String, uid: String, email: String) -> Unit)
+internal expect fun createFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit)
+internal expect fun loginFirebaseUser(email: String, password: String, listener: (tokenId: String, uid: String, email: String, errorCode: Int?, errorDescription: String?) -> Unit)
+internal expect fun logout(listener: (isSuccess: Boolean) -> Unit)
+internal expect fun platformName(): String
+internal expect fun getSavedEmail(): String
+internal expect fun setSavedEmail(email: String)
+internal expect fun isNetworkAvailable(): Boolean
+internal expect fun getSqlDriver(): SqlDriver
+internal expect fun getCurrentTime() : Long
+internal expect fun freezeThread(seconds: Int)
 
-expect fun postOnMainThread(run: () -> Unit)
-expect fun <T> async(run: suspend () -> T?, onCompleted: (T?, Exception?) -> Unit)
+internal expect fun postOnMainThread(run: () -> Unit)
+internal expect fun <T> async(run: suspend () -> T?, onCompleted: (T?, Exception?) -> Unit)
 
 fun createApplicationScreenMessage() : String {
     return "Kotlin Rocks on ${platformName()}"
 }
 
-fun getDataBase() = Database(getSqlDriver(), taskModelAdapter = TaskModel.Adapter(exDatesAdapter = exDatesAdapter, remindHoursAdapter = remindHoursAdapter))
+internal fun createDatabase() = Database(getSqlDriver(), taskModelAdapter = TaskModel.Adapter(exDatesAdapter = exDatesAdapter, remindHoursAdapter = remindHoursAdapter))
 
-val exDatesAdapter = object : ColumnAdapter<List<Long>, String> {
+internal val exDatesAdapter = object : ColumnAdapter<List<Long>, String> {
     override fun decode(databaseValue: String) = if (databaseValue.isBlank()) emptyList() else databaseValue.split(",").map { it.toLong() }
     override fun encode(value: List<Long>) = value.joinToString(separator = ",")
 }
 
-val remindHoursAdapter = object : ColumnAdapter<List<Int>, String> {
+internal val remindHoursAdapter = object : ColumnAdapter<List<Int>, String> {
     override fun decode(databaseValue: String) = if (databaseValue.isBlank()) emptyList() else databaseValue.split(",").map { it.toInt() }
     override fun encode(value: List<Int>) = value.joinToString(separator = ",")
 }

@@ -18,24 +18,4 @@
         android:label="@string/label_fragment_settings"
         tools:layout="@layout/fragment_settings"/>
 
-    <!--<action
-        android:id="@+id/action_global_fragmentTodoList"
-        app:destination="@id/navigation_todo_list"
-        app:popUpTo="@+id/navigation_todo_list"
-        app:popUpToInclusive="true"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
-        app:popEnterAnim="@anim/nav_default_enter_anim"
-        app:popExitAnim="@anim/nav_default_exit_anim"/>
-
-    <action
-        android:id="@+id/action_global_fragmentSettings"
-        app:destination="@id/navigation_settings"
-        app:popUpTo="@+id/navigation_settings"
-        app:popUpToInclusive="true"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
-        app:popEnterAnim="@anim/nav_default_enter_anim"
-        app:popExitAnim="@anim/nav_default_exit_anim"/>-->
-
 </navigation>

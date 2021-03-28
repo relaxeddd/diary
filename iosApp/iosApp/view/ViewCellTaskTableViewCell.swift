@@ -22,6 +22,12 @@ class ViewCellTaskTableViewCell: UITableViewCell {
     @IBOutlet weak var constraintMarginStartTime: NSLayoutConstraint!
     
     internal func update(title: String, desc: String, priority: Int, startTime: Int64, endTime: Int64, date: Int64? = nil, isCompleted: Bool, isDateTask: Bool, isHidden: Bool, isPersistent: Bool, isShowSeparator: Bool) {
+        
+        textTitle?.attributedText = nil
+        textDesc?.attributedText = nil
+        textStartTime?.attributedText = nil
+        textEndTime?.attributedText = nil
+        
         if (isCompleted) {
             let strikethroughTitle: NSMutableAttributedString =  NSMutableAttributedString(string: title)
             strikethroughTitle.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, strikethroughTitle.length))

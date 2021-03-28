@@ -106,3 +106,7 @@ xcuserdata/
 /iosApp/iosApp.xcodeproj/project.xcworkspace/xcuserdata/
 
 *.moved-aside
+
+#Pods
+/iosApp/Pods/
+/iosApp/Podfile.lock

@@ -5,6 +5,7 @@ import relaxeddd.simplediary.domain.model.Task
 class ViewModelTaskListPersistent : ViewModelTaskList() {
 
     override val isAddCurrentDayTask = false
+    override val isAddIntermediateDayTasks = false
 
     override fun filterRule(task: Task) = task.isPersistent
 
