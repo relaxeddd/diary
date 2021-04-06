@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="relaxeddd.simplediary.viewmodel.ViewModelTaskListActual"/>
+            type="relaxeddd.simplediary.presentation.task.list.ViewModelTaskListActual"/>
 
     </data>
 

@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.annotation.Keep
 import androidx.annotation.StringRes
 import relaxeddd.simplediary.R
-import relaxeddd.simplediary.domain.model.Task
+import relaxeddd.simplediary.domain.Task
 
 @Keep
 data class User(

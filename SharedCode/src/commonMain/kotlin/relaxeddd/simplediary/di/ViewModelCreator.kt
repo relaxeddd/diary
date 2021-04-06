@@ -1,13 +1,17 @@
 package relaxeddd.simplediary.di
 
-import relaxeddd.simplediary.viewmodel.*
-import relaxeddd.simplediary.viewmodel.ViewModelAuth
-import relaxeddd.simplediary.viewmodel.ViewModelLogo
-import relaxeddd.simplediary.viewmodel.ViewModelSettings
-import relaxeddd.simplediary.viewmodel.ViewModelTaskCard
-import relaxeddd.simplediary.viewmodel.ViewModelTaskListActual
-import relaxeddd.simplediary.viewmodel.ViewModelTaskListArchive
-import relaxeddd.simplediary.viewmodel.ViewModelTaskListPersistent
+import relaxeddd.simplediary.presentation.auth.ViewModelAuth
+import relaxeddd.simplediary.presentation.splash.ViewModelLogo
+import relaxeddd.simplediary.presentation.settings.ViewModelSettings
+import relaxeddd.simplediary.presentation.task.card.ViewModelTaskCard
+import relaxeddd.simplediary.presentation.auth.IViewModelAuth
+import relaxeddd.simplediary.presentation.settings.IViewModelSettings
+import relaxeddd.simplediary.presentation.splash.IViewModelLogo
+import relaxeddd.simplediary.presentation.task.card.IViewModelTaskCard
+import relaxeddd.simplediary.presentation.task.list.*
+import relaxeddd.simplediary.presentation.task.list.ViewModelTaskListActual
+import relaxeddd.simplediary.presentation.task.list.ViewModelTaskListArchive
+import relaxeddd.simplediary.presentation.task.list.ViewModelTaskListPersistent
 
 object ViewModelCreator {
 
