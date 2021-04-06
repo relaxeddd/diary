@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.EventType
 import relaxeddd.simplediary.ui.main.ActivityMain
-import relaxeddd.simplediary.viewmodel.ViewModelBase
+import relaxeddd.simplediary.presentation.base.ViewModelBase
 
 abstract class FragmentBase<VM : ViewModelBase, B : ViewDataBinding> : Fragment() {
 

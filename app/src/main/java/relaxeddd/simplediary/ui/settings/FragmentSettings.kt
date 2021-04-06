@@ -7,7 +7,7 @@ import relaxeddd.simplediary.common.*
 import relaxeddd.simplediary.databinding.FragmentSettingsBinding
 import relaxeddd.simplediary.dialogs.*
 import relaxeddd.simplediary.ui.FragmentBase
-import relaxeddd.simplediary.viewmodel.ViewModelSettings
+import relaxeddd.simplediary.presentation.settings.ViewModelSettings
 
 class FragmentSettings : FragmentBase<ViewModelSettings, FragmentSettingsBinding>() {
 

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import relaxeddd.simplediary.R
 import relaxeddd.simplediary.common.OnItemClickListener
-import relaxeddd.simplediary.domain.model.Task
+import relaxeddd.simplediary.domain.Task
 
 class AdapterTasks(private val clickListener: OnItemClickListener<Task>): ListAdapter<Task, AdapterTasks.ViewHolder>(DiffCallback()) {
 

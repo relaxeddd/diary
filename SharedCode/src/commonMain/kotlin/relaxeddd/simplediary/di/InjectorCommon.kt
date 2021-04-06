@@ -5,11 +5,11 @@ import io.ktor.client.features.*
 import io.ktor.http.*
 import relaxeddd.simplediary.ContextArgs
 import relaxeddd.simplediary.createDatabase
-import relaxeddd.simplediary.source.db.dao.DaoTask
-import relaxeddd.simplediary.source.network.Api
-import relaxeddd.simplediary.source.repository.RepositoryTasks
-import relaxeddd.simplediary.source.repository.RepositoryUsers
-import relaxeddd.simplediary.utils.BASE_ROUTE
+import relaxeddd.simplediary.data.db.dao.DaoTask
+import relaxeddd.simplediary.data.network.Api
+import relaxeddd.simplediary.data.repository.RepositoryTasks
+import relaxeddd.simplediary.data.repository.RepositoryUsers
+import relaxeddd.simplediary.domain.BASE_ROUTE
 import kotlin.native.concurrent.SharedImmutable
 import kotlin.native.concurrent.ThreadLocal
 

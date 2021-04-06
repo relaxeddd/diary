@@ -5,9 +5,9 @@ import relaxeddd.simplediary.ui.FragmentBase
 import relaxeddd.simplediary.common.OnItemClickListener
 import relaxeddd.simplediary.common.visibleOrGone
 import relaxeddd.simplediary.databinding.FragmentTaskListBinding
-import relaxeddd.simplediary.domain.model.Task
+import relaxeddd.simplediary.domain.Task
 import relaxeddd.simplediary.ui.AdapterTasks
-import relaxeddd.simplediary.viewmodel.ViewModelTaskListActual
+import relaxeddd.simplediary.presentation.task.list.ViewModelTaskListActual
 
 class FragmentTaskList : FragmentBase<ViewModelTaskListActual, FragmentTaskListBinding>() {
 
