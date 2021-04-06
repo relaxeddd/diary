@@ -9,7 +9,7 @@
 import UIKit
 import SharedCode
 
-class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
+class ViewControllerTaskCard: ViewControllerBase<IViewModelTaskCard> {
 
     @IBOutlet weak var editTextTitle: UITextField!
     @IBOutlet weak var editTextDesc: UITextField!
@@ -37,7 +37,7 @@ class ViewControllerTaskCard: ViewControllerBase<ViewModelTaskCard> {
     
     private var isTaskEditing: Bool { self.editTaskId != nil }
     
-    override func createViewModel() -> ViewModelTaskCard { ViewModelTaskCard() }
+    override func createViewModel() -> IViewModelTaskCard { ViewModelCreator().createTaskCardViewModel() }
     override var progressBar: UIActivityIndicatorView? { progressBarCard }
     
     // MARK: - Arguments

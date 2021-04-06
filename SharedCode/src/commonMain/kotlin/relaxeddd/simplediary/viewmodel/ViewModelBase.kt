@@ -4,7 +4,7 @@ import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.utils.observable.Observable
 import relaxeddd.simplediary.utils.observable.MutableObservable
 
-abstract class ViewModelBase : IViewModelBase {
+internal abstract class ViewModelBase : IViewModelBase {
 
     protected val actionM = MutableObservable<Action?>(null)
     override val action: Observable<Action?> get() = actionM

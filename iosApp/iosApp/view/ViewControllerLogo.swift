@@ -9,11 +9,11 @@
 import UIKit
 import SharedCode
 
-class ViewControllerLogo: ViewControllerBase<ViewModelLogo> {
+class ViewControllerLogo: ViewControllerBase<IViewModelLogo> {
     
     @IBOutlet weak var imageLogo: UIImageView!
     
-    override func createViewModel() -> ViewModelLogo { ViewModelLogo() }
+    override func createViewModel() -> IViewModelLogo { ViewModelCreator().createLogoViewModel() }
     override var progressBar: UIActivityIndicatorView? { nil }
 
     override func initView() {

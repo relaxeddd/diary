@@ -9,14 +9,14 @@
 import UIKit
 import SharedCode
 
-class ViewControllerTaskListPersistent: ViewControllerTaskList<ViewModelTaskListPersistent> {
+class ViewControllerTaskListPersistent: ViewControllerTaskList<IViewModelTaskListPersistent> {
     
     @IBOutlet weak var progressBarPersistent: UIActivityIndicatorView!
     @IBOutlet weak var textNoTasksPersistent: UILabel!
     @IBOutlet weak var tableViewTasksPersistent: UITableView!
     
     
-    override func createViewModel() -> ViewModelTaskListPersistent { ViewModelTaskListPersistent() }
+    override func createViewModel() -> IViewModelTaskListPersistent { ViewModelCreator().createTaskListPersistentViewModel() }
     override var progressBar: UIActivityIndicatorView? { progressBarPersistent }
     override var tableViewTasks: UITableView? { tableViewTasksPersistent }
     override var textNoItems: UILabel? { textNoTasksPersistent }

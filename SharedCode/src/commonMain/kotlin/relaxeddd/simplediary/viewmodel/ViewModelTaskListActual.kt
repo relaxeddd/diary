@@ -5,13 +5,14 @@ import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.domain.model.RepeatRule
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.generateId
+import relaxeddd.simplediary.source.repository.RepositoryTasks
 import relaxeddd.simplediary.utils.ID
 
-class ViewModelTaskListActual : ViewModelTaskList() {
+internal class ViewModelTaskListActual(repositoryTasks: RepositoryTasks) : ViewModelTaskList(repositoryTasks), IViewModelTaskListActual {
 
     override fun filterRule(task: Task) = !task.isCompleted && !task.isPersistent
 
-    fun onClickedCompleteTask(id: String) {
+    override fun onClickedCompleteTask(id: String) {
         tasks.value.find { it.id == id }?.let {
             if (it.isRepetitive()) {
                 actionM.postValue(Action(EventType.NAVIGATION_DIALOG_REPETITIVE_TASK_COMPLETE, mapOf(Pair(ID, id))))
@@ -21,7 +22,7 @@ class ViewModelTaskListActual : ViewModelTaskList() {
         }
     }
 
-    fun onClickedCompleteChildTask(id: String) {
+    override fun onClickedCompleteChildTask(id: String) {
         tasks.value.find { it.id == id }?.let { childTask ->
             if (!childTask.isCompleted) {
                 val parentId = if (childTask.parentId.isNotBlank()) childTask.parentId else childTask.id
@@ -42,7 +43,7 @@ class ViewModelTaskListActual : ViewModelTaskList() {
         }
     }
 
-    fun onClickedCompleteParentTask(id: String) {
+    override fun onClickedCompleteParentTask(id: String) {
         val task = tasks.value.find { it.id == id }
         val parentId = if (task?.parentId?.isNotBlank() == true) task.parentId else task?.id
 

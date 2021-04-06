@@ -9,11 +9,11 @@
 import UIKit
 import SharedCode
 
-class ViewControllerSettings: ViewControllerBase<ViewModelSettings> {
+class ViewControllerSettings: ViewControllerBase<IViewModelSettings> {
     
     @IBOutlet weak var progressBarSettings: UIActivityIndicatorView!
 
-    override func createViewModel() -> ViewModelSettings { ViewModelSettings() }
+    override func createViewModel() -> IViewModelSettings { ViewModelCreator().createSettingsViewModel() }
     override var progressBar: UIActivityIndicatorView? { progressBarSettings }
     
     @IBAction func onClickedSaveTasks(_ sender: Any) {
