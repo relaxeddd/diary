@@ -9,13 +9,13 @@
 import UIKit
 import SharedCode
 
-class ViewControllerTaskListArchive: ViewControllerTaskList<ViewModelTaskListArchive> {
+class ViewControllerTaskListArchive: ViewControllerTaskList<IViewModelTaskListArchive> {
 
     @IBOutlet weak var progressBarArchive: UIActivityIndicatorView!
     @IBOutlet weak var tableViewTasksArchive: UITableView!
     @IBOutlet weak var textNoTasksArchive: UILabel!
     
-    override func createViewModel() -> ViewModelTaskListArchive { ViewModelTaskListArchive() }
+    override func createViewModel() -> IViewModelTaskListArchive { ViewModelCreator().createTaskListArchiveViewModel() }
     override var progressBar: UIActivityIndicatorView? { progressBarArchive }
     override var tableViewTasks: UITableView? { tableViewTasksArchive }
     override var textNoItems: UILabel? { textNoTasksArchive }

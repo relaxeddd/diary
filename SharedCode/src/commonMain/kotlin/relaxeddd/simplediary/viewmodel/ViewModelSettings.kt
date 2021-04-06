@@ -1,26 +1,24 @@
 package relaxeddd.simplediary.viewmodel
 
-import relaxeddd.simplediary.di.repoTasks
-import relaxeddd.simplediary.di.repoUsers
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
+import relaxeddd.simplediary.source.repository.RepositoryTasks
+import relaxeddd.simplediary.source.repository.RepositoryUsers
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TEXT
 
-class ViewModelSettings : ViewModelBase() {
+internal class ViewModelSettings(private val repositoryUsers: RepositoryUsers,
+                                 private val repositoryTasks: RepositoryTasks) : ViewModelBase(), IViewModelSettings {
 
-    private val repositoryUsers = repoUsers
-    private val repositoryTasks = repoTasks
-
-    fun onClickedSaveTasks() {
+    override fun onClickedSaveTasks() {
         actionM.postValue(Action(EventType.NAVIGATION_DIALOG_CONFIRM_TASKS_SAVE))
     }
 
-    fun onClickedLoadTasks() {
+    override fun onClickedLoadTasks() {
         actionM.postValue(Action(EventType.NAVIGATION_DIALOG_CONFIRM_TASKS_LOAD))
     }
 
-    fun onConfirmedSave() {
+    override fun onConfirmedSave() {
         isVisibleProgressBarM.value = true
         repositoryTasks.requestSaveTasks { result ->
             isVisibleProgressBarM.value = false
@@ -30,7 +28,7 @@ class ViewModelSettings : ViewModelBase() {
         }
     }
 
-    fun onConfirmedLoad() {
+    override fun onConfirmedLoad() {
         isVisibleProgressBarM.value = true
         repositoryTasks.requestLoadTasks { result ->
             isVisibleProgressBarM.value = false
@@ -40,7 +38,7 @@ class ViewModelSettings : ViewModelBase() {
         }
     }
 
-    fun onClickedLogout() {
+    override fun onClickedLogout() {
         isVisibleProgressBarM.value = true
         repositoryUsers.signOut { isSuccess ->
             isVisibleProgressBarM.value = false

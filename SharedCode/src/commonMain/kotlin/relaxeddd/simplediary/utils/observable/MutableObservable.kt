@@ -2,7 +2,7 @@ package relaxeddd.simplediary.utils.observable
 
 import relaxeddd.simplediary.postOnMainThread
 
-class MutableObservable<T>(value: T) : Observable<T>() {
+internal class MutableObservable<T>(value: T) : Observable<T>() {
 
     override var value: T = value
         set(value) {

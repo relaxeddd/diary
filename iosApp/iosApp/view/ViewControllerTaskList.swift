@@ -9,7 +9,7 @@
 import UIKit
 import SharedCode
 
-class ViewControllerTaskList<VM : ViewModelTaskList>: ViewControllerBase<VM>, UITableViewDataSource, UITableViewDelegate {
+class ViewControllerTaskList<VM : IViewModelTaskList> : ViewControllerBase<VM>, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Fields
     internal var tasks: [Task] = []

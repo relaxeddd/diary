@@ -10,7 +10,7 @@ import relaxeddd.simplediary.utils.observable.MutableObservable
 internal class ViewModelAuth(private val repositoryUsers : RepositoryUsers) : ViewModelBase(), IViewModelAuth {
 
     private val isRegistrationViewM = MutableObservable(true)
-    override val isRegistrationView: Observable<Boolean> = isRegistrationViewM
+    override val isRegistrationView: Observable<Boolean> get() = isRegistrationViewM
 
     private val isAuthorizedM = MutableObservable(false)
     override val isAuthorized: Observable<Boolean> get() = isAuthorizedM
@@ -19,13 +19,13 @@ internal class ViewModelAuth(private val repositoryUsers : RepositoryUsers) : Vi
     override val errorAuth: Observable<String> get() = errorAuthM
 
     private val textEmailM = MutableObservable(getSavedEmail())
-    override val textEmail: Observable<String> = textEmailM
+    override val textEmail: Observable<String> get() = textEmailM
 
     private val textPasswordM = MutableObservable("")
-    override val textPassword: Observable<String> = textPasswordM
+    override val textPassword: Observable<String> get() = textPasswordM
 
     private val textRepeatPasswordM = MutableObservable("")
-    override val textRepeatPassword: Observable<String> = textRepeatPasswordM
+    override val textRepeatPassword: Observable<String> get() = textRepeatPasswordM
 
     private val observerIsAuthorized: (Boolean) -> Unit = { isAuthorized ->
         isAuthorizedM.value = isAuthorized

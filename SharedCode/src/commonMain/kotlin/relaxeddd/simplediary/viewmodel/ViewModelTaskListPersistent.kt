@@ -1,19 +1,20 @@
 package relaxeddd.simplediary.viewmodel
 
 import relaxeddd.simplediary.domain.model.Task
+import relaxeddd.simplediary.source.repository.RepositoryTasks
 
-class ViewModelTaskListPersistent : ViewModelTaskList() {
+internal class ViewModelTaskListPersistent(repositoryTasks: RepositoryTasks) : ViewModelTaskList(repositoryTasks), IViewModelTaskListPersistent {
 
     override val isAddCurrentDayTask = false
     override val isAddIntermediateDayTasks = false
 
     override fun filterRule(task: Task) = task.isPersistent
 
-    fun onClickedCompleteTask(id: String) {
+    override fun onClickedCompleteTask(id: String) {
         completeTask(id)
     }
 
-    fun onClickedRestoreTask(id: String) {
+    override fun onClickedRestoreTask(id: String) {
         restoreTask(id)
     }
 
@@ -27,7 +28,7 @@ class ViewModelTaskListPersistent : ViewModelTaskList() {
         }
     }
 
-    fun restoreTask(id: String) {
+    private fun restoreTask(id: String) {
         tasks.value.find { it.id == id }?.let {
             if (it.isCompleted) {
                 updateTask(it.id, it.title, it.desc, it.comment, it.location, it.priority, it.repeat, it.repeatCount,
@@ -37,9 +38,9 @@ class ViewModelTaskListPersistent : ViewModelTaskList() {
         }
     }
 
-    override fun sortTasks(tasks: List<Task>) = tasks.sortedWith(object: Comparator<Task> {
-        override fun compare(task1: Task, task2: Task): Int {
-            return if (task1.isCompleted && !task2.isCompleted) 1 else if (!task1.isCompleted && task2.isCompleted) -1 else task2.priority.compareTo(task1.priority)
-        }
-    })
+    override fun sortTasks(tasks: List<Task>) = tasks.sortedWith { task1, task2 ->
+        if (task1.isCompleted && !task2.isCompleted) 1 else if (!task1.isCompleted && task2.isCompleted) -1 else task2.priority.compareTo(
+            task1.priority
+        )
+    }
 }

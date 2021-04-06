@@ -1,36 +1,34 @@
 package relaxeddd.simplediary.viewmodel
 
 import io.ktor.util.date.*
-import relaxeddd.simplediary.di.repoTasks
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
 import relaxeddd.simplediary.domain.model.RepeatRule
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.generateId
 import relaxeddd.simplediary.getCurrentTime
+import relaxeddd.simplediary.source.repository.RepositoryTasks
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_DAY
 import relaxeddd.simplediary.utils.TIME_WEEK
 import relaxeddd.simplediary.utils.observable.Observable
 import relaxeddd.simplediary.utils.observable.MutableObservable
 
-abstract class ViewModelTaskList : ViewModelTask() {
+internal abstract class ViewModelTaskList(private val repositoryTasks: RepositoryTasks) : ViewModelTask(repositoryTasks), IViewModelTaskList {
 
-    private val repositoryTasks = repoTasks
-
-    open val isAddCurrentDayTask = true
-    open val isAddIntermediateDayTasks = true
+    internal open val isAddCurrentDayTask = true
+    internal open val isAddIntermediateDayTasks = true
 
     private val tasksM: MutableObservable<List<Task>> = MutableObservable(ArrayList())
-    val tasks: Observable<List<Task>> = tasksM
+    override val tasks: Observable<List<Task>> get() = tasksM
 
     private val isVisibleTextNoItemsM = MutableObservable(true)
-    val isVisibleTextNoItems: Observable<Boolean> = isVisibleTextNoItemsM
+    override val isVisibleTextNoItems: Observable<Boolean> get() = isVisibleTextNoItemsM
 
     private val isVisibleTaskListM = MutableObservable(false)
-    val isVisibleTaskList: Observable<Boolean> = isVisibleTaskListM
+    override val isVisibleTaskList: Observable<Boolean> get() = isVisibleTaskListM
 
-    abstract fun filterRule(task: Task) : Boolean
+    internal abstract fun filterRule(task: Task) : Boolean
 
     private val observerTasks: (List<Task>) -> Unit = {
         var tasks = ArrayList(it).filter(::filterRule)
@@ -184,14 +182,14 @@ abstract class ViewModelTaskList : ViewModelTask() {
         repositoryTasks.exception.removeObserver(observerException)
     }
 
-    fun load() {
+    override fun load() {
         isVisibleProgressBarM.value = true
         repositoryTasks.init {
             isVisibleProgressBarM.value = false
         }
     }
 
-    fun deleteTask(id: String) {
+    override fun deleteTask(id: String) {
         isVisibleProgressBarM.value = true
         repositoryTasks.deleteTask(id) {
             isVisibleProgressBarM.value = false

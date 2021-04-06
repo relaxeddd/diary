@@ -9,13 +9,13 @@
 import UIKit
 import SharedCode
 
-class ViewControllerTaskListActual: ViewControllerTaskList<ViewModelTaskListActual> {
+class ViewControllerTaskListActual: ViewControllerTaskList<IViewModelTaskListActual> {
 
     @IBOutlet weak var progressBarActual: UIActivityIndicatorView!
     @IBOutlet weak var tableViewTasksActual: UITableView!
     @IBOutlet weak var textNoTasksActual: UILabel!
     
-    override func createViewModel() -> ViewModelTaskListActual { ViewModelTaskListActual() }
+    override func createViewModel() -> IViewModelTaskListActual { ViewModelCreator().createTaskListActualViewModel() }
     override var progressBar: UIActivityIndicatorView? { progressBarActual }
     override var tableViewTasks: UITableView? { tableViewTasksActual }
     override var textNoItems: UILabel? { textNoTasksActual }

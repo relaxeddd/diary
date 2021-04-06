@@ -1,6 +1,5 @@
 package relaxeddd.simplediary.viewmodel
 
-import relaxeddd.simplediary.di.repoTasks
 import relaxeddd.simplediary.domain.Response
 import relaxeddd.simplediary.domain.model.Action
 import relaxeddd.simplediary.domain.model.EventType
@@ -8,15 +7,14 @@ import relaxeddd.simplediary.domain.model.RepeatRule
 import relaxeddd.simplediary.domain.model.Task
 import relaxeddd.simplediary.generateId
 import relaxeddd.simplediary.getCurrentTime
+import relaxeddd.simplediary.source.repository.RepositoryTasks
 import relaxeddd.simplediary.utils.ERROR_TEXT
 import relaxeddd.simplediary.utils.TIME_15_MINUTE
 import relaxeddd.simplediary.utils.TIME_DAY
 import relaxeddd.simplediary.utils.observable.Observable
 import relaxeddd.simplediary.utils.observable.MutableObservable
 
-class ViewModelTaskCard : ViewModelTask() {
-
-    private val repositoryTasks = repoTasks
+internal class ViewModelTaskCard(private val repositoryTasks: RepositoryTasks) : ViewModelTask(repositoryTasks), IViewModelTaskCard {
 
     companion object {
         private const val DEFAULT_PRIORITY = 0
@@ -26,54 +24,55 @@ class ViewModelTaskCard : ViewModelTask() {
     private var startDate: Long = 0
 
     private val isEnabledButtonSaveM = MutableObservable(false)
-    val isEnabledButtonSave: Observable<Boolean> = isEnabledButtonSaveM
+    override val isEnabledButtonSave: Observable<Boolean> get() = isEnabledButtonSaveM
 
     private val taskTitleM = MutableObservable("")
-    val taskTitle: Observable<String> = taskTitleM
+    override val taskTitle: Observable<String> get() = taskTitleM
 
     private val taskDescM = MutableObservable("")
-    val taskDesc: Observable<String> = taskDescM
+    override val taskDesc: Observable<String> get() = taskDescM
 
     private val taskCommentM = MutableObservable("")
-    val taskComment: Observable<String> = taskCommentM
+    override val taskComment: Observable<String> get() = taskCommentM
 
     private val taskLocationM = MutableObservable("")
-    val taskLocation: Observable<String> = taskLocationM
+    override val taskLocation: Observable<String> get() = taskLocationM
 
     private val taskPriorityM = MutableObservable(DEFAULT_PRIORITY)
-    val taskPriority: Observable<Int> = taskPriorityM
+    override val taskPriority: Observable<Int> get() = taskPriorityM
 
     private val taskRepeatM = MutableObservable(RepeatRule.NO.ordinal)
-    val taskRepeat: Observable<Int> = taskRepeatM
+    override val taskRepeat: Observable<Int> get() = taskRepeatM
 
     private val taskRepeatCountM = MutableObservable(0)
-    val taskRepeatCount: Observable<Int> = taskRepeatCountM
+    override val taskRepeatCount: Observable<Int> get() = taskRepeatCountM
 
     private val taskStartM = MutableObservable(getCurrentTime())
-    val taskStart: Observable<Long> = taskStartM
+    override val taskStart: Observable<Long> get() = taskStartM
 
     private val taskEndM = MutableObservable(getCurrentTime() + TIME_15_MINUTE)
-    val taskEnd: Observable<Long> = taskEndM
+    override val taskEnd: Observable<Long> get() = taskEndM
 
     private val taskUntilM = MutableObservable(0L)
-    val taskUntil: Observable<Long> = taskUntilM
+    override val taskUntil: Observable<Long> get() = taskUntilM
 
     private val taskIsPersistentM = MutableObservable(false)
-    val taskIsPersistent: Observable<Boolean> = taskIsPersistentM
+    override val taskIsPersistent: Observable<Boolean> get() = taskIsPersistentM
 
     private val taskIsCompletedM = MutableObservable(false)
-    val taskIsCompleted: Observable<Boolean> = taskIsCompletedM
+    override val taskIsCompleted: Observable<Boolean> get() = taskIsCompletedM
 
     private val taskExDatesM = MutableObservable<List<Long>>(ArrayList())
-    val taskExDates: Observable<List<Long>> = taskExDatesM
+    override val taskExDates: Observable<List<Long>> get() = taskExDatesM
 
     private val taskRemindHoursM = MutableObservable<List<Int>>(ArrayList())
-    val taskRemindHours: Observable<List<Int>> = taskRemindHoursM
+    override val taskRemindHours: Observable<List<Int>> get() = taskRemindHoursM
 
     private val observerTitle: (String) -> Unit = {
         isEnabledButtonSaveM.value = it.isNotEmpty()
     }
 
+    //------------------------------------------------------------------------------------------------------------------
     override fun onFill() {
         super.onFill()
         taskTitle.addObserver(observerTitle)
@@ -100,7 +99,7 @@ class ViewModelTaskCard : ViewModelTask() {
         taskTitle.removeObserver(observerTitle)
     }
 
-    fun load(editTaskParentId: String?, startDate: Long) {
+    override fun load(editTaskParentId: String?, startDate: Long) {
         this.editTaskId = editTaskParentId
         this.startDate = startDate
         val editTask = editTaskParentId?.let { parentId -> repositoryTasks.tasks.value.find { it.id == parentId } }
@@ -128,7 +127,7 @@ class ViewModelTaskCard : ViewModelTask() {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    fun onClickedSave() {
+    override fun onClickedSave() {
         if (editTaskId != null) {
             val isCompleted = taskIsCompleted.value
 
@@ -144,7 +143,7 @@ class ViewModelTaskCard : ViewModelTask() {
         saveOrCreateTask()
     }
 
-    fun onClickedCompleteChildTask() {
+    override fun onClickedCompleteChildTask() {
         val parentTask = repositoryTasks.tasks.value.find { it.id == editTaskId }
 
         if (parentTask != null && startDate != 0L) {
@@ -184,51 +183,51 @@ class ViewModelTaskCard : ViewModelTask() {
         }
     }
 
-    fun onClickedCompleteParentTask() {
+    override fun onClickedCompleteParentTask() {
         saveOrCreateTask()
     }
 
-    fun onClickedCancel() {
+    override fun onClickedCancel() {
         actionM.postValue(Action(EventType.EXIT))
     }
 
-    fun onChangedTitle(value: String) {
+    override fun onChangedTitle(value: String) {
         if (taskTitleM.value != value) {
             taskTitleM.postValue(value)
         }
     }
 
-    fun onChangedDesc(value: String) {
+    override fun onChangedDesc(value: String) {
         if (taskDescM.value != value) {
             taskDescM.postValue(value)
         }
     }
 
-    fun onChangedComment(value: String) {
+    override fun onChangedComment(value: String) {
         if (taskCommentM.value != value) {
             taskCommentM.postValue(value)
         }
     }
 
-    fun onChangedLocation(value: String) {
+    override fun onChangedLocation(value: String) {
         if (taskLocationM.value != value) {
             taskLocationM.postValue(value)
         }
     }
 
-    fun onChangedPriority(value: Int) {
+    override fun onChangedPriority(value: Int) {
         if (taskPriorityM.value != value) {
             taskPriorityM.postValue(value)
         }
     }
 
-    fun onChangedRepeat(value: Int) {
+    override fun onChangedRepeat(value: Int) {
         if (taskRepeatM.value != value) {
             taskRepeatM.postValue(value)
         }
     }
 
-    fun onChangedRepeatCount(value: Int) {
+    override fun onChangedRepeatCount(value: Int) {
         if (taskRepeatCountM.value != value) {
             taskRepeatCountM.postValue(value)
         }
@@ -237,7 +236,7 @@ class ViewModelTaskCard : ViewModelTask() {
         }
     }
 
-    fun onChangedStart(value: Long) {
+    override fun onChangedStart(value: Long) {
         val startDaysInMillis = value / TIME_DAY * TIME_DAY
         val startTime = value - startDaysInMillis
         val endDaysInMillis = taskEndM.value / TIME_DAY * TIME_DAY
@@ -254,7 +253,7 @@ class ViewModelTaskCard : ViewModelTask() {
         }
     }
 
-    fun onChangedEnd(value: Long) {
+    override fun onChangedEnd(value: Long) {
         val startDaysInMillis = taskStartM.value / TIME_DAY * TIME_DAY
         var startTime = taskStartM.value - startDaysInMillis
         val endDaysInMillis = value / TIME_DAY * TIME_DAY
@@ -275,7 +274,7 @@ class ViewModelTaskCard : ViewModelTask() {
         }
     }
 
-    fun onChangedUntil(value: Long) {
+    override fun onChangedUntil(value: Long) {
         if (taskUntilM.value != value) {
             taskUntilM.postValue(value)
         }
@@ -284,25 +283,25 @@ class ViewModelTaskCard : ViewModelTask() {
         }
     }
 
-    fun onChangedIsPersistent(value: Boolean) {
+    override fun onChangedIsPersistent(value: Boolean) {
         if (taskIsPersistentM.value != value) {
             taskIsPersistentM.postValue(value)
         }
     }
 
-    fun onChangedIsCompleted(value: Boolean) {
+    override fun onChangedIsCompleted(value: Boolean) {
         if (taskIsCompletedM.value != value) {
             taskIsCompletedM.postValue(value)
         }
     }
 
-    fun onAddRemindHour(value: Int) {
+    override fun onAddRemindHour(value: Int) {
         if (!taskRemindHoursM.value.contains(value)) {
             taskRemindHoursM.value = ArrayList(taskRemindHoursM.value).apply { add(value) }
         }
     }
 
-    fun onRemoveRemindHour(value: Int) {
+    override fun onRemoveRemindHour(value: Int) {
         if (taskRemindHoursM.value.contains(value)) {
             taskRemindHoursM.value = ArrayList(taskRemindHoursM.value).apply { remove(value) }
         }
