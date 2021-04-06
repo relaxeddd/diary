@@ -10,7 +10,7 @@ Cocoapods is making build complex for now
 3. `cd iosApp` and `pod install`
 4. Run on iOS device
 
-## Libraries Used:
+## Libraries Used
 
 * Ktor
 * SQLDelight
@@ -18,8 +18,7 @@ Cocoapods is making build complex for now
 * Google Cloud Functions
 
 ## TODO
-1. Inject dependencies of other view models via constructor like in ViewModelAuth. Make View Models internal and expose them by ViewModelCreator.
-2. Refactor iOS storyboard with Storyboard References
+1. Refactor iOS storyboard with Storyboard References
 
 ## Screenshots
 
